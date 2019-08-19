@@ -1,0 +1,36 @@
+.jumbotron {
+  background: ;
+}
+.fa {
+  padding: 20px;
+  font-size: 50px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Add a hover effect if you want */
+.fa:hover {
+  opacity: 0.7;
+}
+
+/* Set a specific color for each brand */
+
+/* Facebook */
+.fa-facebook {
+  color: green;
+}
+
+/* Twitter */
+.fa-twitter {
+  color: green;
+}
+/* Github */
+.fa-github {
+  color: green;
+}
+
+/* YouTube */
+.fa-youtube {
+  color: green;
+}
