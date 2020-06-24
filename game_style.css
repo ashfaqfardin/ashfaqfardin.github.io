@@ -5,6 +5,13 @@ body {
     background-color: rgb(82, 113, 255);
     color: rgb(255, 255, 255);
 }
+
+.container {
+    height: 300px;
+    width: 400px;
+    align-content: center;
+}
+
 .grid {
     display: flex;
     flex-wrap: wrap;

@@ -1,36 +1,11 @@
-.jumbotron {
-  background: ;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&display=swap');
+
+body {
+    font-family: 'Montserrat Alternates', sans-serif;
+    background-color: rgb(82, 113, 255);
+    color: rgb(255, 255, 255);
 }
-.fa {
-  padding: 20px;
-  font-size: 50px;
-  width: 50px;
-  text-align: center;
+a {
   text-decoration: none;
-}
-
-/* Add a hover effect if you want */
-.fa:hover {
-  opacity: 0.7;
-}
-
-/* Set a specific color for each brand */
-
-/* Facebook */
-.fa-facebook {
-  color: green;
-}
-
-/* Twitter */
-.fa-twitter {
-  color: green;
-}
-/* Github */
-.fa-github {
-  color: green;
-}
-
-/* YouTube */
-.fa-youtube {
-  color: green;
+  color: rgb(102, 255, 161);
 }
