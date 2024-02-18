@@ -1,5 +1,3 @@
-# Mohammad Ashfaq Ur Rahman
-
 ## Education
 
 - Independent University, Bangladesh
