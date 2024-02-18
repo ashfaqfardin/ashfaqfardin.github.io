@@ -3,3 +3,5 @@ logo: /assets/images/profile.jpg
 #description: text below image
 #show_downloads: true
 theme: jekyll-theme-minimal
+theme_options:
+  dark: true
