@@ -45,8 +45,7 @@ Co-Founder and Vice President (October 2016 - February 2020)
 - Best CS Student Volunteer (Honorable Mention)
 
 ## Summary
-
-- I'm a passionate and curious computer science student, pursuing a BS in CSE from Independent University, Bangladesh. I'm fascinated by the potential of artificial intelligence, data science, and cutting-edge technologies to solve real-world problems and create value. 
+I'm a passionate and curious computer science student, pursuing a BS in CSE from Independent University, Bangladesh. I'm fascinated by the potential of artificial intelligence, data science, and cutting-edge technologies to solve real-world problems and create value. 
 
 As an Undergrad Research Student at CCDS.AI, I'm exploring novel applications of deep learning and large language models, using PyTorch and other tools. I've also been involved in several tech events and initiatives, such as the IEEE Computer Society IUB and the Omdena Bangladesh Chapter, where I've contributed to knowledge sharing, community building, and collaborative innovation. My efforts have earned me an award for outstanding student volunteering (honorable mention).
 
