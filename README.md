@@ -30,6 +30,7 @@ A passionate and curious computer science student with a strong foundation in de
 * **Content Coordinator** (February 2020 - February 2022)
 * Led workshops, organized events, and fostered community engagement.
 * **Highlights:** Best CS Student Volunteer (Honorable Mention)
+
 **Navians Debating Society - NDS**
 
 * **IT Secretary** (September 2017 - February 2020)
