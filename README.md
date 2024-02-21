@@ -1,6 +1,6 @@
 **My Profile**
 
-imashfaqfardin@gmail.com | [www.linkedin.com/in/ashfaqfardin]([www.linkedin.com/in/ashfaqfardin]) | ashfaqfardin.github.io
+imashfaqfardin@gmail.com | [www.linkedin.com/in/ashfaqfardin](www.linkedin.com/in/ashfaqfardin) | ashfaqfardin.github.io
 
 **Summary**
 
