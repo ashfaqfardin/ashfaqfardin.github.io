@@ -1,6 +1,11 @@
-**My Profile**
+## My Profile
 
-imashfaqfardin@gmail.com | [www.linkedin.com/in/ashfaqfardin](www.linkedin.com/in/ashfaqfardin) | ashfaqfardin.github.io
+**🔗 Connect with Me** 
+
+- 📫 Email: imashfaqfardin@gmail.com
+- 🐦 Twitter: [@ashfaqfardin](https://twitter.com/ashfaqfardin)
+- 💼 LinkedIn: [Mohammad Ashfaq Ur Rahman](https://linkedin.com/in/ashfaqfardin)
+- 🌐 Personal Website: [ashfaqfardin.me](https://ashfaqfardin.me)
 
 **Summary**
 
