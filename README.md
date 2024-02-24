@@ -60,15 +60,3 @@ A passionate and curious computer science student with a strong foundation in de
 
 * English (Professional Working)
 * Bengali (Native or Bilingual)
-
-**Personal Website:**
-
-ashfaqfardin.github.io
-
-**LinkedIn:**
-
-[@ashfaqfardin]([www.linkedin.com/in/ashfaqfardin])
-
-**Contact:**
-
-imashfaqfardin@gmail.com
