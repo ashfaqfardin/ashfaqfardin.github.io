@@ -1,17 +1,16 @@
 ## My Profile
 
-**🔗 Connect with Me** 
+### 🔗 Connect with Me 
 
 - 📫 Email: imashfaqfardin@gmail.com
 - 🐦 Twitter: [@ashfaqfardin](https://twitter.com/ashfaqfardin)
 - 💼 LinkedIn: [Mohammad Ashfaq Ur Rahman](https://linkedin.com/in/ashfaqfardin)
-- 🌐 Personal Website: [ashfaqfardin.me](https://ashfaqfardin.me)
 
-**Summary**
+### Summary
 
-A passionate and curious computer science student with a strong foundation in deep learning, PyTorch, and Dart. Eager to leverage skills in software engineering and user-centered design to create impactful technologies that solve real-world problems. Thrives in collaborative environments and seeks opportunities to contribute to innovative projects.
+A passionate and curious computer science student with a strong foundation in deep learning, PyTorch, and Dart. Eager to leverage software engineering and user-centered design skills to create impactful technologies that solve real-world problems. Thrives in collaborative environments and seeks opportunities to contribute to innovative projects.
 
-**Education**
+### Education
 
 **Independent University, Bangladesh**
 
@@ -21,12 +20,12 @@ A passionate and curious computer science student with a strong foundation in de
 
 * **Science** (2016 - 2018)
 
-**Experience**
+### Experience
 
 **Center for Computational & Data Sciences (CCDS.AI)**
 
 * **Undergrad Research Student** (October 2023 - Present)
-* Exploring novel applications of deep learning and large language models using PyTorch.
+* Exploring novel applications of deep learning and large language models.
 
 **IEEE Computer Society IUB Student Branch Chapter**
 
