@@ -7,7 +7,7 @@ weight: 3
 
 # **About Me**
 
-Hello! I am**{{ site.author.name }}** :wave:,<br>
+Hello! I am **{{ site.author.name }}** :wave:,<br>
 An undergraduate research student at CCDS.AI. My research focuses on exploring and developing advanced Large Language Models and Vision Language Model applications. By leveraging these cutting-edge technologies, I aim to create innovative solutions that advance the field of artificial intelligence.
 
 <div class="row">
