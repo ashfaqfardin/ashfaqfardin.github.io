@@ -1,7 +1,7 @@
 ### Site Settings ###
 title               : M.Rahman
 description         : >-
-                      Surprise, it's me! 
+                      urprise, it's me! 
 baseurl             : ""                                            # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
 repository          : ashfaqfardin/ashfaqfardin.github.io           # Change to <your-username>/<your-username>.github.io (or remove it if you don't need remote projects)
 remote_theme        : YoussefRaafatNasry/portfolYOU
@@ -23,7 +23,8 @@ nav_exclude:                                            # The following paths ar
 ### Author Info ###
 author:
   name              : Mohammad Ashafaq Ur Rahman
-  image             : https://github.com/ashfaqfardin/ashfaqfardin.github.io/blob/bfe4607ce8cd596511acb7dc1178f44e125d021e/_Images/Me.png
+  image             : 
+    location: "_Images\Me.png"
 # behance           : your_username
 # dribbble          : your_username
   email             : imashfaqfardin@gmail.com
