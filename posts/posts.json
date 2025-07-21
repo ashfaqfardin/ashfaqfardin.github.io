@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Welcome to My Academic Blog",
+    "date": "2024-06-10",
+    "summary": "An introduction to my new academic blog, where I share research, ideas, and updates.",
+    "file": "sample-post.md"
+  },
+  {
+    "title": "How to Add a New Blog Post",
+    "date": "2024-06-11",
+    "summary": "A step-by-step guide on adding new Markdown blog posts to your academic profile.",
+    "file": "how-to-add-post.md"
+  }
+]

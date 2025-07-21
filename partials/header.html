@@ -1,0 +1,65 @@
+<header
+  class="fixed top-0 left-0 w-full z-50 border-b bg-white/95 dark:bg-zinc-900/95 shadow backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-zinc-900/60"
+>
+  <div
+    class="container mx-auto flex h-16 items-center justify-between px-4 md:px-8"
+  >
+    <span
+      class="flex-1 text-lg md:text-xl font-bold tracking-tight flex items-center gap-2 text-indigo-600 dark:text-indigo-300"
+    >
+      <a
+        href="index.html"
+        class="flex items-center gap-2 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded"
+      >
+        <i data-lucide="user" class="w-5 h-5"></i>
+        <span class="md:hidden">Mohammad</span>
+        <span class="hidden md:inline">Mohammad Ashfaq Ur Rahman</span>
+      </a>
+    </span>
+    <button
+      id="mobile-nav-toggle"
+      class="order-3 md:hidden ml-2 p-2 rounded hover:bg-gray-200 dark:hover:bg-zinc-800 transition"
+      aria-label="Open navigation"
+    >
+      <i data-lucide="menu" class="text-gray-700 dark:text-gray-200"></i>
+    </button>
+    <nav
+      id="main-nav"
+      class="hidden md:flex gap-4 md:gap-6 text-sm font-medium text-gray-500 dark:text-gray-400 absolute md:static top-16 left-0 w-full md:w-auto bg-white dark:bg-zinc-900 md:bg-transparent md:dark:bg-transparent border-b md:border-0 z-50 md:z-auto"
+    >
+      <a
+        href="about.html"
+        class="flex items-center gap-1 px-4 py-2 md:px-0 md:py-0 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
+        ><i data-lucide="user"></i>About</a
+      >
+      <a
+        href="education.html"
+        class="flex items-center gap-1 px-4 py-2 md:px-0 md:py-0 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
+        ><i data-lucide="graduation-cap"></i>Education</a
+      >
+      <a
+        href="publications.html"
+        class="flex items-center gap-1 px-4 py-2 md:px-0 md:py-0 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
+        ><i data-lucide="book-open"></i>Publications</a
+      >
+      <a
+        href="projects.html"
+        class="flex items-center gap-1 px-4 py-2 md:px-0 md:py-0 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
+        ><i data-lucide="folder"></i>Projects</a
+      >
+      <a
+        href="blog.html"
+        class="flex items-center gap-1 px-4 py-2 md:px-0 md:py-0 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
+        ><i data-lucide="pen-line"></i>Blog</a
+      >
+    </nav>
+    <button
+      id="dark-toggle"
+      class="ml-2 md:ml-4 p-2 rounded hover:bg-gray-200 dark:hover:bg-zinc-800 transition"
+      title="Toggle dark mode"
+    >
+      <i data-lucide="moon" class="text-gray-700 dark:text-gray-200"></i>
+      <span class="sr-only">Toggle dark mode</span>
+    </button>
+  </div>
+</header>

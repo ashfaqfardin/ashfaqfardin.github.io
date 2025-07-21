@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="About Mohammad Ashfaq Ur Rahman, Research Intern at CCDS, IUB. Academic background, skills, work experience, and more."
+    />
+    <title>About | Academic Profile</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gray-100 dark:bg-zinc-900 min-h-screen flex flex-col transition-colors duration-300"
+  >
+    <div id="header-partial"></div>
+    <main
+      class="flex-1 w-full max-w-6xl mx-auto px-2 sm:px-4 pb-6 sm:pb-10 flex flex-col lg:flex-row gap-8 pt-28"
+    >
+      <!-- Sidebar -->
+      <aside
+        class="w-full lg:w-80 flex-shrink-0 mb-8 lg:mb-0 lg:sticky lg:top-24 h-fit"
+      >
+        <div
+          class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-6 flex flex-col items-center text-center gap-4"
+        >
+          <img
+            src="assets/images/profile.png"
+            alt="Profile photo of Mohammad Ashfaq Ur Rahman"
+            class="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-gray-200 dark:border-zinc-700 shadow object-cover mb-2"
+          />
+          <h2 class="text-xl font-bold text-indigo-600 dark:text-indigo-300">
+            Mohammad Ashfaq Ur Rahman
+          </h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+            Research Intern, Center for Computational & Data Sciences (CCDS),
+            IUB
+          </p>
+          <p class="text-xs text-gray-400 dark:text-gray-500 mb-2">
+            Short bio or tagline goes here. (You can update this in the code!)
+          </p>
+          <div class="flex flex-col gap-2 w-full items-center">
+            <a
+              href="mailto:imashfaqfardin@gmail.com"
+              class="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-300 text-sm"
+              ><i data-lucide="mail" class="w-4 h-4"></i>Email</a
+            >
+            <a
+              href="https://github.com/ashfaqfardin"
+              class="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-300 text-sm"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="github" class="w-4 h-4"></i>GitHub</a
+            >
+            <a
+              href="https://linkedin.com/in/ashfaqfardin"
+              class="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-300 text-sm"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="linkedin" class="w-4 h-4"></i>LinkedIn</a
+            >
+          </div>
+        </div>
+      </aside>
+      <!-- Main Content -->
+      <div class="flex-1 flex flex-col gap-6 min-h-[80vh] overflow-y-auto">
+        <section
+          id="about-main"
+          class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-6 flex flex-col gap-2"
+        >
+          <h2
+            class="text-lg font-bold text-indigo-600 dark:text-indigo-300 mb-2"
+          >
+            About
+          </h2>
+          <p class="text-base text-gray-600 dark:text-gray-300">
+            Research Interests:
+            <span class="font-semibold text-indigo-600 dark:text-indigo-300"
+              >Artificial Intelligence, Machine Learning, Data Science, Deep
+              Learning, LLMs, Agentic Systems</span
+            >
+          </p>
+        </section>
+        <section
+          id="skills-section"
+          class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-5 flex flex-col"
+        >
+          <div class="flex items-center gap-3 mb-2">
+            <i
+              data-lucide="zap"
+              class="w-5 h-5 text-indigo-600 dark:text-indigo-300"
+            ></i>
+            <h2
+              class="text-base font-semibold text-indigo-600 dark:text-indigo-300"
+            >
+              Skills
+            </h2>
+          </div>
+          <div
+            id="skills-md"
+            class="prose prose-sm dark:prose-invert max-w-none"
+          ></div>
+        </section>
+        <section
+          id="work-section"
+          class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-5 flex flex-col"
+        >
+          <div class="flex items-center gap-3 mb-2">
+            <i
+              data-lucide="briefcase"
+              class="w-5 h-5 text-indigo-600 dark:text-indigo-300"
+            ></i>
+            <h2
+              class="text-base font-semibold text-indigo-600 dark:text-indigo-300"
+            >
+              Work Experience
+            </h2>
+          </div>
+          <div
+            id="work-md"
+            class="prose prose-sm dark:prose-invert max-w-none"
+          ></div>
+        </section>
+        <section
+          id="profdev-section"
+          class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-5 flex flex-col"
+        >
+          <div class="flex items-center gap-3 mb-2">
+            <i
+              data-lucide="award"
+              class="w-5 h-5 text-indigo-600 dark:text-indigo-300"
+            ></i>
+            <h2
+              class="text-base font-semibold text-indigo-600 dark:text-indigo-300"
+            >
+              Professional Development
+            </h2>
+          </div>
+          <div
+            id="profdev-md"
+            class="prose prose-sm dark:prose-invert max-w-none"
+          ></div>
+        </section>
+        <section
+          id="cocurricular-section"
+          class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-5 flex flex-col"
+        >
+          <div class="flex items-center gap-3 mb-2">
+            <i
+              data-lucide="users"
+              class="w-5 h-5 text-indigo-600 dark:text-indigo-300"
+            ></i>
+            <h2
+              class="text-base font-semibold text-indigo-600 dark:text-indigo-300"
+            >
+              Co-curricular Activities
+            </h2>
+          </div>
+          <div
+            id="cocurricular-md"
+            class="prose prose-sm dark:prose-invert max-w-none"
+          ></div>
+        </section>
+      </div>
+    </main>
+    <div id="footer-partial"></div>
+    <script src="scripts/partials.js"></script>
+    <script>
+      // Load and render Markdown sections
+      fetch("content/skills.md")
+        .then((res) => res.text())
+        .then((md) => {
+          document.getElementById("skills-md").innerHTML = marked.parse(md);
+        });
+      fetch("content/work_experience.md")
+        .then((res) => res.text())
+        .then((md) => {
+          document.getElementById("work-md").innerHTML = marked.parse(md);
+        });
+      fetch("content/professional_development.md")
+        .then((res) => res.text())
+        .then((md) => {
+          document.getElementById("profdev-md").innerHTML = marked.parse(md);
+        });
+      fetch("content/co_curricular.md")
+        .then((res) => res.text())
+        .then((md) => {
+          document.getElementById("cocurricular-md").innerHTML =
+            marked.parse(md);
+        });
+    </script>
+  </body>
+</html>

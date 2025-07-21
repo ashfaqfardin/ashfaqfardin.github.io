@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Academic profile and blog of Mohammad Ashfaq Ur Rahman, Research Intern at CCDS, IUB. Explore research, projects, publications, and more."
+    />
+    <title>About | Academic Profile</title>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS (Play CDN) -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gray-100 dark:bg-zinc-900 min-h-screen flex flex-col transition-colors duration-300"
+  >
+    <div id="header-partial"></div>
+    <main
+      class="flex-1 w-full max-w-3xl mx-auto px-2 sm:px-4 pb-6 sm:pb-8 space-y-8 pt-28"
+    >
+      <!-- Profile Card -->
+      <section
+        id="about"
+        class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-4 sm:p-8 flex flex-col items-center text-center transition-colors duration-300"
+      >
+        <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6 mb-2">
+          <img
+            src="assets/images/profile.png"
+            alt="Profile photo of Mohammad Ashfaq Ur Rahman"
+            class="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-gray-200 dark:border-zinc-700 shadow object-cover"
+          />
+        </div>
+        <h2
+          class="text-lg sm:text-xl font-bold text-indigo-600 dark:text-indigo-300 mb-1"
+        >
+          Mohammad Ashfaq Ur Rahman
+        </h2>
+        <p class="text-base text-gray-600 dark:text-gray-300 font-medium mb-2">
+          Research Intern, Center for Computational & Data Sciences (CCDS), IUB
+        </p>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+          Research Interests:
+          <span class="font-semibold text-indigo-600 dark:text-indigo-300"
+            >Artificial Intelligence, Machine Learning, Data Science, Deep
+            Learning, LLMs, Agentic Systems</span
+          >
+        </p>
+        <div
+          class="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center w-full"
+        >
+          <a
+            href="mailto:imashfaqfardin@gmail.com"
+            class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-300 hover:bg-gray-100 dark:hover:bg-zinc-700 transition text-sm font-medium justify-center"
+            ><i data-lucide="mail"></i>Email</a
+          >
+          <a
+            href="https://github.com/ashfaqfardin"
+            class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-300 hover:bg-gray-100 dark:hover:bg-zinc-700 transition text-sm font-medium justify-center"
+            target="_blank"
+            rel="noopener"
+            ><i data-lucide="github"></i>GitHub</a
+          >
+          <a
+            href="https://linkedin.com/in/ashfaqfardin"
+            class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-300 hover:bg-gray-100 dark:hover:bg-zinc-700 transition text-sm font-medium justify-center"
+            target="_blank"
+            rel="noopener"
+            ><i data-lucide="linkedin"></i>LinkedIn</a
+          >
+        </div>
+      </section>
+    </main>
+    <div id="footer-partial"></div>
+    <script src="scripts/partials.js"></script>
+    <script src="scripts/profile.js"></script>
+  </body>
+</html>

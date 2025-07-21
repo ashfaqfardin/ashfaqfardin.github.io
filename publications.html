@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Publications by Mohammad Ashfaq Ur Rahman, Research Intern at CCDS, IUB. Academic research and conference papers."
+    />
+    <title>Publications | Academic Profile</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gray-100 dark:bg-zinc-900 min-h-screen flex flex-col transition-colors duration-300"
+  >
+    <div id="header-partial"></div>
+    <main
+      class="flex-1 w-full max-w-3xl mx-auto px-2 sm:px-4 pb-6 sm:pb-8 space-y-8 pt-28"
+    >
+      <section
+        id="publications"
+        class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-4 sm:p-8 transition-colors duration-300"
+      >
+        <div class="flex items-center gap-4 mb-2">
+          <i
+            data-lucide="book-open"
+            class="w-6 h-6 text-indigo-600 dark:text-indigo-300"
+          ></i>
+          <h2
+            class="text-lg sm:text-2xl font-bold text-indigo-600 dark:text-indigo-300"
+          >
+            Publications
+          </h2>
+        </div>
+        <div
+          id="publications-md"
+          class="prose dark:prose-invert max-w-none"
+        ></div>
+      </section>
+    </main>
+    <div id="footer-partial"></div>
+    <script src="scripts/partials.js"></script>
+    <script>
+      // Load and render publications.md
+      fetch("content/publications.md")
+        .then((res) => res.text())
+        .then((md) => {
+          document.getElementById("publications-md").innerHTML =
+            marked.parse(md);
+        });
+    </script>
+  </body>
+</html>
