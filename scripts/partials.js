@@ -1,7 +1,7 @@
 // Inject shared header and footer partials
 async function injectPartials() {
-  const header = await fetch("partials/header.html").then((res) => res.text());
-  const footer = await fetch("partials/footer.html").then((res) => res.text());
+  const header = await fetch("partials/header.txt").then((res) => res.text());
+  const footer = await fetch("partials/footer.txt").then((res) => res.text());
   document.getElementById("header-partial").innerHTML = header;
   document.getElementById("footer-partial").innerHTML = footer;
   // Re-initialize icons and nav after injection
