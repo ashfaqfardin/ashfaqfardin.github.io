@@ -4,75 +4,77 @@
   <div
     class="w-full max-w-6xl mx-auto flex h-16 items-center justify-between px-4"
   >
-    <a
-      href="index.html"
-      class="flex items-center gap-2 text-lg font-bold tracking-tight text-teal-600 dark:text-teal-300 hover:text-teal-700 dark:hover:text-teal-400 transition-colors"
+    <div class="flex-1">
+      <a
+        href="index.html"
+        class="inline-flex items-center gap-2 text-lg font-bold tracking-tight text-teal-600 dark:text-teal-300 hover:text-teal-700 dark:hover:text-teal-400 transition-colors"
+      >
+        <i data-lucide="user-round" class="w-5 h-5"></i>
+        <span class="md:hidden">Mohammad</span>
+        <span class="hidden md:inline">Mohammad Ashfaq Ur Rahman</span>
+      </a>
+    </div>
+
+    <button
+      id="mobile-nav-toggle"
+      class="md:hidden p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
+      aria-label="Open navigation"
     >
-      <i data-lucide="user-round" class="w-5 h-5"></i>
-      <span class="md:hidden">Mohammad</span>
-      <span class="hidden md:inline">Mohammad Ashfaq Ur Rahman</span>
-    </a>
+      <i data-lucide="menu" class="w-6 h-6 text-slate-700 dark:text-slate-200"></i>
+    </button>
 
-    <div class="flex items-center gap-2">
-      <nav
-        id="main-nav"
-        class="hidden md:flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 absolute md:static top-full left-0 w-full md:w-auto p-4 md:p-0 bg-slate-100 dark:bg-slate-800 md:bg-transparent md:dark:bg-transparent border-y md:border-0 border-slate-200 dark:border-slate-700"
+    <nav
+      id="main-nav"
+      class="hidden md:flex items-center gap-1 absolute md:static top-16 left-0 w-full md:w-auto p-2 md:p-0 bg-slate-50 dark:bg-slate-900 md:bg-transparent md:dark:bg-transparent border-y md:border-0 border-slate-200 dark:border-slate-700"
+    >
+      <a
+        href="about.html"
+        class="nav-link flex items-center gap-2 w-full text-left md:text-center px-4 py-3 md:px-3 md:py-2 rounded-md text-base md:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
       >
-        <a
-          href="about.html"
-          class="nav-link px-3 py-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        >
-          About
-        </a>
-        <a
-          href="education.html"
-          class="nav-link px-3 py-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        >
-          Education
-        </a>
-        <a
-          href="publications.html"
-          class="nav-link px-3 py-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        >
-          Publications
-        </a>
-        <a
-          href="projects.html"
-          class="nav-link px-3 py-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        >
-          Projects
-        </a>
-        <a
-          href="timeline.html"
-          class="nav-link px-3 py-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        >
-          Timeline
-        </a>
-        <a
-          href="blog.html"
-          class="nav-link px-3 py-2 rounded-md hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        >
-          Blog
-        </a>
-      </nav>
+        <i data-lucide="user" class="w-4 h-4"></i> About
+      </a>
+      <a
+        href="education.html"
+        class="nav-link flex items-center gap-2 w-full text-left md:text-center px-4 py-3 md:px-3 md:py-2 rounded-md text-base md:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
+      >
+        <i data-lucide="graduation-cap" class="w-4 h-4"></i> Education
+      </a>
+      <a
+        href="publications.html"
+        class="nav-link flex items-center gap-2 w-full text-left md:text-center px-4 py-3 md:px-3 md:py-2 rounded-md text-base md:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
+      >
+        <i data-lucide="book-open-check" class="w-4 h-4"></i> Publications
+      </a>
+      <a
+        href="projects.html"
+        class="nav-link flex items-center gap-2 w-full text-left md:text-center px-4 py-3 md:px-3 md:py-2 rounded-md text-base md:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
+      >
+        <i data-lucide="folder-kanban" class="w-4 h-4"></i> Projects
+      </a>
+      <a
+        href="timeline.html"
+        class="nav-link flex items-center gap-2 w-full text-left md:text-center px-4 py-3 md:px-3 md:py-2 rounded-md text-base md:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
+      >
+        <i data-lucide="milestone" class="w-4 h-4"></i> Timeline
+      </a>
+      <a
+        href="blog.html"
+        class="nav-link flex items-center gap-2 w-full text-left md:text-center px-4 py-3 md:px-3 md:py-2 rounded-md text-base md:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
+      >
+        <i data-lucide="pen-square" class="w-4 h-4"></i> Blog
+      </a>
+    </nav>
 
-      <button
-        id="dark-toggle"
-        class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
-        title="Toggle dark mode"
-      >
-        <i data-lucide="moon" class="block dark:hidden text-slate-700"></i>
-        <i data-lucide="sun" class="hidden dark:block text-slate-200"></i>
-        <span class="sr-only">Toggle dark mode</span>
-      </button>
-
-      <button
-        id="mobile-nav-toggle"
-        class="md:hidden p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
-        aria-label="Open navigation"
-      >
-        <i data-lucide="menu" class="text-slate-700 dark:text-slate-200"></i>
-      </button>
+    <div class="hidden md:flex items-center ml-4">
+        <button
+          id="dark-toggle"
+          class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
+          title="Toggle dark mode"
+        >
+          <i data-lucide="moon" class="block dark:hidden text-slate-700"></i>
+          <i data-lucide="sun" class="hidden dark:block text-slate-200"></i>
+          <span class="sr-only">Toggle dark mode</span>
+        </button>
     </div>
   </div>
 </header>
