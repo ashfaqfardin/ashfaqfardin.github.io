@@ -1,32 +1,38 @@
-<footer class="w-full border-t bg-white dark:bg-zinc-900 py-4 sm:py-6 mt-auto">
+<footer class="w-full border-t border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 py-5 mt-auto">
   <div
-    class="container mx-auto px-2 sm:px-4 flex flex-col md:flex-row items-center justify-between text-gray-500 dark:text-gray-400 text-xs gap-2"
+    class="w-full max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-slate-500 dark:text-slate-400 text-sm gap-4"
   >
-    <span class="text-center md:text-left"
-      >&copy; 2024 Mohammad Ashfaq Ur Rahman. All rights reserved.</span
+    <span class="text-center sm:text-left"
+      >&copy; 2025 Mohammad Ashfaq Ur Rahman. All rights reserved.</span
     >
     <div
-      class="flex gap-4 mt-2 md:mt-0 justify-center md:justify-end w-full md:w-auto"
+      class="flex items-center gap-6"
     >
       <a
         href="https://github.com/ashfaqfardin"
-        class="hover:text-indigo-600 dark:hover:text-indigo-300"
+        class="hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
         target="_blank"
-        rel="noopener"
-        >GitHub</a
+        rel="noopener noreferrer"
+        aria-label="GitHub Profile"
       >
+        <i data-lucide="github" class="w-5 h-5"></i>
+      </a>
       <a
         href="https://linkedin.com/in/ashfaqfardin"
-        class="hover:text-indigo-600 dark:hover:text-indigo-300"
+        class="hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
         target="_blank"
-        rel="noopener"
-        >LinkedIn</a
+        rel="noopener noreferrer"
+        aria-label="LinkedIn Profile"
       >
+        <i data-lucide="linkedin" class="w-5 h-5"></i>
+      </a>
       <a
         href="mailto:imashfaqfardin@gmail.com"
-        class="hover:text-indigo-600 dark:hover:text-indigo-300"
-        >Email</a
+        class="hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
+        aria-label="Email"
       >
+        <i data-lucide="mail" class="w-5 h-5"></i>
+      </a>
     </div>
   </div>
 </footer>

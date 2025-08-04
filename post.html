@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog Post | Academic Profile</title>
+    <link rel="stylesheet" href="styles/animations.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "system-ui", "sans-serif"] },
+            typography: ({ theme }) => ({
+              custom: {
+                css: {
+                  "--tw-prose-body": theme("colors.slate[600]"),
+                  "--tw-prose-headings": theme("colors.slate[800]"),
+                  "--tw-prose-links": theme("colors.teal[600]"),
+                  "--tw-prose-invert-body": theme("colors.slate[300]"),
+                  "--tw-prose-invert-headings": theme("colors.slate[100]"),
+                  "--tw-prose-invert-links": theme("colors.teal[400]"),
+                },
+              },
+            }),
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="font-sans bg-slate-50 text-slate-700 dark:bg-slate-900 dark:text-slate-300 min-h-screen flex flex-col"
+  >
+    <div id="header-partial"></div>
+
+    <main class="flex-1 w-full max-w-4xl mx-auto px-4 pb-10 pt-28">
+      <a
+        href="blog.html"
+        class="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-lg bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm text-teal-600 dark:text-teal-300 font-semibold border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+      >
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        Back to All Posts
+      </a>
+
+      <div
+        id="post-card"
+        class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 sm:p-8"
+      >
+        <div
+          id="post-content"
+          class="prose prose-custom dark:prose-invert max-w-none"
+        >
+          <p>Loading post...</p>
+        </div>
+      </div>
+    </main>
+
+    <div id="footer-partial"></div>
+    <script src="scripts/partials.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const postContent = document.getElementById("post-content");
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const postFile = urlParams.get("file");
+
+        if (postFile) {
+          const filePath = `posts/${postFile}`;
+
+          fetch(filePath)
+            .then((res) => {
+              if (!res.ok) throw new Error("Post not found");
+              return res.text();
+            })
+            .then((md) => {
+              postContent.innerHTML = marked.parse(md);
+              const firstHeading = postContent.querySelector("h1, h2, h3");
+              if (firstHeading) {
+                document.title = `${firstHeading.textContent} | Blog`;
+              }
+            })
+            .catch((err) => {
+              postContent.innerHTML = `<p>Sorry, the requested post could not be found.</p>`;
+              console.error(err);
+            });
+        } else {
+          postContent.innerHTML = `<p>No post specified.</p>`;
+        }
+
+        // This will now render the icon in the new back button as well
+        setTimeout(() => lucide.createIcons(), 100);
+      });
+    </script>
+  </body>
+</html>

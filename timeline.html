@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="An interactive timeline of my academic and professional journey."
+    />
+    <title>Timeline | Academic Profile</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/animations.css" />
+    <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "system-ui", "sans-serif"] },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* --- Responsive Timeline Styles (Mobile First) --- */
+
+      /* NEW: On mobile, the "line" is now the left border of the card itself. */
+      /* This removes the need for extra pseudo-elements for the mobile view. */
+
+      /* --- Desktop-Only Styles for Horizontal Layout & Animation --- */
+      @media (min-width: 768px) {
+        @keyframes autoscroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .timeline-autoscroll {
+          display: flex;
+          animation: autoscroll linear infinite;
+        }
+        .timeline-wrapper:hover .timeline-autoscroll {
+          animation-play-state: paused;
+        }
+
+        .timeline-container::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 0;
+          width: 100%;
+          height: 3px;
+          transform: translateY(-50%);
+          background-color: #cbd5e1; /* slate-300 */
+        }
+        .dark .timeline-container::before {
+          background-color: #475569;
+        }
+
+        .timeline-card::before {
+          content: "";
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 3px;
+          height: 1rem;
+          background-color: #cbd5e1;
+        }
+        .dark .timeline-card::before {
+          background-color: #475569;
+        }
+
+        .timeline-item.items-start .timeline-card::before {
+          bottom: 100%;
+          top: auto;
+        }
+        .timeline-item.items-end .timeline-card::before {
+          top: 100%;
+          bottom: auto;
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="font-sans bg-slate-50 text-slate-700 dark:bg-slate-900 dark:text-slate-300 min-h-screen flex flex-col"
+  >
+    <div id="header-partial"></div>
+
+    <main
+      class="flex-1 w-full flex flex-col justify-center overflow-hidden pt-28 pb-10"
+    >
+      <div class="w-full max-w-6xl mx-auto px-4">
+        <div class="text-center mb-12">
+          <h1
+            class="text-3xl sm:text-4xl font-bold text-teal-600 dark:text-teal-400"
+          >
+            My Journey
+          </h1>
+          <p class="mt-2 text-lg text-slate-500 dark:text-slate-400">
+            A timeline of my key milestones and achievements.
+          </p>
+        </div>
+      </div>
+
+      <div id="timeline-wrapper" class="relative w-full">
+        <div
+          id="timeline-container"
+          class="w-full max-w-3xl mx-auto flex flex-col gap-8 md:flex-row md:items-center md:h-96 md:overflow-x-hidden md:max-w-none md:gap-0 px-4 md:px-0 relative"
+        ></div>
+      </div>
+    </main>
+
+    <div id="footer-partial"></div>
+    <script src="scripts/partials.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("timeline-container");
+
+        const createBadge = (type) => {
+          const colors = {
+            Publication:
+              "bg-sky-100 text-sky-800 dark:bg-sky-900/50 dark:text-sky-300",
+            Education:
+              "bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300",
+            Project:
+              "bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-900/50 dark:text-fuchsia-300",
+            Work: "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300",
+          };
+          return `<span class="inline-block px-2 py-0.5 text-xs font-semibold rounded-full ${
+            colors[type] || "bg-slate-100 text-slate-800"
+          }">${type}</span>`;
+        };
+
+        fetch("content/timeline.json")
+          .then((res) => res.json())
+          .then((items) => {
+            const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+
+            if (isDesktop) {
+              // --- DESKTOP: Create horizontal auto-scrolling timeline ---
+              const contentWrapper = document.createElement("div");
+              contentWrapper.className = "timeline-autoscroll";
+              container.appendChild(contentWrapper);
+
+              const populateItems = () => {
+                items.forEach((item, index) => {
+                  const isAbove = index % 2 === 0;
+                  const timelineItem = document.createElement("div");
+                  timelineItem.className = `timeline-item relative flex shrink-0 w-80 px-4 ${
+                    isAbove ? "md:items-end" : "md:items-start"
+                  } h-full`;
+                  timelineItem.innerHTML = `
+                      <div class="timeline-card w-full relative rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-5 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex items-center justify-between mb-2"><p class="text-sm font-semibold text-slate-500 dark:text-slate-400">${
+                          item.date
+                        }</p>${createBadge(item.type)}</div>
+                        <h3 class="text-lg font-bold text-teal-700 dark:text-teal-300">${
+                          item.title
+                        }</h3>
+                        <p class="mt-1 text-slate-600 dark:text-slate-300 text-sm">${
+                          item.description
+                        }</p>
+                        ${
+                          item.link
+                            ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sm text-teal-600 dark:text-teal-400 font-semibold mt-3 hover:underline">Read More <i data-lucide="arrow-right" class="w-3 h-3"></i></a>`
+                            : ""
+                        }
+                      </div>`;
+                  contentWrapper.appendChild(timelineItem);
+                });
+              };
+
+              populateItems();
+              populateItems();
+
+              const totalWidth = contentWrapper.scrollWidth / 2;
+              const duration = totalWidth / 15;
+              contentWrapper.style.animationDuration = `${duration}s`;
+            } else {
+              // --- MOBILE: Create clean vertical timeline ---
+              items.forEach((item) => {
+                const timelineItem = document.createElement("div");
+                // NEW: Simplified mobile card with a left border acting as the timeline.
+                timelineItem.className =
+                  "w-full rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 border-l-4 dark:border-l-teal-400 border-l-teal-500 p-5";
+                timelineItem.innerHTML = `
+                       <div class="flex items-center justify-between mb-2"><p class="text-sm font-semibold text-slate-500 dark:text-slate-400">${
+                         item.date
+                       }</p>${createBadge(item.type)}</div>
+                       <h3 class="text-lg font-bold text-teal-700 dark:text-teal-300">${
+                         item.title
+                       }</h3>
+                       <p class="mt-1 text-slate-600 dark:text-slate-300 text-sm">${
+                         item.description
+                       }</p>
+                       ${
+                         item.link
+                           ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sm text-teal-600 dark:text-teal-400 font-semibold mt-3 hover:underline">Read More <i data-lucide="arrow-right" class="w-3 h-3"></i></a>`
+                           : ""
+                       }
+                    `;
+                container.appendChild(timelineItem);
+              });
+            }
+            lucide.createIcons();
+          })
+          .catch((err) => console.error("Failed to load timeline data:", err));
+      });
+    </script>
+  </body>
+</html>

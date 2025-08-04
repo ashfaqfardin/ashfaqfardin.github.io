@@ -1,0 +1,44 @@
+[
+  {
+    "date": "2019 - 2024",
+    "type": "Education",
+    "title": "BSc in Computer Science and Engineering",
+    "description": "Completed Bachelor of Science in Computer Science and Engineering from Independent University, Bangladesh (IUB).",
+    "link": "education.html"
+  },
+  {
+    "date": "2021",
+    "type": "Entrepreneurship",
+    "title": "Founder and CEO of Neumentora",
+    "description": "Founded Neumentora, a platform aimed at providing mentorship, technical resources, and community support for students and professionals in technology.",
+    "link": ""
+  },
+  {
+    "date": "2022-2023",
+    "type": "Leadership",
+    "title": "Chair, IEEE Computer Society IUB Student Branch Chapter",
+    "description": "Led the IEEE Computer Society IUB Student Branch Chapter, organizing technical events, workshops, and fostering a collaborative community among CSE students.",
+    "link": ""
+  },
+  {
+    "date": "December 2024",
+    "type": "Work",
+    "title": "Research Intern at CCDS.AI",
+    "description": "Joined as a Research Intern at the Center for Computational & Data Sciences (CCDS.AI), focusing on dataset development and LLM-based educational systems.",
+    "link": "about.html"
+  },
+  {
+    "date": "February 2025",
+    "type": "Workshop",
+    "title": "Workshop on Large Language Models (LLMs)",
+    "description": "Conducted a 3-day hands-on workshop on LLMs covering data preparation, fine-tuning, and deployment, with demonstrations on LLaMA using Llama.cpp.",
+    "link": ""
+  },
+  {
+    "date": "July 2025",
+    "type": "Publication",
+    "title": "Improving User Engagement and Learning Outcomes in LLM-Based Python Tutor: A Study of PACE",
+    "description": "Co-authored a paper on enhancing user engagement and learning outcomes in Large Language Model systems, presented at an academic conference.",
+    "link": "publications.html"
+  }
+]

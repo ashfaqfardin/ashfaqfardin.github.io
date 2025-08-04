@@ -1,0 +1,36 @@
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes keyframes-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at top left, #ccfbf1, transparent 40%),
+    radial-gradient(circle at bottom right, #cffafe, transparent 40%);
+  background-size: 200% 200%;
+  animation: keyframes-gradient 20s ease infinite;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+.dark body::before {
+  background: radial-gradient(circle at top left, #134e4a, transparent 50%),
+    radial-gradient(circle at bottom right, #164e63, transparent 50%);
+  opacity: 1;
+}

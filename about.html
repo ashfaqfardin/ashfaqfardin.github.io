@@ -12,199 +12,213 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="styles/animations.css" />
     <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+            },
+            // Extending typography to customize prose styles
+            typography: ({ theme }) => ({
+              custom: {
+                css: {
+                  "--tw-prose-body": theme("colors.slate[600]"),
+                  "--tw-prose-headings": theme("colors.slate[800]"),
+                  "--tw-prose-links": theme("colors.teal[600]"),
+                  "--tw-prose-bold": theme("colors.slate[800]"),
+                  "--tw-prose-bullets": theme("colors.slate[400]"),
+                  "--tw-prose-hr": theme("colors.slate[200]"),
+                  "--tw-prose-quotes": theme("colors.slate[800]"),
+                  "--tw-prose-quote-borders": theme("colors.teal[300]"),
+
+                  "--tw-prose-invert-body": theme("colors.slate[300]"),
+                  "--tw-prose-invert-headings": theme("colors.slate[100]"),
+                  "--tw-prose-invert-links": theme("colors.teal[400]"),
+                  "--tw-prose-invert-bold": theme("colors.slate[100]"),
+                  "--tw-prose-invert-bullets": theme("colors.slate[600]"),
+                  "--tw-prose-invert-hr": theme("colors.slate[700]"),
+                  "--tw-prose-invert-quotes": theme("colors.slate[100]"),
+                  "--tw-prose-invert-quote-borders": theme("colors.teal[700]"),
+                },
+              },
+            }),
+          },
+        },
       };
     </script>
-    <style>
-      body {
-        font-family: "Inter", system-ui, sans-serif;
-      }
-    </style>
   </head>
+
   <body
-    class="bg-gray-100 dark:bg-zinc-900 min-h-screen flex flex-col transition-colors duration-300"
+    class="font-sans bg-slate-50 text-slate-700 dark:bg-slate-900 dark:text-slate-300 min-h-screen flex flex-col transition-colors duration-300"
   >
     <div id="header-partial"></div>
+
     <main
-      class="flex-1 w-full max-w-6xl mx-auto px-2 sm:px-4 pb-6 sm:pb-10 flex flex-col lg:flex-row gap-8 pt-28"
+      class="flex-1 w-full max-w-6xl mx-auto px-4 pb-10 flex flex-col lg:flex-row gap-12 pt-28"
     >
-      <!-- Sidebar -->
-      <aside
-        class="w-full lg:w-80 flex-shrink-0 mb-8 lg:mb-0 lg:sticky lg:top-24 h-fit"
-      >
+      <aside class="w-full lg:w-80 flex-shrink-0 lg:sticky lg:top-24 h-fit">
         <div
-          class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-6 flex flex-col items-center text-center gap-4"
+          class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 flex flex-col items-center text-center gap-4"
         >
-          <img
-            src="assets/images/profile.png"
-            alt="Profile photo of Mohammad Ashfaq Ur Rahman"
-            class="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-gray-200 dark:border-zinc-700 shadow object-cover mb-2"
-          />
-          <h2 class="text-xl font-bold text-indigo-600 dark:text-indigo-300">
+          <div
+            class="p-1 rounded-full bg-gradient-to-tr from-teal-400 to-cyan-400 mb-2"
+          >
+            <img
+              src="assets/images/profile.png"
+              alt="Profile photo of Mohammad Ashfaq Ur Rahman"
+              class="w-32 h-32 rounded-full border-4 border-white dark:border-slate-800 shadow-md object-cover"
+            />
+          </div>
+          <h1 class="text-2xl font-bold text-teal-600 dark:text-teal-300">
             Mohammad Ashfaq Ur Rahman
-          </h2>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+          </h1>
+          <p class="text-sm text-slate-500 dark:text-slate-400 -mt-2">
             Research Intern, Center for Computational & Data Sciences (CCDS),
             IUB
           </p>
-          <p class="text-xs text-gray-400 dark:text-gray-500 mb-2">
-            Keep Swimming 🐬
+          <p class="text-sm text-slate-400 dark:text-slate-500 italic">
+            "Keep Swimming" 🐬
           </p>
-          <div class="flex flex-col gap-2 w-full items-center">
+          <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 pt-2">
             <a
               href="mailto:imashfaqfardin@gmail.com"
-              class="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-300 text-sm"
-              ><i data-lucide="mail" class="w-4 h-4"></i>Email</a
+              class="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-teal-500 dark:hover:text-teal-300 text-sm transition-colors"
             >
+              <i data-lucide="mail" class="w-4 h-4"></i>Email
+            </a>
             <a
               href="https://github.com/ashfaqfardin"
-              class="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-300 text-sm"
               target="_blank"
               rel="noopener"
-              ><i data-lucide="github" class="w-4 h-4"></i>GitHub</a
+              class="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-teal-500 dark:hover:text-teal-300 text-sm transition-colors"
             >
+              <i data-lucide="github" class="w-4 h-4"></i>GitHub
+            </a>
             <a
               href="https://linkedin.com/in/ashfaqfardin"
-              class="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-300 text-sm"
               target="_blank"
               rel="noopener"
-              ><i data-lucide="linkedin" class="w-4 h-4"></i>LinkedIn</a
+              class="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-teal-500 dark:hover:text-teal-300 text-sm transition-colors"
             >
+              <i data-lucide="linkedin" class="w-4 h-4"></i>LinkedIn
+            </a>
           </div>
         </div>
       </aside>
-      <!-- Main Content -->
-      <div class="flex-1 flex flex-col gap-6 min-h-[80vh] overflow-y-auto">
+
+      <div class="flex-1 flex flex-col gap-8">
         <section
           id="about-main"
-          class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-6 flex flex-col gap-2"
+          class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 flex flex-col gap-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
         >
-          <h2
-            class="text-lg font-bold text-indigo-600 dark:text-indigo-300 mb-2"
-          >
-            About
+          <h2 class="text-xl font-bold text-teal-600 dark:text-teal-300 mb-2">
+            About Me
           </h2>
-          <p class="text-base text-gray-600 dark:text-gray-300">
-            Research Interests:
-            <span class="font-semibold text-indigo-600 dark:text-indigo-300"
-              >Artificial Intelligence, Machine Learning, Data Science, Deep
-              Learning, LLMs, Agentic Systems</span
-            >
+          <p
+            class="text-base text-slate-600 dark:text-slate-300 leading-relaxed"
+          >
+            I'm a passionate researcher and developer with a strong interest in
+            building intelligent systems that can learn and reason. My current
+            focus is on exploring the frontiers of AI.
+          </p>
+          <p
+            class="text-base text-slate-600 dark:text-slate-300 leading-relaxed pt-2"
+          >
+            <strong>Research Interests:</strong>
+            <span class="font-semibold text-teal-700 dark:text-teal-400">
+              Artificial Intelligence, Machine Learning, Data Science, Deep
+              Learning, LLMs, Agentic Systems
+            </span>
           </p>
         </section>
-        <section
-          id="skills-section"
-          class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-5 flex flex-col"
-        >
-          <div class="flex items-center gap-3 mb-2">
-            <i
-              data-lucide="zap"
-              class="w-5 h-5 text-indigo-600 dark:text-indigo-300"
-            ></i>
-            <h2
-              class="text-base font-semibold text-indigo-600 dark:text-indigo-300"
-            >
-              Skills
-            </h2>
-          </div>
-          <div
-            id="skills-md"
-            class="prose prose-sm dark:prose-invert max-w-none"
-          ></div>
-        </section>
-        <section
-          id="work-section"
-          class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-5 flex flex-col"
-        >
-          <div class="flex items-center gap-3 mb-2">
-            <i
-              data-lucide="briefcase"
-              class="w-5 h-5 text-indigo-600 dark:text-indigo-300"
-            ></i>
-            <h2
-              class="text-base font-semibold text-indigo-600 dark:text-indigo-300"
-            >
-              Work Experience
-            </h2>
-          </div>
-          <div
-            id="work-md"
-            class="prose prose-sm dark:prose-invert max-w-none"
-          ></div>
-        </section>
-        <section
-          id="profdev-section"
-          class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-5 flex flex-col"
-        >
-          <div class="flex items-center gap-3 mb-2">
-            <i
-              data-lucide="award"
-              class="w-5 h-5 text-indigo-600 dark:text-indigo-300"
-            ></i>
-            <h2
-              class="text-base font-semibold text-indigo-600 dark:text-indigo-300"
-            >
-              Professional Development
-            </h2>
-          </div>
-          <div
-            id="profdev-md"
-            class="prose prose-sm dark:prose-invert max-w-none"
-          ></div>
-        </section>
-        <section
-          id="cocurricular-section"
-          class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-5 flex flex-col"
-        >
-          <div class="flex items-center gap-3 mb-2">
-            <i
-              data-lucide="users"
-              class="w-5 h-5 text-indigo-600 dark:text-indigo-300"
-            ></i>
-            <h2
-              class="text-base font-semibold text-indigo-600 dark:text-indigo-300"
-            >
-              Co-curricular Activities
-            </h2>
-          </div>
-          <div
-            id="cocurricular-md"
-            class="prose prose-sm dark:prose-invert max-w-none"
-          ></div>
-        </section>
+
+        <div id="dynamic-content-container" class="flex flex-col gap-8"></div>
       </div>
     </main>
+
     <div id="footer-partial"></div>
+
     <script src="scripts/partials.js"></script>
     <script>
-      // Load and render Markdown sections
-      fetch("content/skills.md")
-        .then((res) => res.text())
-        .then((md) => {
-          document.getElementById("skills-md").innerHTML = marked.parse(md);
-        });
-      fetch("content/work_experience.md")
-        .then((res) => res.text())
-        .then((md) => {
-          document.getElementById("work-md").innerHTML = marked.parse(md);
-        });
-      fetch("content/professional_development.md")
-        .then((res) => res.text())
-        .then((md) => {
-          document.getElementById("profdev-md").innerHTML = marked.parse(md);
-        });
-      fetch("content/co_curricular.md")
-        .then((res) => res.text())
-        .then((md) => {
-          document.getElementById("cocurricular-md").innerHTML =
-            marked.parse(md);
-        });
+      // Function to create a section card
+      const createSectionCard = (id, icon, title) => {
+        const section = document.createElement("section");
+        section.id = `${id}-section`;
+        section.className =
+          "rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1";
+
+        // Added prose-a:* utilities for link transitions directly
+        section.innerHTML = `
+          <div class="flex items-center gap-3 mb-4">
+            <i data-lucide="${icon}" class="w-6 h-6 text-teal-500 dark:text-teal-400"></i>
+            <h2 class="text-xl font-semibold text-teal-600 dark:text-teal-400">${title}</h2>
+          </div>
+          <div 
+            id="${id}-md" 
+            class="prose prose-custom dark:prose-invert max-w-none prose-a:transition-colors prose-a:duration-200 hover:prose-a:text-teal-700 dark:hover:prose-a:text-teal-300"
+          ></div>
+        `;
+        return section;
+      };
+
+      // Define sections to be loaded
+      const sections = [
+        {
+          id: "skills",
+          icon: "zap",
+          title: "Skills",
+          file: "content/skills.md",
+        },
+        {
+          id: "work",
+          icon: "briefcase",
+          title: "Work Experience",
+          file: "content/work_experience.md",
+        },
+        {
+          id: "profdev",
+          icon: "award",
+          title: "Professional Development",
+          file: "content/professional_development.md",
+        },
+        {
+          id: "cocurricular",
+          icon: "users",
+          title: "Co-curricular Activities",
+          file: "content/co_curricular.md",
+        },
+      ];
+
+      const container = document.getElementById("dynamic-content-container");
+
+      // Load and render Markdown for each section
+      sections.forEach((sec) => {
+        const card = createSectionCard(sec.id, sec.icon, sec.title);
+        container.appendChild(card);
+
+        fetch(sec.file)
+          .then((res) => {
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+            return res.text();
+          })
+          .then((md) => {
+            document.getElementById(`${sec.id}-md`).innerHTML =
+              marked.parse(md);
+          })
+          .catch((err) => console.error(`Failed to load ${sec.file}:`, err));
+      });
+
+      // After all content is potentially loaded, render icons
+      // We need to wait a tick for the DOM to update
+      setTimeout(() => {
+        lucide.createIcons();
+      }, 0);
     </script>
   </body>
 </html>

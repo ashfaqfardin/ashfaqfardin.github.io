@@ -12,55 +12,99 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="styles/animations.css" />
     <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+            },
+            // Extending typography to customize prose styles
+            typography: ({ theme }) => ({
+              custom: {
+                css: {
+                  "--tw-prose-body": theme("colors.slate[600]"),
+                  "--tw-prose-headings": theme("colors.slate[800]"),
+                  "--tw-prose-links": theme("colors.teal[600]"),
+                  "--tw-prose-bold": theme("colors.slate[800]"),
+                  "--tw-prose-bullets": theme("colors.slate[400]"),
+                  "--tw-prose-hr": theme("colors.slate[200]"),
+                  "--tw-prose-quotes": theme("colors.slate[800]"),
+                  "--tw-prose-quote-borders": theme("colors.teal[300]"),
+
+                  "--tw-prose-invert-body": theme("colors.slate[300]"),
+                  "--tw-prose-invert-headings": theme("colors.slate[100]"),
+                  "--tw-prose-invert-links": theme("colors.teal[400]"),
+                  "--tw-prose-invert-bold": theme("colors.slate[100]"),
+                  "--tw-prose-invert-bullets": theme("colors.slate[600]"),
+                  "--tw-prose-invert-hr": theme("colors.slate[700]"),
+                  "--tw-prose-invert-quotes": theme("colors.slate[100]"),
+                  "--tw-prose-invert-quote-borders": theme("colors.teal[700]"),
+                },
+              },
+            }),
+          },
+        },
       };
     </script>
-    <style>
-      body {
-        font-family: "Inter", system-ui, sans-serif;
-      }
-    </style>
   </head>
+
   <body
-    class="bg-gray-100 dark:bg-zinc-900 min-h-screen flex flex-col transition-colors duration-300"
+    class="font-sans bg-slate-50 text-slate-700 dark:bg-slate-900 dark:text-slate-300 min-h-screen flex flex-col transition-colors duration-300"
   >
     <div id="header-partial"></div>
-    <main
-      class="flex-1 w-full max-w-3xl mx-auto px-2 sm:px-4 pb-6 sm:pb-8 space-y-8 pt-28"
-    >
+
+    <main class="flex-1 w-full max-w-4xl mx-auto px-4 pb-10 pt-28">
       <section
         id="education"
-        class="rounded-xl bg-white dark:bg-zinc-800 shadow-sm border border-gray-200 dark:border-zinc-700 p-4 sm:p-8 transition-colors duration-300"
+        class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 sm:p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
       >
-        <div class="flex items-center gap-4 mb-2">
+        <div class="flex items-center gap-4 mb-6">
           <i
             data-lucide="graduation-cap"
-            class="w-6 h-6 text-indigo-600 dark:text-indigo-300"
+            class="w-8 h-8 text-teal-500 dark:text-teal-400"
           ></i>
-          <h2
-            class="text-lg sm:text-2xl font-bold text-indigo-600 dark:text-indigo-300"
+          <h1
+            class="text-2xl sm:text-3xl font-bold text-teal-600 dark:text-teal-400"
           >
             Education
-          </h2>
+          </h1>
         </div>
-        <div id="education-md" class="prose dark:prose-invert max-w-none"></div>
+
+        <div
+          id="education-md"
+          class="prose prose-custom dark:prose-invert max-w-none prose-a:transition-colors prose-a:duration-200 hover:prose-a:text-teal-700 dark:hover:prose-a:text-teal-300"
+        ></div>
       </section>
     </main>
+
     <div id="footer-partial"></div>
+
     <script src="scripts/partials.js"></script>
     <script>
       // Load and render education.md
       fetch("content/education.md")
-        .then((res) => res.text())
+        .then((res) => {
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+          return res.text();
+        })
         .then((md) => {
           document.getElementById("education-md").innerHTML = marked.parse(md);
-        });
+        })
+        .catch((err) =>
+          console.error(`Failed to load content/education.md:`, err)
+        );
+
+      // Re-render Lucide icons after content is loaded
+      // A brief timeout ensures the DOM is updated before this runs
+      setTimeout(() => {
+        lucide.createIcons();
+      }, 0);
     </script>
   </body>
 </html>
