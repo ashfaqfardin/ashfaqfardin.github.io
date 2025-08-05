@@ -34,3 +34,26 @@ body::before {
     radial-gradient(circle at bottom right, #164e63, transparent 50%);
   opacity: 1;
 }
+
+/* Add this to the end of styles/animations.css */
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.6); /* Teal-500 with opacity */
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(20, 184, 166, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(20, 184, 166, 0);
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2.5s infinite;
+}
+
+/* Add this to the end of your file */
+.bg-whatsapp {
+  background-color: #25d366;
+}
