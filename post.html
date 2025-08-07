@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog Post | Academic Profile</title>
+    <title>My Notes | Academic Profile</title>
     <link rel="stylesheet" href="styles/animations.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
@@ -42,7 +42,7 @@
 
     <main class="flex-1 w-full max-w-4xl mx-auto px-4 pb-10 pt-28">
       <a
-        href="blog.html"
+        href="notes.html"
         class="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-lg bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm text-teal-600 dark:text-teal-300 font-semibold border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
       >
         <i data-lucide="arrow-left" class="w-4 h-4"></i>
@@ -83,7 +83,7 @@
               postContent.innerHTML = marked.parse(md);
               const firstHeading = postContent.querySelector("h1, h2, h3");
               if (firstHeading) {
-                document.title = `${firstHeading.textContent} | Blog`;
+                document.title = `${firstHeading.textContent} | Notes`;
               }
             })
             .catch((err) => {

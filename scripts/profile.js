@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const blogList = document.getElementById("blog-list");
+  const blogList = document.getElementById("notes-list");
 
   /**
    * Fetches the list of posts from a JSON file and renders them as links.
@@ -44,6 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Set the inner content of the card
       cardLink.innerHTML = `
+        <img 
+          src="${post.thumbnail}" 
+          alt="${post.title}" 
+          class="w-full h-48 object-cover rounded-lg mb-4 opacity-100 mix-blend-multiply dark:mix-blend-luminosity transition-all duration-300 group-hover:opacity-100"
+        />
         <h3 class="font-bold text-lg text-teal-700 dark:text-teal-300">${post.title}</h3>
         <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">${post.date}</p>
         <p class="text-base text-slate-600 dark:text-slate-300 mt-3">${post.summary}</p>

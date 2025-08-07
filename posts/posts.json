@@ -1,8 +1,23 @@
 [
   {
-    "title": "Welcome to My Academic Blog",
-    "date": "2024-06-10",
-    "summary": "An introduction to my new academic blog, where I share research, ideas, and updates.",
-    "file": "sample-post.md"
+    "title": "Data Structure",
+    "thumbnail": "./posts/thumbnails/data-structure.jfif",
+    "date": "2025-08-01",
+    "summary": "My notes on Data Structures, a foundational concept in computer science about organizing and storing data efficiently for optimal access and modification.",
+    "file": "data-structure.md"
+  },
+  {
+    "title": "Object Oriented Programming",
+    "thumbnail": "./posts/thumbnails/object-oriented-programming.jfif",
+    "date": "2025-08-01",
+    "summary": "My notes on the Object-Oriented Programming (OOP) paradigm. This covers key principles like encapsulation, inheritance, and polymorphism with practical examples.",
+    "file": "object-oriented-programming.md"
+  },
+  {
+    "title": "Machine Learning (NLP)",
+    "thumbnail": "./posts/thumbnails/machine-learning-nlp.jfif",
+    "date": "2025-08-01",
+    "summary": "My notes on Natural Language Processing (NLP), a subfield of AI that enables computers to understand and process human language for tasks like sentiment analysis.",
+    "file": "machine-learning-nlp.md"
   }
 ]
