@@ -1,5 +1,3 @@
-# **Data Structure**
-
 ## **1. Introduction to Time & Space Complexity**
 
 In computer science, **time complexity** and **space complexity** are used to evaluate how efficient an algorithm is.

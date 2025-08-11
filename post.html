@@ -51,14 +51,19 @@
 
       <div
         id="post-card"
-        class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 sm:p-8"
+        class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-4 sm:p-8"
       >
         <div
           id="post-content"
-          class="prose prose-custom dark:prose-invert max-w-none"
+          class="prose prose-custom dark:prose-invert max-w-none mb-8 min-h-[250px] sm:min-h-[350px]"
         >
           <p>Loading post...</p>
         </div>
+
+        <div
+          id="pagination-controls"
+          class="flex items-center justify-between border-t border-slate-200 dark:border-slate-700 pt-6"
+        ></div>
       </div>
     </main>
 
@@ -67,9 +72,41 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const postContent = document.getElementById("post-content");
-
+        const paginationControls = document.getElementById(
+          "pagination-controls"
+        );
         const urlParams = new URLSearchParams(window.location.search);
         const postFile = urlParams.get("file");
+
+        let pages = [];
+        let currentPageIndex = 0;
+
+        const renderPage = (index) => {
+          if (!pages[index]) return;
+
+          postContent.innerHTML = marked.parse(pages[index]);
+
+          const pageIndicator = document.getElementById("page-indicator");
+          const prevButton = document.getElementById("prev-button");
+          const nextButton = document.getElementById("next-button");
+
+          if (pageIndicator) {
+            pageIndicator.textContent = `Page ${index + 1} of ${pages.length}`;
+          }
+          if (prevButton) {
+            prevButton.disabled = index === 0;
+            prevButton.classList.toggle("opacity-50", index === 0);
+          }
+          if (nextButton) {
+            nextButton.disabled = index === pages.length - 1;
+            nextButton.classList.toggle(
+              "opacity-50",
+              index === pages.length - 1
+            );
+          }
+
+          lucide.createIcons();
+        };
 
         if (postFile) {
           const filePath = `posts/${postFile}`;
@@ -80,11 +117,55 @@
               return res.text();
             })
             .then((md) => {
-              postContent.innerHTML = marked.parse(md);
-              const firstHeading = postContent.querySelector("h1, h2, h3");
+              pages = md
+                .trim()
+                .split(/^\s*---\s*$/m)
+                .filter((p) => p.trim());
+
+              if (pages.length === 0) {
+                postContent.innerHTML = `<p>No content found in this file to create pages.</p>`;
+                return;
+              }
+
+              const tempDiv = document.createElement("div");
+              tempDiv.innerHTML = marked.parse(md);
+              const firstHeading = tempDiv.querySelector("h1, h2, h3");
               if (firstHeading) {
                 document.title = `${firstHeading.textContent} | Notes`;
               }
+
+              // NEW: Responsive pagination controls HTML
+              paginationControls.innerHTML = `
+                <button id="prev-button" class="inline-flex items-center justify-center sm:justify-start gap-2 px-3 sm:px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 disabled:opacity-50 disabled:hover:bg-slate-200 dark:disabled:hover:bg-slate-700 transition-opacity">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Previous</span>
+                </button>
+                <span id="page-indicator" class="hidden sm:block text-sm font-semibold text-slate-500 dark:text-slate-400"></span>
+                <button id="next-button" class="inline-flex items-center justify-center sm:justify-start gap-2 px-3 sm:px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 disabled:opacity-50 disabled:hover:bg-slate-200 dark:disabled:hover:bg-slate-700 transition-opacity">
+                    <span class="hidden sm:inline">Next</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+              `;
+
+              document
+                .getElementById("prev-button")
+                .addEventListener("click", () => {
+                  if (currentPageIndex > 0) {
+                    currentPageIndex--;
+                    renderPage(currentPageIndex);
+                  }
+                });
+
+              document
+                .getElementById("next-button")
+                .addEventListener("click", () => {
+                  if (currentPageIndex < pages.length - 1) {
+                    currentPageIndex++;
+                    renderPage(currentPageIndex);
+                  }
+                });
+
+              renderPage(currentPageIndex);
             })
             .catch((err) => {
               postContent.innerHTML = `<p>Sorry, the requested post could not be found.</p>`;
@@ -93,9 +174,6 @@
         } else {
           postContent.innerHTML = `<p>No post specified.</p>`;
         }
-
-        // This will now render the icon in the new back button as well
-        setTimeout(() => lucide.createIcons(), 100);
       });
     </script>
   </body>
