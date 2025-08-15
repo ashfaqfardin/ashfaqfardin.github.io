@@ -1,6 +1,6 @@
 ## Center for Computational & Data Sciences (CCDS), IUB | Research Intern
 
-**12/2024 – Present**  
+**12/2024 – 07/2025**  
 Bashnudhara RA, Dhaka, Bangladesh
 
 - Currently exploring Agentic Systems.
