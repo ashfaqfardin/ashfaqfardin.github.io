@@ -93,15 +93,106 @@
         headerIds: false,
       });
 
-      // Load and render publications.md
+      // Load and render publications.md in custom sectioned format
       fetch("content/publications.md")
         .then((res) => {
           if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
           return res.text();
         })
         .then((md) => {
+          // Remove legacy reference definitions if present
+          md = md.replace(
+            /^\s*\[([^\]]+)\]:\s*(\S+)(?:\s+"([^"]+)")?\s*$/gm,
+            ""
+          );
+
+          // Split into publication entries by ---
+          const entries = md
+            .split(/\r?\n-{3,}\r?\n/)
+            .map((e) => e.trim())
+            .filter(Boolean);
+
+          // Parse each entry into fields
+          function parseEntry(entry) {
+            const fields = {};
+            let current = null;
+            entry.split(/\r?\n/).forEach((line) => {
+              const sec = line.match(/^\[(\w+)\]$/);
+              if (sec) {
+                current = sec[1].toLowerCase();
+                fields[current] = "";
+              } else if (current) {
+                if (fields[current]) fields[current] += "\n";
+                fields[current] += line.trim();
+              }
+            });
+            return fields;
+          }
+
+          // Render each publication
+          const rendered = entries
+            .map((entry) => {
+              const f = parseEntry(entry);
+              // Image
+              let imgHtml = "";
+              if (f.image) {
+                imgHtml = `<img src="${escapeHtml(f.image)}" alt="${escapeHtml(
+                  f.title || "Publication image"
+                )}" class="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 object-cover rounded-xl flex-shrink-0">`;
+              }
+              // Title
+              let titleHtml = f.title
+                ? `<div class="font-bold text-xl sm:text-2xl mb-2">${escapeHtml(
+                    f.title
+                  )}</div>`
+                : "";
+              // Abstract
+              let abstractHtml = f.abstract
+                ? `<div class="mb-2 text-base">${escapeHtml(f.abstract)}</div>`
+                : "";
+              // Author
+              let authorHtml = f.author
+                ? `<div class="mb-2 text-sm text-slate-600 dark:text-slate-400">${escapeHtml(
+                    f.author
+                  )}</div>`
+                : "";
+              // Code button
+              let codeHtml = "";
+              if (f.code && f.code.startsWith("http")) {
+                codeHtml = `<a href="${escapeHtml(
+                  f.code
+                )}" target="_blank" rel="noopener" class="inline-block mr-2 mb-1 px-4 py-1 rounded bg-teal-600 text-white font-semibold text-sm hover:bg-teal-700 transition align-middle"><i data-lucide="code" class="inline w-4 h-4 mr-1 -mt-0.5"></i>Code</a>`;
+              }
+              // Paper button
+              let paperHtml = "";
+              if (f.paper && f.paper.startsWith("http")) {
+                paperHtml = `<a href="${escapeHtml(
+                  f.paper
+                )}" target="_blank" rel="noopener" class="inline-block mb-1 px-4 py-1 rounded bg-slate-700 text-white font-semibold text-sm hover:bg-slate-800 transition align-middle"><i data-lucide="file-text" class="inline w-4 h-4 mr-1 -mt-0.5"></i>Paper</a>`;
+              }
+
+              return `
+              <div class="publication-item border-b border-slate-200 dark:border-slate-700 py-8">
+                  <div class="flex flex-row items-center gap-6 md:gap-8">
+                  ${imgHtml}
+                  <div class="flex-1 min-w-0 flex flex-col justify-center">
+                    ${titleHtml}
+                    ${
+                      abstractHtml
+                        ? `<div class='mb-1'>${abstractHtml}</div>`
+                        : ""
+                    }
+                    ${authorHtml ? `<div class='mb-2'>${authorHtml}</div>` : ""}
+                    <div class="mt-2 flex flex-row flex-wrap gap-2">${codeHtml}${paperHtml}</div>
+                  </div>
+                </div>
+              </div>
+            `;
+            })
+            .join("\n");
+
           document.getElementById("publications-md").innerHTML =
-            marked.parse(md);
+            rendered || `<p class="text-slate-500">No publications found.</p>`;
         })
         .catch((err) => {
           console.error(`Failed to load content/publications.md:`, err);
@@ -109,6 +200,19 @@
             "publications-md"
           ).innerHTML = `<p class="text-slate-500">Could not load publications.</p>`;
         });
+
+      // small helper to escape HTML in alt text
+      function escapeHtml(str) {
+        return String(str).replace(/[&<>"']/g, function (s) {
+          return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+          }[s];
+        });
+      }
 
       // Re-render Lucide icons after content is loaded
       setTimeout(() => {
