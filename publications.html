@@ -48,6 +48,20 @@
                 },
               },
             }),
+            keyframes: {
+              fadeIn: {
+                "0%": { opacity: "0", transform: "translateY(10px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+              fadeOut: {
+                "0%": { opacity: "1", transform: "translateY(0)" },
+                "100%": { opacity: "0", transform: "translateY(10px)" },
+              },
+            },
+            animation: {
+              fadeIn: "fadeIn 0.2s ease-out forwards",
+              fadeOut: "fadeOut 0.2s ease-out forwards",
+            },
           },
         },
       };
@@ -74,6 +88,20 @@
           >
             Publications
           </h1>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative mb-6">
+          <i
+            data-lucide="search"
+            class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"
+          ></i>
+          <input
+            type="text"
+            id="publication-search"
+            placeholder="Search publications by title, authors, or content..."
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20 dark:focus:ring-teal-400/20 focus:border-teal-500 dark:focus:border-teal-400 transition-all duration-200"
+          />
         </div>
 
         <div
@@ -112,6 +140,16 @@
             .map((e) => e.trim())
             .filter(Boolean);
 
+          // Parse entries and sort by year in descending order
+          const parsedEntries = entries
+            .map((entry) => {
+              const parsed = parseEntry(entry);
+              // Extract year as number for sorting
+              const year = parseInt(parsed.year) || 0;
+              return { ...parsed, numericYear: year };
+            })
+            .sort((a, b) => b.numericYear - a.numericYear);
+
           // Parse each entry into fields
           function parseEntry(entry) {
             const fields = {};
@@ -130,60 +168,99 @@
           }
 
           // Render each publication
-          const rendered = entries
-            .map((entry) => {
-              const f = parseEntry(entry);
-              // Image
-              let imgHtml = "";
-              if (f.image) {
-                imgHtml = `<img src="${escapeHtml(f.image)}" alt="${escapeHtml(
-                  f.title || "Publication image"
-                )}" class="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 object-cover rounded-xl flex-shrink-0">`;
-              }
-              // Title
+          const rendered = parsedEntries
+            .map((f) => {
+              // Label (e.g., "Vision")
+              let labelHtml = f.label
+                ? `<div class="mb-2"><span class="inline-block px-3 py-1 rounded-sm bg-teal-600 dark:bg-teal-700 text-white text-xs font-medium">${escapeHtml(
+                    f.label
+                  )}</span></div>`
+                : "";
+
+              // Image with background and border
+              let imgHtml = f.image
+                ? `<div class="bg-white dark:bg-slate-800 rounded w-32 h-32 flex items-center justify-center border border-slate-200 dark:border-slate-700"><img src="${escapeHtml(
+                    f.image
+                  )}" alt="${escapeHtml(
+                    f.title || "Publication image"
+                  )}" class="w-full h-full object-contain p-1 rounded"></div>`
+                : "";
+
+              // Title - same line as year
               let titleHtml = f.title
-                ? `<div class="font-bold text-xl sm:text-2xl mb-2">${escapeHtml(
+                ? `<div class="font-bold text-base text-slate-800 dark:text-white">${escapeHtml(
                     f.title
                   )}</div>`
                 : "";
-              // Abstract
-              let abstractHtml = f.abstract
-                ? `<div class="mb-2 text-base">${escapeHtml(f.abstract)}</div>`
-                : "";
-              // Author
-              let authorHtml = f.author
-                ? `<div class="mb-2 text-sm text-slate-600 dark:text-slate-400">${escapeHtml(
-                    f.author
+
+              // Year on same line as title
+              let yearHtml = f.year
+                ? `<div class="text-slate-600 dark:text-slate-400 ml-auto pl-4">${escapeHtml(
+                    f.year
                   )}</div>`
                 : "";
-              // Code button
-              let codeHtml = "";
-              if (f.code && f.code.startsWith("http")) {
-                codeHtml = `<a href="${escapeHtml(
-                  f.code
-                )}" target="_blank" rel="noopener" class="inline-block mr-2 mb-1 px-4 py-1 rounded bg-teal-600 text-white font-semibold text-sm hover:bg-teal-700 transition align-middle"><i data-lucide="code" class="inline w-4 h-4 mr-1 -mt-0.5"></i>Code</a>`;
-              }
-              // Paper button
-              let paperHtml = "";
-              if (f.paper && f.paper.startsWith("http")) {
-                paperHtml = `<a href="${escapeHtml(
-                  f.paper
-                )}" target="_blank" rel="noopener" class="inline-block mb-1 px-4 py-1 rounded bg-slate-700 text-white font-semibold text-sm hover:bg-slate-800 transition align-middle"><i data-lucide="file-text" class="inline w-4 h-4 mr-1 -mt-0.5"></i>Paper</a>`;
+
+              // Authors - with link styling
+              let authorHtml = f.author
+                ? `<div class="text-sm mt-1 mb-2"><span class="text-slate-600 dark:text-slate-300">${f.author
+                    .split(",")
+                    .map((author) =>
+                      author.includes("Mohammad Ashfaq")
+                        ? `<a href="#" class="text-teal-600 dark:text-teal-400 hover:underline">${author.trim()}</a>`
+                        : author
+                    )
+                    .join(", ")}</span></div>`
+                : "";
+
+              // Extract URLs from markdown-style links [text](url)
+              function extractUrl(text) {
+                const match = text.match(/\[([^\]]+)\]\(([^)]+)\)/);
+                return match ? match[2] : text;
               }
 
+              // Buttons with icons
+              let codeHtml = f.code
+                ? `<a href="${escapeHtml(
+                    extractUrl(f.code)
+                  )}" target="_blank" rel="noopener" 
+                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-300 dark:border-slate-600 
+                    text-slate-700 dark:text-slate-300 text-xs font-medium hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                    <i data-lucide="code-2" class="w-3.5 h-3.5"></i>Code</a>`
+                : "";
+
+              let paperHtml = f.paper
+                ? `<a href="${escapeHtml(
+                    extractUrl(f.paper)
+                  )}" target="_blank" rel="noopener" 
+                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-300 dark:border-slate-600 
+                    text-slate-700 dark:text-slate-300 text-xs font-medium hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                    <i data-lucide="file-text" class="w-3.5 h-3.5"></i>Paper</a>`
+                : "";
+
+              let bibHtml = f.bib
+                ? `<button onclick="copyBibTeX(this, \`${escapeHtml(
+                    f.bib
+                  )}\`)" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-300 dark:border-slate-600 
+                text-slate-700 dark:text-slate-300 text-xs font-medium hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                <i data-lucide="quote" class="w-3.5 h-3.5"></i>BIB</button>`
+                : ``;
+
               return `
-              <div class="publication-item border-b border-slate-200 dark:border-slate-700 py-8">
-                  <div class="flex flex-row items-center gap-6 md:gap-8">
-                  ${imgHtml}
-                  <div class="flex-1 min-w-0 flex flex-col justify-center">
-                    ${titleHtml}
-                    ${
-                      abstractHtml
-                        ? `<div class='mb-1'>${abstractHtml}</div>`
-                        : ""
-                    }
-                    ${authorHtml ? `<div class='mb-2'>${authorHtml}</div>` : ""}
-                    <div class="mt-2 flex flex-row flex-wrap gap-2">${codeHtml}${paperHtml}</div>
+              <div class="publication-item border-b border-slate-200 dark:border-slate-700 py-6">
+                <div class="flex flex-row gap-6">
+                  <div class="flex flex-col items-start min-w-[8rem]">
+                    ${labelHtml}
+                    ${imgHtml}
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex flex-row items-center justify-between">
+                      ${titleHtml}
+                      ${yearHtml}
+                    </div>
+                    ${authorHtml}
+                    <div class="flex flex-row flex-wrap gap-2">
+                      ${codeHtml}${paperHtml}${bibHtml}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -193,6 +270,9 @@
 
           document.getElementById("publications-md").innerHTML =
             rendered || `<p class="text-slate-500">No publications found.</p>`;
+
+          // Re-initialize Lucide icons for the newly added buttons
+          lucide.createIcons();
         })
         .catch((err) => {
           console.error(`Failed to load content/publications.md:`, err);
@@ -218,6 +298,97 @@
       setTimeout(() => {
         lucide.createIcons();
       }, 0);
+
+      // Function to copy BibTeX citation to clipboard
+      function copyBibTeX(button, bibText) {
+        navigator.clipboard
+          .writeText(bibText)
+          .then(() => {
+            // Store original content
+            const originalContent = button.innerHTML;
+            // Show copied state
+            button.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5"></i>Copied!`;
+            // Reinitialize icon
+            lucide.createIcons();
+            // Reset after 2 seconds
+            setTimeout(() => {
+              button.innerHTML = originalContent;
+              lucide.createIcons();
+            }, 2000);
+          })
+          .catch((err) => {
+            console.error("Failed to copy text: ", err);
+          });
+      }
+
+      // Handle publication search
+      let allPublications = []; // Store all publication elements
+      const searchInput = document.getElementById("publication-search");
+
+      // Function to initialize search functionality after content is loaded
+      function initializeSearch() {
+        // Store all publication items
+        allPublications = Array.from(
+          document.getElementsByClassName("publication-item")
+        );
+
+        // Add search event listener
+        searchInput.addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase();
+
+          allPublications.forEach((pub) => {
+            const content = pub.textContent.toLowerCase();
+            const isVisible = content.includes(searchTerm);
+            pub.style.display = isVisible ? "block" : "none";
+
+            // Add/remove animation classes
+            if (isVisible) {
+              pub.classList.add("animate-fadeIn");
+              pub.classList.remove("animate-fadeOut");
+            } else {
+              pub.classList.add("animate-fadeOut");
+              pub.classList.remove("animate-fadeIn");
+            }
+          });
+
+          // Show "no results" message if no publications are visible
+          const hasVisiblePublications = allPublications.some(
+            (pub) => pub.style.display !== "none"
+          );
+          const noResultsMsg = document.getElementById("no-results-message");
+
+          if (!hasVisiblePublications) {
+            if (!noResultsMsg) {
+              const msg = document.createElement("div");
+              msg.id = "no-results-message";
+              msg.className = "text-slate-500 text-center py-8 animate-fadeIn";
+              msg.innerHTML = "No publications found matching your search.";
+              document.getElementById("publications-md").appendChild(msg);
+            }
+          } else if (noResultsMsg) {
+            noResultsMsg.remove();
+          }
+        });
+      }
+
+      // Call initializeSearch after content is loaded
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.addedNodes.length) {
+            if (
+              document.getElementsByClassName("publication-item").length > 0
+            ) {
+              initializeSearch();
+              observer.disconnect();
+            }
+          }
+        });
+      });
+
+      observer.observe(document.getElementById("publications-md"), {
+        childList: true,
+        subtree: true,
+      });
     </script>
   </body>
 </html>

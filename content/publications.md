@@ -1,15 +1,21 @@
 [Title]
 Fruit Quality Detection and Monitoring System
 [Image]
-posts/Images/fruit-quality.png
-[Abstract]
-This paper presents a system for detecting and monitoring fruit quality using computer vision and sensor data to ensure optimal freshness and reduce waste.
+posts/publications/fruitquality.png
 [Author]
 MMK Sohag, Mohammad Ashfaq Ur Rahman, MI Shochcho, MR Mahmud, DM Shams, et al.
 [Code]
-[https://github.com/example/fruit-quality-system](https://github.com/example/fruit-quality-system)
 [Paper]
-[https://ieeexplore.ieee.org/document/10300000](https://ieeexplore.ieee.org/document/10300000)
+[https://ieeexplore.ieee.org/abstract/document/10237165/](https://ieeexplore.ieee.org/abstract/document/10237165/)
+[BIB]
+@inproceedings{sohag2023fruit,
+title={Fruit Quality Detection and Monitoring System},
+author={Sohag, Md Maruf Kamran and Rahman, Mohammad Ashfaq Ur and Shochcho, Muhtasim Ibteda and Mahmud, Md Ridwan and Shams, Daiyan Mohammad and Samiha, Mysha and Uddin, Mohammad Rejwan and Hasan, Mahady},
+booktitle={2023 IEEE 13th International Conference on Control System, Computing and Engineering (ICCSCE)},
+pages={111--114},
+year={2023},
+organization={IEEE}
+}
 [Venue]
 2023 IEEE 13th International Conference on Control System, Computing and Engineering (ICCSCE)
 [Year]
@@ -20,17 +26,44 @@ MMK Sohag, Mohammad Ashfaq Ur Rahman, MI Shochcho, MR Mahmud, DM Shams, et al.
 [Title]
 BD at BEA 2025 Shared Task: MPNet Ensembles for Pedagogical Mistake Identification and Localization in AI Tutor Responses
 [Image]
-posts/Images/bea2025.png
-[Abstract]
-This paper describes the BD team's approach to the BEA 2025 Shared Task using MPNet ensembles for identifying and localizing pedagogical mistakes in AI tutor responses.
+posts/publications/bdatbea.png
 [Author]
 S Rohan, IS Apan, MI Shochcho, M Fahim, Mohammad Ashfaq Ur Rahman, AKM Rahman, et al.
 [Code]
-[https://github.com/example/bea2025-mpnet](https://github.com/example/bea2025-mpnet)
 [Paper]
-[https://arxiv.org/abs/2506.01817](https://arxiv.org/abs/2506.01817)
+[https://aclanthology.org/2025.bea-1.102/](https://aclanthology.org/2025.bea-1.102/)
+[BIB]
+@inproceedings{rohan-etal-2025-bd,
+title = "{BD} at {BEA} 2025 Shared Task: {MPN}et Ensembles for Pedagogical Mistake Identification and Localization in {AI} Tutor Responses",
+author = "Rohan, Shadman and
+Sur Apan, Ishita and
+Shochcho, Muhtasim Ibteda and
+Fahim, Md and
+Rahman, Mohammad Ashfaq Ur and
+Rahman, AKM Mahbubur and
+Ali, Amin Ahsan",
+editor = {Kochmar, Ekaterina and
+Alhafni, Bashar and
+Bexte, Marie and
+Burstein, Jill and
+Horbach, Andrea and
+Laarmann-Quante, Ronja and
+Tack, Ana{\"i}s and
+Yaneva, Victoria and
+Yuan, Zheng},
+booktitle = "Proceedings of the 20th Workshop on Innovative Use of NLP for Building Educational Applications (BEA 2025)",
+month = jul,
+year = "2025",
+address = "Vienna, Austria",
+publisher = "Association for Computational Linguistics",
+url = "https://aclanthology.org/2025.bea-1.102/",
+doi = "10.18653/v1/2025.bea-1.102",
+pages = "1266--1277",
+ISBN = "979-8-89176-270-1",
+abstract = "We present Team BD{'}s submission to the BEA 2025 Shared Task on Pedagogical Ability Assessment of AI-powered Tutors, under Track 1 (Mistake Identification) and Track 2 (Mistake Location). Both tracks involve three-class classification of tutor responses in educational dialogues {--} determining if a tutor correctly recognizes a student{'}s mistake (Track 1) and whether the tutor pinpoints the mistake{'}s location (Track 2). Our system is built on MPNet, a Transformer-based language modelthat combines BERT and XLNet{'}s pre-training advantages. We fine-tuned MPNet on the task data using a class-weighted cross-entropy loss to handle class imbalance, and leveraged grouped cross-validation (10 folds) to maximize the use of limited data while avoiding dialogue overlap between training and validation. We then performed a hard-voting ensemble of the best models from each fold, which improves robustness and generalization by combining multiple classifiers. Ourapproach achieved strong results on both tracks, with exact-match macro-F1 scores of approximately 0.7110 for Mistake Identification and 0.5543 for Mistake Location on the official test set. We include comprehensive analysis of our system{'}s performance, including confusion matrices and t-SNE visualizations to interpret classifier behavior, as well as a taxonomy of common errors with examples. We hope our ensemble-based approach and findings provide useful insights for designing reliable tutor response evaluation systems in educational dialogue settings."
+}
 [Venue]
-arXiv preprint
+Proceedings of the 20th Workshop on Innovative Use of NLP for Building Educational Applications (BEA 2025)
 [Year]
 2025
 
@@ -39,17 +72,22 @@ arXiv preprint
 [Title]
 Improving User Engagement and Learning Outcomes in LLM-Based Python Tutor: A Study of PACE
 [Image]
-posts/Images/big-o-notation.png
-[Abstract]
-This paper explores how LLM-based Python tutors can improve user engagement and learning outcomes, presenting the PACE system and its evaluation.
+posts/publications/chiea.png
 [Author]
 Muhtasim Ibteda Shochcho, Mohammad Ashfaq Ur Rahman, Shadman Rohan, Ashraful Islam, Hasnain Heickal, AKM Mahbubur Rahman, M. Ashraful Amin, Amin Ahsan Ali
 [Code]
-[https://github.com/example/pace-tutor](https://github.com/example/pace-tutor)
 [Paper]
-[https://doi.org/10.1145/3706599.3720240](https://doi.org/10.1145/3706599.3720240)
+[https://dl.acm.org/doi/abs/10.1145/3706599.3720240](https://dl.acm.org/doi/abs/10.1145/3706599.3720240)
+[BIB]
+@inproceedings{shochcho2025improving,
+title={Improving User Engagement and Learning Outcomes in LLM-Based Python Tutor: A Study of PACE},
+author={Shochcho, Muhtasim Ibteda and Rahman, Mohammad Ashfaq Ur and Rohan, Shadman and Islam, Ashraful and Heickal, Hasnain and Rahman, AKM Mahbubur and Amin, M Ashraful and Ali, Amin Ahsan},
+booktitle={Proceedings of the Extended Abstracts of the CHI Conference on Human Factors in Computing Systems},
+pages={1--12},
+year={2025}
+}
 [Venue]
-Proceedings of the Extended Abstracts of the CHI Conference on Human Factors in Computing Systems (CHI EA)
+Proceedings of the Extended Abstracts of the CHI Conference on Human Factors in Computing Systems
 [Year]
 2025
 
@@ -58,15 +96,11 @@ Proceedings of the Extended Abstracts of the CHI Conference on Human Factors in 
 [Title]
 PACE: Python AI Companion for Enhanced Engagement
 [Image]
-posts/Images/pace.png
-[Abstract]
-PACE is an intelligent Python learning assistant that enhances student engagement through adaptive feedback and interactive exercises powered by LLMs.
+posts/publications/pace.png
 [Author]
 Muhtasim Ibteda Shochcho, Mohammad Ashfaq Ur Rahman
-[Code]
-[https://github.com/example/pace](https://github.com/example/pace)
 [Paper]
-[https://iub.edu.bd/pace](https://iub.edu.bd/pace)
+[https://ar.iub.edu.bd/handle/11348/993](https://ar.iub.edu.bd/handle/11348/993)
 [Venue]
 Independent University, Bangladesh
 [Year]
