@@ -76,7 +76,7 @@
     <main class="flex-1 w-full max-w-4xl mx-auto px-4 pb-10 pt-28">
       <section
         id="publications"
-        class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 sm:p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+        class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-4 sm:p-6 md:p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
       >
         <div class="flex items-center gap-4 mb-6">
           <i
@@ -99,9 +99,14 @@
           <input
             type="text"
             id="publication-search"
-            placeholder="Search publications by title, authors, or content..."
+            placeholder="Search publications..."
             class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20 dark:focus:ring-teal-400/20 focus:border-teal-500 dark:focus:border-teal-400 transition-all duration-200"
           />
+          <div
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-slate-400 dark:text-slate-500 hidden sm:block"
+          >
+            Search by title, authors, or content
+          </div>
         </div>
 
         <div
@@ -179,7 +184,7 @@
 
               // Image with background and border
               let imgHtml = f.image
-                ? `<div class="bg-white dark:bg-slate-800 rounded w-32 h-32 flex items-center justify-center border border-slate-200 dark:border-slate-700"><img src="${escapeHtml(
+                ? `<div class="bg-white dark:bg-slate-800 rounded w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center border border-slate-200 dark:border-slate-700"><img src="${escapeHtml(
                     f.image
                   )}" alt="${escapeHtml(
                     f.title || "Publication image"
@@ -247,18 +252,20 @@
 
               return `
               <div class="publication-item border-b border-slate-200 dark:border-slate-700 py-6">
-                <div class="flex flex-row gap-6">
-                  <div class="flex flex-col items-start min-w-[8rem]">
+                <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                  <div class="flex flex-row sm:flex-col items-center sm:items-start">
                     ${labelHtml}
-                    ${imgHtml}
+                    <div class="flex-shrink-0">
+                      ${imgHtml}
+                    </div>
                   </div>
-                  <div class="flex-1 min-w-0">
-                    <div class="flex flex-row items-center justify-between">
+                  <div class="flex-1 min-w-0 mt-4 sm:mt-0">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
                       ${titleHtml}
                       ${yearHtml}
                     </div>
                     ${authorHtml}
-                    <div class="flex flex-row flex-wrap gap-2">
+                    <div class="flex flex-row flex-wrap gap-2 mt-3">
                       ${codeHtml}${paperHtml}${bibHtml}
                     </div>
                   </div>
