@@ -13,3 +13,6 @@ A hands-on session on deep learning code management using PyTorch, organized by 
 ## Quiz Application | [GitHub](#)
 
 A Flutter-based mobile quiz app featuring a multiple-choice format, smooth navigation, and a responsive UI for both Android and iOS. Built with Dart and Flutter.
+
+## Flutter Vocabulary Application | [GitHub](#)
+Ongoing
