@@ -205,6 +205,13 @@
                   )}</div>`
                 : "";
 
+              // Venue (conference/journal)
+              let venueHtml = f.venue
+                ? `<div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-1">${escapeHtml(
+                    f.venue
+                  )}</div>`
+                : "";
+
               // Authors - with link styling
               let authorHtml = f.author
                 ? `<div class="text-sm mt-1 mb-2"><span class="text-slate-600 dark:text-slate-300">${f.author
@@ -264,6 +271,7 @@
                       ${titleHtml}
                       ${yearHtml}
                     </div>
+                    ${venueHtml}
                     ${authorHtml}
                     <div class="flex flex-row flex-wrap gap-2 mt-3">
                       ${codeHtml}${paperHtml}${bibHtml}
