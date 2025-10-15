@@ -57,10 +57,30 @@
                 "0%": { opacity: "1", transform: "translateY(0)" },
                 "100%": { opacity: "0", transform: "translateY(10px)" },
               },
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-5px)" },
+              },
+              glow: {
+                "0%, 100%": { boxShadow: "0 0 0 rgba(45, 212, 191, 0)" },
+                "50%": { boxShadow: "0 0 15px rgba(45, 212, 191, 0.3)" },
+              },
+              scale: {
+                "0%": { transform: "scale(0.95)" },
+                "100%": { transform: "scale(1)" },
+              },
+              slideIn: {
+                "0%": { transform: "translateX(-20px)", opacity: "0" },
+                "100%": { transform: "translateX(0)", opacity: "1" },
+              },
             },
             animation: {
               fadeIn: "fadeIn 0.2s ease-out forwards",
               fadeOut: "fadeOut 0.2s ease-out forwards",
+              float: "float 3s ease-in-out infinite",
+              glow: "glow 3s ease-in-out infinite",
+              scale: "scale 0.2s ease-out forwards",
+              slideIn: "slideIn 0.3s ease-out forwards",
             },
           },
         },
@@ -91,19 +111,19 @@
         </div>
 
         <!-- Search Bar -->
-        <div class="relative mb-6">
+        <div class="relative mb-6 group">
           <i
             data-lucide="search"
-            class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"
+            class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 group-focus-within:text-teal-500 dark:group-focus-within:text-teal-400 transition-colors duration-200"
           ></i>
           <input
             type="text"
             id="publication-search"
             placeholder="Search publications..."
-            class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20 dark:focus:ring-teal-400/20 focus:border-teal-500 dark:focus:border-teal-400 transition-all duration-200"
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20 dark:focus:ring-teal-400/20 focus:border-teal-500 dark:focus:border-teal-400 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-white/70 dark:hover:bg-slate-800/70 transition-all duration-200 ease-out scale-100 focus:scale-[1.01]"
           />
           <div
-            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-slate-400 dark:text-slate-500 hidden sm:block"
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-slate-400 dark:text-slate-500 hidden sm:block opacity-0 group-focus-within:opacity-100 transition-opacity duration-200 delay-200"
           >
             Search by title, authors, or content
           </div>
@@ -231,12 +251,20 @@
               }
 
               // Buttons with icons
+              const buttonBaseClass = `
+                inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-300 dark:border-slate-600 
+                text-slate-700 dark:text-slate-300 text-xs font-medium 
+                hover:border-teal-500 dark:hover:border-teal-400
+                hover:text-teal-600 dark:hover:text-teal-400
+                hover:scale-105 active:scale-95
+                transition-all duration-200 ease-out
+              `;
+
               let codeHtml = f.code
                 ? `<a href="${escapeHtml(
                     extractUrl(f.code)
                   )}" target="_blank" rel="noopener" 
-                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-300 dark:border-slate-600 
-                    text-slate-700 dark:text-slate-300 text-xs font-medium hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                    class="${buttonBaseClass}">
                     <i data-lucide="code-2" class="w-3.5 h-3.5"></i>Code</a>`
                 : "";
 
@@ -244,36 +272,34 @@
                 ? `<a href="${escapeHtml(
                     extractUrl(f.paper)
                   )}" target="_blank" rel="noopener" 
-                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-300 dark:border-slate-600 
-                    text-slate-700 dark:text-slate-300 text-xs font-medium hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                    class="${buttonBaseClass}">
                     <i data-lucide="file-text" class="w-3.5 h-3.5"></i>Paper</a>`
                 : "";
 
               let bibHtml = f.bib
                 ? `<button onclick="copyBibTeX(this, \`${escapeHtml(
                     f.bib
-                  )}\`)" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-300 dark:border-slate-600 
-                text-slate-700 dark:text-slate-300 text-xs font-medium hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                  )}\`)" class="${buttonBaseClass}">
                 <i data-lucide="quote" class="w-3.5 h-3.5"></i>BIB</button>`
                 : ``;
 
               return `
-              <div class="publication-item border-b border-slate-200 dark:border-slate-700 py-6">
-                <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
+              <div class="publication-item border-b border-slate-200 dark:border-slate-700 py-6 opacity-0 animate-slideIn hover:bg-white/30 dark:hover:bg-slate-800/30 transition-colors duration-300 rounded-lg -mx-2 px-2">
+                <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 group">
                   <div class="flex flex-row sm:flex-col items-center sm:items-start">
                     ${labelHtml}
-                    <div class="flex-shrink-0">
+                    <div class="flex-shrink-0 transition-transform duration-500 hover:scale-105 group-hover:animate-float">
                       ${imgHtml}
                     </div>
                   </div>
                   <div class="flex-1 min-w-0 mt-4 sm:mt-0">
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 group-hover:animate-glow">
                       ${titleHtml}
                       ${yearHtml}
                     </div>
                     ${venueHtml}
                     ${authorHtml}
-                    <div class="flex flex-row flex-wrap gap-2 mt-3">
+                    <div class="flex flex-row flex-wrap gap-2 mt-3 opacity-90 group-hover:opacity-100 transition-opacity duration-300">
                       ${codeHtml}${paperHtml}${bibHtml}
                     </div>
                   </div>
