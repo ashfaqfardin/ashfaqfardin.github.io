@@ -48,6 +48,20 @@
                 },
               },
             }),
+            keyframes: {
+              slideUp: {
+                "0%": { transform: "translateY(10px)", opacity: "0" },
+                "100%": { transform: "translateY(0)", opacity: "1" },
+              },
+              fadeIn: {
+                "0%": { opacity: "0" },
+                "100%": { opacity: "1" },
+              },
+            },
+            animation: {
+              slideUp: "slideUp 0.5s ease-out forwards",
+              fadeIn: "fadeIn 0.5s ease-out forwards",
+            },
           },
         },
       };
@@ -137,6 +151,36 @@
           </p>
         </section>
 
+        <section
+          id="selected-publications"
+          class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 flex flex-col gap-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+        >
+          <div class="flex items-center gap-3">
+            <i
+              data-lucide="book-open-check"
+              class="w-6 h-6 text-teal-500 dark:text-teal-400"
+            ></i>
+            <h2 class="text-xl font-bold text-teal-600 dark:text-teal-300">
+              Selected Publications
+            </h2>
+          </div>
+
+          <div id="selected-publications-container"></div>
+
+          <div
+            class="flex justify-center mt-2 animate-fadeIn opacity-0"
+            style="animation-delay: 600ms"
+          >
+            <a
+              href="publications.html"
+              class="inline-flex items-center gap-2 text-sm text-teal-600 dark:text-teal-400 hover:underline"
+            >
+              View all publications
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </section>
+
         <div id="dynamic-content-container" class="flex flex-col gap-8"></div>
       </div>
     </main>
@@ -145,6 +189,204 @@
 
     <script src="scripts/partials.js"></script>
     <script>
+      // Function to parse publications markdown (adapted from publications.html)
+      function escapeHtml(str) {
+        return String(str).replace(/[&<>"']/g, function (s) {
+          return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+          }[s];
+        });
+      }
+
+      const parsePublications = (md) => {
+        // Remove legacy reference definitions if present
+        md = md.replace(/^\s*\[([^\]]+)\]:\s*(\S+)(?:\s+"([^"]+)")?\s*$/gm, "");
+
+        // Split into publication entries
+        const entries = md
+          .split(/\r?\n-{3,}\r?\n/)
+          .map((e) => e.trim())
+          .filter(Boolean);
+
+        // Parse entries and sort by year
+        const parsedEntries = entries
+          .map((entry) => {
+            const fields = {};
+            let current = null;
+
+            entry.split(/\r?\n/).forEach((line) => {
+              const sec = line.match(/^\[(\w+)\]$/);
+              if (sec) {
+                current = sec[1].toLowerCase();
+                fields[current] = "";
+              } else if (current) {
+                if (fields[current]) fields[current] += "\n";
+                fields[current] += line.trim();
+              }
+            });
+
+            // Extract URLs from markdown-style links [text](url)
+            if (fields.paper) {
+              const match = fields.paper.match(/\[([^\]]+)\]\(([^)]+)\)/);
+              if (match) fields.paper = match[2];
+            }
+            if (fields.code) {
+              const match = fields.code.match(/\[([^\]]+)\]\(([^)]+)\)/);
+              if (match) fields.code = match[2];
+            }
+
+            return {
+              ...fields,
+              numericYear: parseInt(fields.year) || 0,
+            };
+          })
+          .sort((a, b) => b.numericYear - a.numericYear);
+
+        return parsedEntries;
+      };
+
+      // Function to copy BibTeX citation to clipboard
+      function copyBibTeX(button, bibText) {
+        navigator.clipboard
+          .writeText(bibText)
+          .then(() => {
+            // Store original content
+            const originalContent = button.innerHTML;
+            // Show copied state
+            button.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5"></i>Copied!`;
+            // Reinitialize icon
+            lucide.createIcons();
+            // Reset after 2 seconds
+            setTimeout(() => {
+              button.innerHTML = originalContent;
+              lucide.createIcons();
+            }, 2000);
+          })
+          .catch((err) => {
+            console.error("Failed to copy text: ", err);
+          });
+      }
+
+      // Function to create publication card
+      const createPublicationCard = (pub, delay) => {
+        // Render author with highlighted name
+        const authorHtml = pub.author
+          ? `
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            ${pub.author
+              .split(",")
+              .map((author) =>
+                author.includes("Mohammad Ashfaq")
+                  ? `<span class="text-teal-600 dark:text-teal-400">${escapeHtml(
+                      author.trim()
+                    )}</span>`
+                  : escapeHtml(author.trim())
+              )
+              .join(", ")}
+          </p>
+        `
+          : "";
+
+        // Button base class from publications.html
+        const buttonBaseClass = `
+          inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-300 dark:border-slate-600 
+          text-slate-700 dark:text-slate-300 text-xs font-medium 
+          hover:border-teal-500 dark:hover:border-teal-400
+          hover:text-teal-600 dark:hover:text-teal-400
+          hover:scale-105 active:scale-95
+          transition-all duration-200 ease-out
+        `;
+
+        return `
+          <div class="flex flex-col sm:flex-row gap-4 p-3 rounded-lg hover:bg-white/50 dark:hover:bg-slate-700/50 transition-colors duration-300 group animate-slideUp opacity-0" style="animation-delay: ${delay}ms">
+            <div class="w-24 h-24 flex-shrink-0 bg-white dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700 p-2 group-hover:scale-105 transition-transform duration-300">
+              <img src="${escapeHtml(pub.image || "")}" alt="${escapeHtml(
+          pub.title
+        )}" class="w-full h-full object-contain rounded" 
+                   onerror="this.onerror=null; this.src='assets/images/publication-placeholder.png';" />
+            </div>
+            <div class="flex-1">
+              <h3 class="font-semibold text-slate-800 dark:text-slate-200">${escapeHtml(
+                pub.title
+              )}</h3>
+              ${authorHtml}
+              <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">${escapeHtml(
+                pub.venue
+              )}${pub.year ? ` (${escapeHtml(pub.year)})` : ""}</p>
+              <div class="flex flex-wrap gap-2 mt-3 opacity-90 group-hover:opacity-100 transition-opacity duration-300">
+                ${
+                  pub.code
+                    ? `
+                  <a href="${escapeHtml(
+                    pub.code
+                  )}" target="_blank" rel="noopener" class="${buttonBaseClass}">
+                    <i data-lucide="code-2" class="w-3.5 h-3.5"></i>Code
+                  </a>
+                `
+                    : ""
+                }
+                ${
+                  pub.paper
+                    ? `
+                  <a href="${escapeHtml(
+                    pub.paper
+                  )}" target="_blank" rel="noopener" class="${buttonBaseClass}">
+                    <i data-lucide="file-text" class="w-3.5 h-3.5"></i>Paper
+                  </a>
+                `
+                    : ""
+                }
+                ${
+                  pub.bib
+                    ? `
+                  <button onclick="copyBibTeX(this, \`${escapeHtml(
+                    pub.bib
+                  )}\`)" class="${buttonBaseClass}">
+                    <i data-lucide="quote" class="w-3.5 h-3.5"></i>BIB
+                  </button>
+                `
+                    : ""
+                }
+              </div>
+            </div>
+          </div>
+        `;
+      };
+
+      // Load publications
+      fetch("content/publications.md")
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to load publications");
+          return res.text();
+        })
+        .then((md) => {
+          const publications = parsePublications(md);
+          const latestTwo = publications.slice(0, 2);
+
+          if (latestTwo.length === 0) {
+            throw new Error("No publications found");
+          }
+
+          const container = document.getElementById(
+            "selected-publications-container"
+          );
+          container.innerHTML = latestTwo
+            .map((pub, index) => createPublicationCard(pub, (index + 1) * 200))
+            .join("");
+
+          // Re-initialize Lucide icons for the new content
+          lucide.createIcons();
+        })
+        .catch((err) => {
+          console.error("Failed to load publications:", err);
+          document.getElementById("selected-publications-container").innerHTML =
+            '<p class="text-sm text-slate-500 dark:text-slate-400">Failed to load publications. Please try again later.</p>';
+        });
+
       // Function to create a section card
       const createSectionCard = (id, icon, title) => {
         const section = document.createElement("section");
