@@ -93,43 +93,43 @@
   >
     <div id="header-partial"></div>
 
-    <main class="flex-1 w-full max-w-4xl mx-auto px-4 pb-10 pt-28">
+    <main class="flex-1 w-full max-w-4xl mx-auto px-3 sm:px-4 pb-6 sm:pb-10 pt-24 sm:pt-28">
       <section
         id="publications"
-        class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-xl shadow-lg border border-slate-200/50 dark:border-slate-700/50 p-4 sm:p-6 md:p-8 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 hover:border-teal-500/20 dark:hover:border-teal-400/20"
+        class="rounded-xl sm:rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-xl shadow-lg border border-slate-200/50 dark:border-slate-700/50 p-3 sm:p-6 md:p-8 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 hover:border-teal-500/20 dark:hover:border-teal-400/20"
       >
-        <div class="flex items-center gap-4 mb-6 group">
+        <div class="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 group">
           <div class="relative">
             <i
               data-lucide="book-open-check"
-              class="w-8 h-8 text-teal-500 dark:text-teal-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+              class="w-7 h-7 sm:w-8 sm:h-8 text-teal-500 dark:text-teal-400 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
             ></i>
             <div
               class="absolute inset-0 bg-teal-500/20 dark:bg-teal-400/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100"
             ></div>
           </div>
           <h1
-            class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-teal-600 to-teal-500 dark:from-teal-400 dark:to-teal-300 bg-clip-text text-transparent group-hover:scale-[1.02] transition-transform duration-300"
+            class="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-teal-600 to-teal-500 dark:from-teal-400 dark:to-teal-300 bg-clip-text text-transparent group-hover:scale-[1.02] transition-transform duration-300"
           >
             Publications
           </h1>
         </div>
 
         <!-- Search Bar -->
-        <div class="relative mb-8 group">
+        <div class="relative mb-6 sm:mb-8 group">
           <div
-            class="absolute -inset-1 bg-gradient-to-r from-teal-500/20 to-slate-500/20 dark:from-teal-400/20 dark:to-slate-400/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500"
+            class="absolute -inset-1 bg-gradient-to-r from-teal-500/20 to-slate-500/20 dark:from-teal-400/20 dark:to-slate-400/20 rounded-lg sm:rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500"
           ></div>
           <div class="relative">
             <i
               data-lucide="search"
-              class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 group-focus-within:text-teal-500 dark:group-focus-within:text-teal-400 transition-all duration-300 group-focus-within:scale-110"
+              class="w-4 h-4 sm:w-5 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 group-focus-within:text-teal-500 dark:group-focus-within:text-teal-400 transition-all duration-300 group-focus-within:scale-110"
             ></i>
             <input
               type="text"
               id="publication-search"
               placeholder="Search publications..."
-              class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200/50 dark:border-slate-700/50 bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30 dark:focus:ring-teal-400/30 focus:border-teal-500/50 dark:focus:border-teal-400/50 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 ease-out scale-100 focus:scale-[1.01] shadow-sm hover:shadow-md"
+              class="w-full pl-8 sm:pl-10 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border border-slate-200/50 dark:border-slate-700/50 bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30 dark:focus:ring-teal-400/30 focus:border-teal-500/50 dark:focus:border-teal-400/50 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 ease-out scale-100 focus:scale-[1.01] shadow-sm hover:shadow-md"
             />
             <div
               class="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-slate-400 dark:text-slate-500 hidden sm:block opacity-0 group-focus-within:opacity-100 transition-all duration-300 delay-200 group-focus-within:translate-x-0 translate-x-2"
@@ -211,18 +211,18 @@
             .map((f) => {
               // Label (e.g., "Vision")
               let labelHtml = f.label
-                ? `<div class="mb-2"><span class="inline-block px-3 py-1 rounded-sm bg-teal-600 dark:bg-teal-700 text-white text-xs font-medium">${escapeHtml(
+                ? `<div class="mb-1.5 sm:mb-2"><span class="inline-block px-2 sm:px-3 py-0.5 sm:py-1 rounded-sm bg-teal-600 dark:bg-teal-700 text-white text-[10px] sm:text-xs font-medium shadow-sm">${escapeHtml(
                     f.label
                   )}</span></div>`
                 : "";
 
               // Image with background and border
               let imgHtml = f.image
-                ? `<div class="bg-white dark:bg-slate-800 rounded w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center border border-slate-200 dark:border-slate-700"><img src="${escapeHtml(
+                ? `<div class="bg-white dark:bg-slate-800 rounded-lg w-20 h-20 sm:w-32 sm:h-32 flex items-center justify-center border border-slate-200 dark:border-slate-700 shadow-sm"><img src="${escapeHtml(
                     f.image
                   )}" alt="${escapeHtml(
                     f.title || "Publication image"
-                  )}" class="w-full h-full object-contain p-1 rounded"></div>`
+                  )}" class="w-full h-full object-contain p-1 rounded-lg"></div>`
                 : "";
 
               // Title - same line as year
@@ -266,8 +266,8 @@
 
               // Buttons with icons
               const buttonBaseClass = `
-                inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200/50 dark:border-slate-700/50 
-                text-slate-600 dark:text-slate-300 text-xs font-medium 
+                inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-md sm:rounded-lg border border-slate-200/50 dark:border-slate-700/50 
+                text-slate-600 dark:text-slate-300 text-[11px] sm:text-xs font-medium 
                 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm
                 hover:border-teal-500/50 dark:hover:border-teal-400/50
                 hover:text-teal-600 dark:hover:text-teal-400
@@ -275,6 +275,7 @@
                 hover:shadow-md hover:shadow-teal-500/5 dark:hover:shadow-teal-400/5
                 hover:bg-white/80 dark:hover:bg-slate-800/80
                 transition-all duration-300 ease-out
+                touch-manipulation
               `;
 
               let codeHtml = f.code
