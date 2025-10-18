@@ -2,4 +2,4 @@
 - **Web Application/Frameworks:** React.js, Node.js, Express.js, Tailwind CSS
 - **Machine Learning:** PyTorch, TensorFlow
 - **Databases:** MySQL, PostgreSQL, MongoDB
-- **Tools & Platforms:** Git, Docker, Linux, Firebase, Hugging Face, Ollama, Grok
+- **Tools & Platforms:** Git, Docker, Linux, Firebase, Hugging Face, Ollama, Groq

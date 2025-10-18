@@ -189,8 +189,9 @@
 
     <script src="scripts/partials.js"></script>
     <script>
-      // Function to parse publications markdown (adapted from publications.html)
+      // Function to escape HTML special characters
       function escapeHtml(str) {
+        if (!str) return "";
         return String(str).replace(/[&<>"']/g, function (s) {
           return {
             "&": "&amp;",
@@ -202,22 +203,17 @@
         });
       }
 
+      // --- PUBLICATIONS PARSER ---
       const parsePublications = (md) => {
-        // Remove legacy reference definitions if present
         md = md.replace(/^\s*\[([^\]]+)\]:\s*(\S+)(?:\s+"([^"]+)")?\s*$/gm, "");
-
-        // Split into publication entries
         const entries = md
           .split(/\r?\n-{3,}\r?\n/)
           .map((e) => e.trim())
           .filter(Boolean);
-
-        // Parse entries and sort by year
         const parsedEntries = entries
           .map((entry) => {
             const fields = {};
             let current = null;
-
             entry.split(/\r?\n/).forEach((line) => {
               const sec = line.match(/^\[(\w+)\]$/);
               if (sec) {
@@ -228,8 +224,6 @@
                 fields[current] += line.trim();
               }
             });
-
-            // Extract URLs from markdown-style links [text](url)
             if (fields.paper) {
               const match = fields.paper.match(/\[([^\]]+)\]\(([^)]+)\)/);
               if (match) fields.paper = match[2];
@@ -238,46 +232,33 @@
               const match = fields.code.match(/\[([^\]]+)\]\(([^)]+)\)/);
               if (match) fields.code = match[2];
             }
-
             return {
               ...fields,
               numericYear: parseInt(fields.year) || 0,
             };
           })
           .sort((a, b) => b.numericYear - a.numericYear);
-
         return parsedEntries;
       };
 
-      // Function to copy BibTeX citation to clipboard
       function copyBibTeX(button, bibText) {
         navigator.clipboard
           .writeText(bibText)
           .then(() => {
-            // Store original content
             const originalContent = button.innerHTML;
-            // Show copied state
             button.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5"></i>Copied!`;
-            // Reinitialize icon
             lucide.createIcons();
-            // Reset after 2 seconds
             setTimeout(() => {
               button.innerHTML = originalContent;
               lucide.createIcons();
             }, 2000);
           })
-          .catch((err) => {
-            console.error("Failed to copy text: ", err);
-          });
+          .catch((err) => console.error("Failed to copy text: ", err));
       }
 
-      // Function to create publication card
       const createPublicationCard = (pub, delay) => {
-        // Render author with highlighted name
         const authorHtml = pub.author
-          ? `
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            ${pub.author
+          ? `<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${pub.author
               .split(",")
               .map((author) =>
                 author.includes("Mohammad Ashfaq")
@@ -286,180 +267,219 @@
                     )}</span>`
                   : escapeHtml(author.trim())
               )
-              .join(", ")}
-          </p>
-        `
+              .join(", ")}</p>`
           : "";
-
-        // Button base class from publications.html
-        const buttonBaseClass = `
-          inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-300 dark:border-slate-600 
-          text-slate-700 dark:text-slate-300 text-xs font-medium 
-          hover:border-teal-500 dark:hover:border-teal-400
-          hover:text-teal-600 dark:hover:text-teal-400
-          hover:scale-105 active:scale-95
-          transition-all duration-200 ease-out
-        `;
-
-        return `
-          <div class="flex flex-col sm:flex-row gap-4 p-3 rounded-lg hover:bg-white/50 dark:hover:bg-slate-700/50 transition-colors duration-300 group animate-slideUp opacity-0" style="animation-delay: ${delay}ms">
-            <div class="w-24 h-24 flex-shrink-0 bg-white dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700 p-2 group-hover:scale-105 transition-transform duration-300">
-              <img src="${escapeHtml(pub.image || "")}" alt="${escapeHtml(
+        const buttonBaseClass = `inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-xs font-medium hover:border-teal-500 dark:hover:border-teal-400 hover:text-teal-600 dark:hover:text-teal-400 hover:scale-105 active:scale-95 transition-all duration-200 ease-out`;
+        return `<div class="flex flex-col sm:flex-row gap-4 p-3 rounded-lg hover:bg-white/50 dark:hover:bg-slate-700/50 transition-colors duration-300 group animate-slideUp opacity-0" style="animation-delay: ${delay}ms"><div class="w-24 h-24 flex-shrink-0 bg-white dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700 p-2 group-hover:scale-105 transition-transform duration-300"><img src="${escapeHtml(
+          pub.image
+        )}" alt="${escapeHtml(
           pub.title
-        )}" class="w-full h-full object-contain rounded" 
-                   onerror="this.onerror=null; this.src='assets/images/publication-placeholder.png';" />
-            </div>
-            <div class="flex-1">
-              <h3 class="font-semibold text-slate-800 dark:text-slate-200">${escapeHtml(
-                pub.title
-              )}</h3>
-              ${authorHtml}
-              <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">${escapeHtml(
-                pub.venue
-              )}${pub.year ? ` (${escapeHtml(pub.year)})` : ""}</p>
-              <div class="flex flex-wrap gap-2 mt-3 opacity-90 group-hover:opacity-100 transition-opacity duration-300">
-                ${
-                  pub.code
-                    ? `
-                  <a href="${escapeHtml(
-                    pub.code
-                  )}" target="_blank" rel="noopener" class="${buttonBaseClass}">
-                    <i data-lucide="code-2" class="w-3.5 h-3.5"></i>Code
-                  </a>
-                `
-                    : ""
-                }
-                ${
-                  pub.paper
-                    ? `
-                  <a href="${escapeHtml(
-                    pub.paper
-                  )}" target="_blank" rel="noopener" class="${buttonBaseClass}">
-                    <i data-lucide="file-text" class="w-3.5 h-3.5"></i>Paper
-                  </a>
-                `
-                    : ""
-                }
-                ${
-                  pub.bib
-                    ? `
-                  <button onclick="copyBibTeX(this, \`${escapeHtml(
-                    pub.bib
-                  )}\`)" class="${buttonBaseClass}">
-                    <i data-lucide="quote" class="w-3.5 h-3.5"></i>BIB
-                  </button>
-                `
-                    : ""
-                }
-              </div>
-            </div>
-          </div>
-        `;
+        )}" class="w-full h-full object-contain rounded" onerror="this.onerror=null; this.src='assets/images/publication-placeholder.png';" /></div><div class="flex-1"><h3 class="font-semibold text-slate-800 dark:text-slate-200">${escapeHtml(
+          pub.title
+        )}</h3>${authorHtml}<p class="text-sm text-slate-600 dark:text-slate-400 mt-1">${escapeHtml(
+          pub.venue
+        )}${
+          pub.year ? ` (${escapeHtml(pub.year)})` : ""
+        }</p><div class="flex flex-wrap gap-2 mt-3 opacity-90 group-hover:opacity-100 transition-opacity duration-300">${
+          pub.code
+            ? `<a href="${escapeHtml(
+                pub.code
+              )}" target="_blank" rel="noopener" class="${buttonBaseClass}"><i data-lucide="code-2" class="w-3.5 h-3.5"></i>Code</a>`
+            : ""
+        }${
+          pub.paper
+            ? `<a href="${escapeHtml(
+                pub.paper
+              )}" target="_blank" rel="noopener" class="${buttonBaseClass}"><i data-lucide="file-text" class="w-3.5 h-3.5"></i>Paper</a>`
+            : ""
+        }${
+          pub.bib
+            ? `<button onclick="copyBibTeX(this, \`${escapeHtml(
+                pub.bib
+              )}\`)" class="${buttonBaseClass}"><i data-lucide="quote" class="w-3.5 h-3.5"></i>BIB</button>`
+            : ""
+        }</div></div></div>`;
       };
 
-      // Load publications
-      fetch("content/publications.md")
-        .then((res) => {
-          if (!res.ok) throw new Error("Failed to load publications");
-          return res.text();
-        })
-        .then((md) => {
-          const publications = parsePublications(md);
-          const latestTwo = publications.slice(0, 2);
-
-          if (latestTwo.length === 0) {
-            throw new Error("No publications found");
+      // --- GENERIC CUSTOM MARKDOWN PARSER ---
+      const parseCustomMarkdown = (md) => {
+        const entries = md
+          .split("---")
+          .map((e) => e.trim())
+          .filter(Boolean);
+        return entries.map((entry) => {
+          const item = {};
+          const regex = /\[(\w+)\]\n?([\s\S]*?)(?=\n\[\w+\]|$)/g;
+          let match;
+          while ((match = regex.exec(entry)) !== null) {
+            const key = match[1].toLowerCase();
+            let value = match[2].trim();
+            if (key === "responsibilities") {
+              item[key] = value
+                .split("\n")
+                .map((r) => r.trim().replace(/^- /, ""))
+                .filter(Boolean);
+            } else {
+              item[key] = value;
+            }
           }
-
-          const container = document.getElementById(
-            "selected-publications-container"
-          );
-          container.innerHTML = latestTwo
-            .map((pub, index) => createPublicationCard(pub, (index + 1) * 200))
-            .join("");
-
-          // Re-initialize Lucide icons for the new content
-          lucide.createIcons();
-        })
-        .catch((err) => {
-          console.error("Failed to load publications:", err);
-          document.getElementById("selected-publications-container").innerHTML =
-            '<p class="text-sm text-slate-500 dark:text-slate-400">Failed to load publications. Please try again later.</p>';
+          return item;
         });
-
-      // Function to create a section card
-      const createSectionCard = (id, icon, title) => {
-        const section = document.createElement("section");
-        section.id = `${id}-section`;
-        section.className =
-          "rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1";
-
-        // Added prose-a:* utilities for link transitions directly
-        section.innerHTML = `
-          <div class="flex items-center gap-3 mb-4">
-            <i data-lucide="${icon}" class="w-6 h-6 text-teal-500 dark:text-teal-400"></i>
-            <h2 class="text-xl font-semibold text-teal-600 dark:text-teal-400">${title}</h2>
-          </div>
-          <div 
-            id="${id}-md" 
-            class="prose prose-custom dark:prose-invert max-w-none prose-a:transition-colors prose-a:duration-200 hover:prose-a:text-teal-700 dark:hover:prose-a:text-teal-300"
-          ></div>
-        `;
-        return section;
       };
 
-      // Define sections to be loaded
-      const sections = [
-        {
-          id: "skills",
-          icon: "zap",
-          title: "Skills",
-          file: "content/skills.md",
-        },
-        {
-          id: "work",
-          icon: "briefcase",
-          title: "Work Experience",
-          file: "content/work_experience.md",
-        },
-        {
-          id: "profdev",
-          icon: "award",
-          title: "Professional Development",
-          file: "content/professional_development.md",
-        },
-        {
-          id: "cocurricular",
-          icon: "users",
-          title: "Co-curricular Activities",
-          file: "content/co_curricular.md",
-        },
-      ];
+      const createCustomHtml = (items) => {
+        return items
+          .map(
+            (item) => `
+          <div class="space-y-3">
+            ${
+              item.role
+                ? `<h4 class="!my-0 font-semibold text-base">${escapeHtml(
+                    item.role
+                  )}</h4>`
+                : ""
+            }
+            ${
+              item.organization
+                ? `<p class="!my-0 text-sm text-slate-600 dark:text-slate-400"><em>${escapeHtml(
+                    item.organization
+                  )}</em></p>`
+                : ""
+            }
+            ${
+              item.duration || item.location
+                ? `<p class="!my-0 text-xs text-slate-500 dark:text-slate-400">${escapeHtml(
+                    item.duration
+                  )}${item.duration && item.location ? " | " : ""}${escapeHtml(
+                    item.location
+                  )}</p>`
+                : ""
+            }
+            ${
+              item.responsibilities && item.responsibilities.length > 0
+                ? `
+            <ul class="!mt-2 !mb-0">
+              ${item.responsibilities
+                .map((r) => `<li>${escapeHtml(r)}</li>`)
+                .join("")}
+            </ul>`
+                : ""
+            }
+            ${
+              item.skills
+                ? `<p class="!my-0 pt-2 text-sm"><strong>Skills:</strong> ${escapeHtml(
+                    item.skills
+                  )}</p>`
+                : ""
+            }
+          </div>
+        `
+          )
+          .join('<hr class="!my-6 border-slate-200 dark:border-slate-700" />');
+      };
 
-      const container = document.getElementById("dynamic-content-container");
-
-      // Load and render Markdown for each section
-      sections.forEach((sec) => {
-        const card = createSectionCard(sec.id, sec.icon, sec.title);
-        container.appendChild(card);
-
-        fetch(sec.file)
+      // --- DYNAMIC CONTENT LOADING ---
+      document.addEventListener("DOMContentLoaded", () => {
+        // Load selected publications
+        fetch("content/publications.md")
           .then((res) => {
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+            if (!res.ok) throw new Error("Failed to load publications");
             return res.text();
           })
           .then((md) => {
-            document.getElementById(`${sec.id}-md`).innerHTML =
-              marked.parse(md);
+            const publications = parsePublications(md);
+            const latestTwo = publications.slice(0, 2);
+            if (latestTwo.length > 0) {
+              document.getElementById(
+                "selected-publications-container"
+              ).innerHTML = latestTwo
+                .map((pub, index) =>
+                  createPublicationCard(pub, (index + 1) * 200)
+                )
+                .join("");
+            } else {
+              throw new Error("No publications found");
+            }
           })
-          .catch((err) => console.error(`Failed to load ${sec.file}:`, err));
-      });
+          .catch((err) => {
+            console.error("Failed to load publications:", err);
+            document.getElementById(
+              "selected-publications-container"
+            ).innerHTML =
+              '<p class="text-sm text-slate-500 dark:text-slate-400">Could not load publications.</p>';
+          })
+          .finally(() => lucide.createIcons());
 
-      // After all content is potentially loaded, render icons
-      // We need to wait a tick for the DOM to update
-      setTimeout(() => {
-        lucide.createIcons();
-      }, 0);
+        // Function to create a section card
+        const createSectionCard = (id, icon, title) => {
+          const section = document.createElement("section");
+          section.id = `${id}-section`;
+          section.className =
+            "rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1";
+          section.innerHTML = `<div class="flex items-center gap-3 mb-4"><i data-lucide="${icon}" class="w-6 h-6 text-teal-500 dark:text-teal-400"></i><h2 class="text-xl font-semibold text-teal-600 dark:text-teal-400">${title}</h2></div><div id="${id}-md" class="prose prose-custom dark:prose-invert max-w-none prose-a:transition-colors prose-a:duration-200 hover:prose-a:text-teal-700 dark:hover:prose-a:text-teal-300"></div>`;
+          return section;
+        };
+
+        // Define sections to be loaded
+        const sections = [
+          {
+            id: "skills",
+            icon: "zap",
+            title: "Skills",
+            file: "content/skills.md",
+          },
+          {
+            id: "work",
+            icon: "briefcase",
+            title: "Work Experience",
+            file: "content/work_experience.md",
+            customParser: true,
+          },
+          {
+            id: "profdev",
+            icon: "award",
+            title: "Professional Development",
+            file: "content/professional_development.md",
+            customParser: true,
+          },
+          {
+            id: "cocurricular",
+            icon: "users",
+            title: "Co-curricular Activities",
+            file: "content/co_curricular.md",
+            customParser: true,
+          },
+        ];
+
+        const container = document.getElementById("dynamic-content-container");
+
+        // Load and render content for each section
+        const promises = sections.map((sec) => {
+          const card = createSectionCard(sec.id, sec.icon, sec.title);
+          container.appendChild(card);
+          return fetch(sec.file)
+            .then((res) => {
+              if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+              return res.text();
+            })
+            .then((md) => {
+              let htmlContent;
+              if (sec.customParser) {
+                const parsedItems = parseCustomMarkdown(md);
+                htmlContent = createCustomHtml(parsedItems);
+              } else {
+                htmlContent = marked.parse(md);
+              }
+              document.getElementById(`${sec.id}-md`).innerHTML = htmlContent;
+            })
+            .catch((err) => console.error(`Failed to load ${sec.file}:`, err));
+        });
+
+        // After all content is loaded, render icons
+        Promise.all(promises).then(() => {
+          lucide.createIcons();
+        });
+      });
     </script>
   </body>
 </html>

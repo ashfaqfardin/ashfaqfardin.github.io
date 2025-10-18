@@ -1,7 +1,16 @@
-## IEEE Computer Society IUB Student Branch Chapter | Chairperson
+[role]
+Chairperson
 
-**08/2022 – 05/2023**  
+[organization]
+IEEE Computer Society IUB Student Branch Chapter
+
+[duration]
+08/2022 – 05/2023
+
+[location]
 Bashnudhara RA, Dhaka, Bangladesh
+
+[responsibilities]
 
 - Organized and led TechFest IUB, a major tech event held at the end of each semester.
 - Grew the executive board from 7 to 17 members, showing strong leadership.
@@ -11,3 +20,6 @@ Bashnudhara RA, Dhaka, Bangladesh
 - Increased active general membership from 20 to 304.
 - Improved the club's branding and visibility.
 - Built partnerships with outside groups for collaboration and opportunities.
+
+[skills]
+Leadership, Event Management, Project Management, Public Speaking, Fundraising, Community Building, Branding
