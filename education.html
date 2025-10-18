@@ -87,6 +87,148 @@
 
     <script src="scripts/partials.js"></script>
     <script>
+      // Function to parse education markdown
+      const parseEducation = (md) => {
+        // Split into education entries
+        const entries = md
+          .split(/\r?\n-{3,}\r?\n/)
+          .map((e) => e.trim())
+          .filter(Boolean);
+
+        // Parse each entry
+        return entries.map((entry) => {
+          const fields = {};
+          let currentField = "";
+
+          entry.split(/\r?\n/).forEach((line) => {
+            const fieldMatch = line.match(/^\[([^\]]+)\]$/);
+            if (fieldMatch) {
+              currentField = fieldMatch[1].toLowerCase();
+              fields[currentField] = "";
+            } else if (currentField && line.trim()) {
+              if (fields[currentField]) {
+                fields[currentField] += "\n";
+              }
+              fields[currentField] += line.trim();
+            }
+          });
+
+          return fields;
+        });
+      };
+
+      // Function to create education card
+      const createEducationCard = (edu, index) => {
+        // Handle relevant courses if present
+        const additionalHtml = edu.additional
+          ? `
+          <div class="mt-4 text-sm">
+            <div class="prose prose-sm prose-custom dark:prose-invert">
+              ${marked.parse(edu.additional)}
+            </div>
+          </div>
+        `
+          : "";
+
+        // Current name display if present
+        const currentNameHtml = edu["current name"]
+          ? `
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 group-hover:text-teal-500 dark:group-hover:text-teal-400 transition-colors duration-300">
+            Now: ${edu["current name"]}
+          </div>
+        `
+          : "";
+
+        // Create group and GPA badge
+        const badgesHtml = `
+          <div class="flex flex-wrap gap-2 mt-3">
+            ${
+              edu.duration
+                ? `
+              <span class="px-2.5 py-1 bg-slate-100/80 dark:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-full text-xs font-medium flex items-center gap-1.5 group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300">
+                <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                ${edu.duration}
+              </span>
+            `
+                : ""
+            }
+            ${
+              edu.group
+                ? `
+              <span class="px-2.5 py-1 bg-slate-100/80 dark:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-full text-xs font-medium flex items-center gap-1.5 group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300">
+                <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                ${edu.group}
+              </span>
+            `
+                : ""
+            }
+            ${
+              edu.gpa
+                ? `
+              <span class="px-2.5 py-1 bg-teal-50/80 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 rounded-full text-xs font-medium flex items-center gap-1.5 group-hover:bg-teal-100 dark:group-hover:bg-teal-900/50 transition-colors duration-300">
+                <i data-lucide="award" class="w-3.5 h-3.5"></i>
+                GPA: ${edu.gpa}
+              </span>
+            `
+                : ""
+            }
+          </div>
+        `;
+
+        return `
+          <div class="education-item mb-10 last:mb-0 opacity-0 animate-fadeIn" style="animation-delay: ${
+            index * 200
+          }ms">
+            <div class="relative pl-8 border-l-2 border-slate-200 dark:border-slate-700 group">
+              <div class="absolute -left-[11px] top-0 w-5 h-5 rounded-full border-2 border-teal-500 dark:border-teal-400 bg-white dark:bg-slate-800 transition-transform duration-300 group-hover:scale-125 group-hover:border-[3px]"></div>
+              
+              <div class="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-xl p-5 border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:shadow-md hover:border-teal-500/20 dark:hover:border-teal-400/20 transition-all duration-300 transform hover:-translate-y-0.5">
+                <div class="space-y-1">
+                  <h3 class="font-semibold text-lg text-slate-800 dark:text-slate-200 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
+                    ${edu.degree}
+                  </h3>
+                  <div class="text-base text-slate-600 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors duration-300">
+                    ${edu.institute}
+                  </div>
+                  ${currentNameHtml}
+                </div>
+                
+                ${badgesHtml}
+                ${additionalHtml}
+              </div>
+            </div>
+          </div>
+        `;
+      };
+
+      // Add animation keyframes and styles
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes fadeIn {
+          0% { 
+            opacity: 0; 
+            transform: translateY(20px); 
+            filter: blur(5px);
+          }
+          100% { 
+            opacity: 1; 
+            transform: translateY(0);
+            filter: blur(0);
+          }
+        }
+        @keyframes borderPulse {
+          0%, 100% { border-color: rgb(20 184 166 / 0.3); }
+          50% { border-color: rgb(20 184 166 / 0.6); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        .education-item:hover .border-l-2 {
+          animation: borderPulse 2s ease-in-out infinite;
+        }
+      `;
+      document.head.appendChild(style);
+
       // Load and render education.md
       fetch("content/education.md")
         .then((res) => {
@@ -94,14 +236,23 @@
           return res.text();
         })
         .then((md) => {
-          document.getElementById("education-md").innerHTML = marked.parse(md);
+          const education = parseEducation(md);
+          const container = document.getElementById("education-md");
+
+          container.innerHTML = education
+            .map((edu, index) => createEducationCard(edu, index))
+            .join("");
+
+          // Re-initialize Lucide icons
+          lucide.createIcons();
         })
-        .catch((err) =>
-          console.error(`Failed to load content/education.md:`, err)
-        );
+        .catch((err) => {
+          console.error(`Failed to load content/education.md:`, err);
+          document.getElementById("education-md").innerHTML =
+            '<p class="text-slate-500">Failed to load education history. Please try again later.</p>';
+        });
 
       // Re-render Lucide icons after content is loaded
-      // A brief timeout ensures the DOM is updated before this runs
       setTimeout(() => {
         lucide.createIcons();
       }, 0);
