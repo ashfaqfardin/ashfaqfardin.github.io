@@ -3,7 +3,7 @@ Independent University, Bangladesh
 [Degree]
 BSc in Computer Science & Engineering
 [Duration]
-2020 - 2024
+2019 - 2024
 [GPA]
 3.31/4.00
 [Additional]
