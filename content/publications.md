@@ -105,3 +105,49 @@ Muhtasim Ibteda Shochcho, Mohammad Ashfaq Ur Rahman
 Independent University, Bangladesh
 [Year]
 2025
+
+---
+
+[Title]
+AlphaBorno at BLP-2025 Task 2: Code Generation with Structured Prompts and Execution Feedback
+[Image]
+posts/publications/alphaborno.png
+[Author]
+Mohammad Ashfaq Ur Rahman, Muhtasim Ibteda Shochcho, Md Fahim
+[Paper]
+[https://aclanthology.org/2025.banglalp-1.63/](https://aclanthology.org/2025.banglalp-1.63/)
+[BIB]
+@inproceedings{rahman2025alphaborno,
+  title={Alphaborno at blp-2025 task 2: Code generation with structured prompts and execution feedback},
+  author={Rahman, Mohammad Ashfaq Ur and Shochcho, Muhtasim Ibteda and Fahim, Md},
+  booktitle={Proceedings of the Second Workshop on Bangla Language Processing (BLP-2025)},
+  pages={615--623},
+  year={2025}
+}
+[Venue]
+Proceedings of the Second Workshop on Bangla Language Processing (BLP-2025)
+[Year]
+2025
+
+---
+
+[Title]
+SOMAJGYAAN: A Dataset for Evaluating LLMs on Bangla Culture, Social Knowledge, and Low-Resource Language Adaptation
+[Image]
+posts/publications/somajgyann.png
+[Author]
+Fariha Anjum Shifa, Muhtasim Ibteda Shochcho, Abdullah Ibne Hanif Arean, Mohammad Ashfaq Ur Rahman, Akm Moshiur Rahman Mazumder, Ahaj Mahhin Faiak, Md Fahim, M Ashraful Amin, Amin Ahsan Ali, Akmmahbubur Rahman
+[Paper]
+[https://aclanthology.org/2025.findings-ijcnlp.134/](https://aclanthology.org/2025.findings-ijcnlp.134/)
+[BIB]
+@inproceedings{shifa2025somajgyaan,
+  title={SOMAJGYAAN: A Dataset for Evaluating LLMs on Bangla Culture, Social Knowledge, and Low-Resource Language Adaptation},
+  author={Shifa, Fariha Anjum and Shochcho, Muhtasim Ibteda and Arean, Abdullah Ibne Hanif and Rahman, Mohammad Ashfaq Ur and Mazumder, Akm Moshiur Rahman and Faiak, Ahaj Mahhin and Fahim, Md and Amin, M Ashraful and Ali, Amin Ahsan and Rahman, Akmmahbubur},
+  booktitle={Proceedings of the 14th International Joint Conference on Natural Language Processing and the 4th Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics},
+  pages={2157--2177},
+  year={2025}
+}
+[Venue]
+Proceedings of the 14th International Joint Conference on Natural Language Processing and the 4th Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics
+[Year]
+2025
