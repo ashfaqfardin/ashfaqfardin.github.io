@@ -1,4 +1,19 @@
 [Institute]
+University of Surrey
+[Degree]
+MSc in Artificial Intelligence
+[Duration]
+2026 - Present
+[GPA]
+
+[Additional]
+**Focus:** Machine Learning, Natural Language Processing, Computer Vision
+[Logo]
+university-of-surrey-logo.png
+
+---
+
+[Institute]
 Independent University, Bangladesh
 [Degree]
 BSc in Computer Science & Engineering
@@ -8,6 +23,8 @@ BSc in Computer Science & Engineering
 3.31/4.00
 [Additional]
 **Relevant Courses:** Artificial Intelligence, Numerical Method, Linear Algebra, Ordinary Differential Equation (ODE)
+[Logo]
+independent-university-logo.png
 
 ---
 
@@ -23,6 +40,8 @@ Higher Secondary Certificate (HSC)
 4.67/5.00
 [Group]
 Science
+[Logo]
+bangladesh-navy-college-logo.png
 
 ---
 
@@ -38,3 +57,5 @@ Secondary School Certificate (SSC)
 5.00/5.00
 [Group]
 Science
+[Logo]
+bhasantek-school-logo.png

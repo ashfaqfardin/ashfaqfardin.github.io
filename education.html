@@ -175,24 +175,45 @@
           </div>
         `;
 
+        // Responsive horizontal layout with logo and text vertically centered
+        // Use [Logo] field if present, otherwise fallback to icon
+        let logoHtml = '';
+        if (edu.logo) {
+          const logoPath = `assets/images/${edu.logo}`;
+          // The icon is always present, but hidden by default; shown if image fails
+          logoHtml = `
+            <span class="relative w-full h-full flex items-center justify-center">
+              <img src="${logoPath}" alt="${edu.institute} logo" class="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" loading="lazy" onerror="this.style.display='none';this.parentNode.querySelector('.fallback-icon').style.display='flex';" />
+              <span class="fallback-icon absolute inset-0 w-full h-full hidden items-center justify-center">
+                <i data-lucide="building" class="w-7 h-7 sm:w-8 sm:h-8 text-slate-500 dark:text-slate-300"></i>
+              </span>
+            </span>
+          `;
+        } else {
+          logoHtml = `<i data-lucide="building" class="w-7 h-7 sm:w-8 sm:h-8 text-slate-500 dark:text-slate-300"></i>`;
+        }
+
         return `
           <div class="education-item mb-10 last:mb-0 opacity-0 animate-fadeIn" style="animation-delay: ${
             index * 200
           }ms">
             <div class="relative pl-8 border-l-2 border-slate-200 dark:border-slate-700 group">
               <div class="absolute -left-[11px] top-0 w-5 h-5 rounded-full border-2 border-teal-500 dark:border-teal-400 bg-white dark:bg-slate-800 transition-transform duration-300 group-hover:scale-125 group-hover:border-[3px]"></div>
-              
               <div class="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-xl p-5 border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:shadow-md hover:border-teal-500/20 dark:hover:border-teal-400/20 transition-all duration-300 transform hover:-translate-y-0.5">
-                <div class="space-y-1">
-                  <h3 class="font-semibold text-lg text-slate-800 dark:text-slate-200 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
-                    ${edu.degree}
-                  </h3>
-                  <div class="text-base text-slate-600 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors duration-300">
-                    ${edu.institute}
+                <div class="flex flex-row items-center gap-5 sm:gap-6 md:gap-8">
+                  <div class="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
+                    ${logoHtml}
                   </div>
-                  ${currentNameHtml}
+                  <div class="flex-1 min-w-0">
+                    <h3 class="font-semibold text-lg sm:text-xl text-slate-800 dark:text-slate-200 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
+                      ${edu.degree}
+                    </h3>
+                    <div class="text-base sm:text-lg text-slate-600 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors duration-300">
+                      ${edu.institute}
+                    </div>
+                    ${currentNameHtml}
+                  </div>
                 </div>
-                
                 ${badgesHtml}
                 ${additionalHtml}
               </div>
