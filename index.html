@@ -8,242 +8,141 @@
       content="Academic profile and blog of Mohammad Ashfaq Ur Rahman, Trying to build something at Neumentora. Explore research, projects, publications, and more."
     />
     <title>Mohammad Ashfaq Ur Rahman | Academic Profile</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles/animations.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-
-    <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              discord: "#5865F2",
-            },
-            fontFamily: {
-              sans: ["Inter", "system-ui", "sans-serif"],
-            },
-            keyframes: {
-              wave: {
-                "0%": { transform: "rotate(0.0deg)" },
-                "10%": { transform: "rotate(14.0deg)" },
-                "20%": { transform: "rotate(-8.0deg)" },
-                "30%": { transform: "rotate(14.0deg)" },
-                "40%": { transform: "rotate(-4.0deg)" },
-                "50%": { transform: "rotate(10.0deg)" },
-                "60%": { transform: "rotate(0.0deg)" },
-                "100%": { transform: "rotate(0.0deg)" },
-              },
-              float: {
-                "0%, 100%": { transform: "translateY(0)" },
-                "50%": { transform: "translateY(-10px)" },
-              },
-              glowPulse: {
-                "0%, 100%": { opacity: "1" },
-                "50%": { opacity: "0.7" },
-              },
-              slide: {
-                "0%": { transform: "translateX(-100%)", opacity: "0" },
-                "100%": { transform: "translateX(0)", opacity: "1" },
-              },
-              scale: {
-                "0%": { transform: "scale(0.8)", opacity: "0" },
-                "100%": { transform: "scale(1)", opacity: "1" },
-              },
-              wiggle: {
-                "0%, 100%": { transform: "rotate(-3deg)" },
-                "50%": { transform: "rotate(3deg)" },
-              },
-              shimmer: {
-                "0%": { backgroundPosition: "-1000px 0" },
-                "100%": { backgroundPosition: "1000px 0" },
-              },
-            },
-            animation: {
-              wave: "wave 2.5s ease-in-out infinite",
-              float: "float 3s ease-in-out infinite",
-              glowPulse: "glowPulse 2s ease-in-out infinite",
-              slide: "slide 0.5s ease-out forwards",
-              scale: "scale 0.3s ease-out forwards",
-              wiggle: "wiggle 0.5s ease-in-out",
-              shimmer: "shimmer 2s linear infinite",
-            },
-          },
-        },
-      };
+      document.documentElement.classList.add("js");
+      try {
+        var t = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.classList.add(t);
+      } catch (e) {}
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Host+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
   </head>
-  <body
-    class="font-sans bg-slate-50 text-slate-700 dark:bg-slate-900 dark:text-slate-300 min-h-screen flex flex-col"
-  >
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div id="header-partial"></div>
 
-    <main class="flex-1 w-full max-w-4xl mx-auto px-4 pb-10 pt-28">
-      <section
-        id="about"
-        class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 sm:p-8 flex flex-col items-center text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group opacity-0 animate-scale"
-      >
-        <div
-          class="p-1 rounded-full bg-gradient-to-tr from-teal-400 to-cyan-400 mb-4 shadow-md relative animate-float group-hover:animate-none"
-        >
-          <div
-            class="absolute inset-0 rounded-full bg-gradient-to-tr from-teal-400 to-cyan-400 animate-glowPulse"
-          ></div>
-          <img
-            src="assets/images/profile.png"
-            alt="Profile photo of Mohammad Ashfaq Ur Rahman"
-            class="w-28 h-28 rounded-full border-4 border-slate-50 dark:border-slate-800 object-cover relative z-10 transition-transform duration-300 group-hover:scale-110"
-          />
-        </div>
-
-        <h1
-          class="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-cyan-400 animate-slide"
-        >
-          Mohammad Ashfaq Ur Rahman
-          <!-- <span class="inline-block animate-wave">👋</span> -->
-        </h1>
-
-        <p
-          class="mt-1 text-base text-slate-600 dark:text-slate-300 font-medium opacity-0 animate-scale"
-          style="animation-delay: 200ms"
-        >
-          Trying to build something at Neumentora.
+    <main id="main">
+      <section id="about" class="container hero">
+        <p class="section-label" data-rise>
+          <span class="section-label__dot"></span><span class="section-label__num">00</span
+          ><span class="section-label__name">Academic profile</span>
         </p>
 
-        <dl
-          class="mt-4 text-sm text-slate-500 dark:text-slate-400 max-w-xl opacity-0 animate-scale"
-          style="animation-delay: 400ms"
-        >
-          <dt class="font-bold">Research Interests:</dt>
-          <dd class="font-medium text-slate-600 dark:text-slate-300">
-            <span class="relative inline-flex gap-2 flex-wrap justify-center">
-              <span
-                class="transition-colors duration-300 hover:text-teal-600 dark:hover:text-teal-400"
-                >Artificial Intelligence</span
-              >•
-              <span
-                class="transition-colors duration-300 hover:text-teal-600 dark:hover:text-teal-400"
-                >Machine Learning</span
-              >•
-              <span
-                class="transition-colors duration-300 hover:text-teal-600 dark:hover:text-teal-400"
-                >Data Science</span
-              >•
-              <span
-                class="transition-colors duration-300 hover:text-teal-600 dark:hover:text-teal-400"
-                >Deep Learning</span
-              >•
-              <span
-                class="transition-colors duration-300 hover:text-teal-600 dark:hover:text-teal-400"
-                >LLMs</span
-              >•
-              <span
-                class="transition-colors duration-300 hover:text-teal-600 dark:hover:text-teal-400"
-                >Agentic Systems</span
-              >
-            </span>
-          </dd>
-        </dl>
+        <h1 class="display-xl hero__title">
+          <span class="line"><span class="line__inner" style="--d: 0.1s">Mohammad Ashfaq</span></span>
+          <span class="line"><span class="line__inner" style="--d: 0.2s">Ur Rahman<span class="lime">.</span></span></span>
+        </h1>
 
-        <div
-          class="mt-6 flex flex-wrap gap-3 justify-center opacity-0 animate-scale"
-          style="animation-delay: 600ms"
-        >
-          <a
-            href="mailto:imashfaqfardin@gmail.com"
-            class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-teal-400/50 dark:hover:border-teal-400/50 text-sm group"
-          >
-            <i
-              data-lucide="mail"
-              class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-teal-500"
-            ></i
-            >Email
-          </a>
-          <a
-            href="https://github.com/ashfaqfardin"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-teal-400/50 dark:hover:border-teal-400/50 text-sm group"
-          >
-            <i
-              data-lucide="github"
-              class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-teal-500"
-            ></i
-            >GitHub
-          </a>
-          <a
-            href="https://linkedin.com/in/ashfaqfardin"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-teal-400/50 dark:hover:border-teal-400/50 text-sm group"
-          >
-            <i
-              data-lucide="linkedin"
-              class="w-4 h-4 transition-transform duration-300 group-hover:scale-110 group-hover:text-teal-500"
-            ></i
-            >LinkedIn
-          </a>
+        <div class="hero__meta">
+          <p class="heading-m hero__intro" data-rise style="--d: 0.45s">Trying to build something at Neumentora.</p>
+          <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><i></i></div>
+          <div class="hero__actions" data-rise style="--d: 0.55s">
+            <a href="mailto:imashfaqfardin@gmail.com" class="pill pill--dark">
+              <span class="pill__label">Email</span>
+              <span class="pill__chip"><svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg></span>
+            </a>
+            <a href="https://github.com/ashfaqfardin" target="_blank" rel="noopener noreferrer" class="pill pill--light">
+              <span class="pill__label">GitHub</span>
+              <span class="pill__chip"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg></span>
+            </a>
+            <a href="https://linkedin.com/in/ashfaqfardin" target="_blank" rel="noopener noreferrer" class="pill pill--light">
+              <span class="pill__label">LinkedIn</span>
+              <span class="pill__chip"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"></use></svg></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero__visual">
+          <figure class="portrait" data-rise style="--d: 0.35s">
+            <img src="assets/images/profile.png" alt="Profile photo of Mohammad Ashfaq Ur Rahman" />
+            <figcaption class="portrait__caption label">&ldquo;Keep Swimming&rdquo; 🐬</figcaption>
+          </figure>
+
+          <dl class="interests-card" data-rise style="--d: 0.5s">
+            <dt class="section-label">
+              <span class="section-label__dot"></span><span class="section-label__name">Research Interests</span>
+            </dt>
+            <dd>
+              <ol class="interests-list">
+                <li><span class="numeral">01</span>Artificial Intelligence</li>
+                <li><span class="numeral">02</span>Machine Learning</li>
+                <li><span class="numeral">03</span>Data Science</li>
+                <li><span class="numeral">04</span>Deep Learning</li>
+                <li><span class="numeral">05</span>LLMs</li>
+                <li><span class="numeral">06</span>Agentic Systems</li>
+              </ol>
+            </dd>
+          </dl>
         </div>
       </section>
 
-      <section
-        id="discord-cta"
-        class="mt-8 text-center rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 sm:p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group opacity-0 animate-scale"
-        style="animation-delay: 800ms"
-      >
-        <div class="relative">
-          <div
-            class="absolute inset-0 bg-gradient-to-r from-discord/10 to-teal-400/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          ></div>
-          <h2
-            class="text-2xl font-bold bg-gradient-to-r from-discord to-teal-400 bg-clip-text text-transparent relative"
-          >
-            Join Our Discord Community
-          </h2>
-          <p
-            class="mt-2 max-w-2xl mx-auto text-slate-600 dark:text-slate-400 transition-all duration-300 group-hover:text-slate-800 dark:group-hover:text-slate-200"
-          >
-            Connect with fellow researchers, students, and enthusiasts. Let's
-            learn and build the future of AI together.
-          </p>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <div class="marquee__group">
+            <span class="marquee__item">Artificial Intelligence</span><span class="marquee__dot"></span>
+            <span class="marquee__item">Machine Learning</span><span class="marquee__dot"></span>
+            <span class="marquee__item">Data Science</span><span class="marquee__dot"></span>
+            <span class="marquee__item">Deep Learning</span><span class="marquee__dot"></span>
+            <span class="marquee__item">LLMs</span><span class="marquee__dot"></span>
+            <span class="marquee__item">Agentic Systems</span><span class="marquee__dot"></span>
+          </div>
+          <div class="marquee__group">
+            <span class="marquee__item">Artificial Intelligence</span><span class="marquee__dot"></span>
+            <span class="marquee__item">Machine Learning</span><span class="marquee__dot"></span>
+            <span class="marquee__item">Data Science</span><span class="marquee__dot"></span>
+            <span class="marquee__item">Deep Learning</span><span class="marquee__dot"></span>
+            <span class="marquee__item">LLMs</span><span class="marquee__dot"></span>
+            <span class="marquee__item">Agentic Systems</span><span class="marquee__dot"></span>
+          </div>
         </div>
-        <div class="mt-6">
-          <a
-            href="https://discord.gg/rnWp2PyKyP"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group/btn inline-flex items-center justify-center gap-3 px-6 py-3 rounded-lg bg-discord hover:bg-opacity-90 text-white font-semibold shadow-md transition-all duration-300 hover:shadow-xl hover:shadow-discord/20 hover:scale-105 relative overflow-hidden"
-          >
-            <span
-              class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 animate-shimmer"
-            ></span>
-            <i
-              class="fa-brands fa-discord text-xl transition-transform duration-300 group-hover/btn:scale-110 group-hover/btn:animate-wiggle"
-            ></i>
-            <span class="relative">Join Now</span>
-          </a>
+      </div>
+
+      <section id="discord-cta" class="container section" style="padding-top: var(--section-y)">
+        <p class="section-label" data-reveal>
+          <span class="section-label__dot"></span><span class="section-label__num">01</span
+          ><span class="section-label__name">Community</span>
+        </p>
+        <div class="cta-card" data-reveal data-spotlight>
+          <div class="cta-card__copy">
+            <span class="cta-card__badge"><svg class="icon" aria-hidden="true"><use href="#i-discord"></use></svg></span>
+            <h2 class="display-m">Join Our Discord Community</h2>
+          </div>
+          <div class="cta-card__body">
+            <p class="body-l">
+              Connect with fellow researchers, students, and enthusiasts. Let's learn and build the future of AI together.
+            </p>
+            <a href="https://discord.gg/rnWp2PyKyP" target="_blank" rel="noopener noreferrer" class="pill pill--accent">
+              <span class="pill__label">Join Now</span>
+              <span class="pill__chip"><svg class="icon" aria-hidden="true"><use href="#i-discord"></use></svg></span>
+            </a>
+          </div>
         </div>
+      </section>
+
+      <section id="explore" class="container section" style="padding-bottom: var(--section-y)">
+        <p class="section-label" data-reveal>
+          <span class="section-label__dot"></span><span class="section-label__num">02</span
+          ><span class="section-label__name">Explore</span>
+        </p>
+        <ol class="index-list" data-reveal>
+          <li><a class="index-row" href="about.html"><span class="index-row__left"><span class="numeral">01</span><span class="heading-l">About</span></span><span class="chip"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></span></a></li>
+          <li><a class="index-row" href="education.html"><span class="index-row__left"><span class="numeral">02</span><span class="heading-l">Education</span></span><span class="chip"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></span></a></li>
+          <li><a class="index-row" href="publications.html"><span class="index-row__left"><span class="numeral">03</span><span class="heading-l">Publications</span></span><span class="chip"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></span></a></li>
+          <li><a class="index-row" href="projects.html"><span class="index-row__left"><span class="numeral">04</span><span class="heading-l">Projects</span></span><span class="chip"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></span></a></li>
+          <li><a class="index-row" href="timeline.html"><span class="index-row__left"><span class="numeral">05</span><span class="heading-l">Timeline</span></span><span class="chip"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></span></a></li>
+          <li><a class="index-row" href="notes.html"><span class="index-row__left"><span class="numeral">06</span><span class="heading-l">Notes</span></span><span class="chip"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></span></a></li>
+        </ol>
       </section>
     </main>
 
     <div id="footer-partial"></div>
 
-    <script src="scripts/partials.js"></script>
-    <script src="scripts/profile.js"></script>
-    <script>
-      // Render all Lucide icons on the page
-      lucide.createIcons();
-    </script>
+    <script src="scripts/site.js"></script>
   </body>
 </html>

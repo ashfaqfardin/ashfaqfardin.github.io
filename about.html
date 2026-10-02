@@ -8,478 +8,247 @@
       content="About Mohammad Ashfaq Ur Rahman, Trying to build something at Neumentora. Academic background, skills, work experience, and more."
     />
     <title>About | Academic Profile</title>
+    <script>
+      document.documentElement.classList.add("js");
+      try {
+        var t = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.classList.add(t);
+      } catch (e) {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Host+Grotesk:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles/animations.css" />
-    <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ["Inter", "system-ui", "sans-serif"],
-            },
-            // Extending typography to customize prose styles
-            typography: ({ theme }) => ({
-              custom: {
-                css: {
-                  "--tw-prose-body": theme("colors.slate[600]"),
-                  "--tw-prose-headings": theme("colors.slate[800]"),
-                  "--tw-prose-links": theme("colors.teal[600]"),
-                  "--tw-prose-bold": theme("colors.slate[800]"),
-                  "--tw-prose-bullets": theme("colors.slate[400]"),
-                  "--tw-prose-hr": theme("colors.slate[200]"),
-                  "--tw-prose-quotes": theme("colors.slate[800]"),
-                  "--tw-prose-quote-borders": theme("colors.teal[300]"),
-
-                  "--tw-prose-invert-body": theme("colors.slate[300]"),
-                  "--tw-prose-invert-headings": theme("colors.slate[100]"),
-                  "--tw-prose-invert-links": theme("colors.teal[400]"),
-                  "--tw-prose-invert-bold": theme("colors.slate[100]"),
-                  "--tw-prose-invert-bullets": theme("colors.slate[600]"),
-                  "--tw-prose-invert-hr": theme("colors.slate[700]"),
-                  "--tw-prose-invert-quotes": theme("colors.slate[100]"),
-                  "--tw-prose-invert-quote-borders": theme("colors.teal[700]"),
-                },
-              },
-            }),
-            keyframes: {
-              slideUp: {
-                "0%": { transform: "translateY(10px)", opacity: "0" },
-                "100%": { transform: "translateY(0)", opacity: "1" },
-              },
-              fadeIn: {
-                "0%": { opacity: "0" },
-                "100%": { opacity: "1" },
-              },
-            },
-            animation: {
-              slideUp: "slideUp 0.5s ease-out forwards",
-              fadeIn: "fadeIn 0.5s ease-out forwards",
-            },
-          },
-        },
-      };
-    </script>
+    <link rel="stylesheet" href="styles/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
   </head>
 
-  <body
-    class="font-sans bg-slate-50 text-slate-700 dark:bg-slate-900 dark:text-slate-300 min-h-screen flex flex-col transition-colors duration-300"
-  >
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div id="header-partial"></div>
 
-    <main
-      class="flex-1 w-full max-w-6xl mx-auto px-4 pb-10 flex flex-col lg:flex-row gap-12 pt-28"
-    >
-      <aside class="w-full lg:w-80 flex-shrink-0 lg:sticky lg:top-24 h-fit">
-        <div
-          class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 flex flex-col items-center text-center gap-4"
-        >
-          <div
-            class="p-1 rounded-full bg-gradient-to-tr from-teal-400 to-cyan-400 mb-2"
-          >
-            <img
-              src="assets/images/profile.png"
-              alt="Profile photo of Mohammad Ashfaq Ur Rahman"
-              class="w-32 h-32 rounded-full border-4 border-white dark:border-slate-800 shadow-md object-cover"
-            />
+    <main id="main">
+      <header class="container page-head">
+        <p class="section-label" data-rise>
+          <span class="section-label__dot"></span><span class="section-label__num">01</span
+          ><span class="section-label__name">About</span>
+        </p>
+        <h1 class="display-l"><span class="line"><span class="line__inner" style="--d: 0.1s">About</span></span></h1>
+      </header>
+
+      <div class="container about">
+        <aside class="about__aside" data-rise style="--d: 0.25s">
+          <figure class="portrait about__photo">
+            <img src="assets/images/profile.png" alt="Profile photo of Mohammad Ashfaq Ur Rahman" />
+          </figure>
+          <div class="about__id">
+            <p class="heading-m">Mohammad Ashfaq Ur Rahman</p>
+            <p class="muted">Trying to build something at Neumentora.</p>
+            <p class="label">&ldquo;Keep Swimming&rdquo; 🐬</p>
           </div>
-          <h1 class="text-2xl font-bold text-teal-600 dark:text-teal-300">
-            Mohammad Ashfaq Ur Rahman
-          </h1>
-          <p class="text-sm text-slate-500 dark:text-slate-400 -mt-2">
-            Trying to build something at Neumentora.
-          </p>
-          <p class="text-sm text-slate-400 dark:text-slate-500 italic">
-            "Keep Swimming" 🐬
-          </p>
-          <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 pt-2">
-            <a
-              href="mailto:imashfaqfardin@gmail.com"
-              class="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-teal-500 dark:hover:text-teal-300 text-sm transition-colors"
-            >
-              <i data-lucide="mail" class="w-4 h-4"></i>Email
-            </a>
-            <a
-              href="https://github.com/ashfaqfardin"
-              target="_blank"
-              rel="noopener"
-              class="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-teal-500 dark:hover:text-teal-300 text-sm transition-colors"
-            >
-              <i data-lucide="github" class="w-4 h-4"></i>GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/ashfaqfardin"
-              target="_blank"
-              rel="noopener"
-              class="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-teal-500 dark:hover:text-teal-300 text-sm transition-colors"
-            >
-              <i data-lucide="linkedin" class="w-4 h-4"></i>LinkedIn
-            </a>
-          </div>
+          <ul class="link-list">
+            <li>
+              <a href="mailto:imashfaqfardin@gmail.com">
+                <span><svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>Email</span>
+                <svg class="icon icon--arrow" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/ashfaqfardin" target="_blank" rel="noopener">
+                <span><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg>GitHub</span>
+                <svg class="icon icon--arrow" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://linkedin.com/in/ashfaqfardin" target="_blank" rel="noopener">
+                <span><svg class="icon" aria-hidden="true"><use href="#i-linkedin"></use></svg>LinkedIn</span>
+                <svg class="icon icon--arrow" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+              </a>
+            </li>
+          </ul>
+        </aside>
+
+        <div class="about__main">
+          <section id="about-main" data-reveal>
+            <header class="block__head">
+              <h2 class="heading-m">About Me</h2>
+              <span class="numeral">01 / 06</span>
+            </header>
+            <p class="statement">
+              I'm a passionate researcher and developer with a strong interest in building intelligent systems that can
+              learn and reason. My current focus is on exploring the frontiers of AI.
+            </p>
+            <dl class="interests-inline">
+              <dt class="label">Research Interests</dt>
+              <dd>
+                <ul class="tags">
+                  <li class="tag">Artificial Intelligence</li>
+                  <li class="tag">Machine Learning</li>
+                  <li class="tag">Data Science</li>
+                  <li class="tag">Deep Learning</li>
+                  <li class="tag">LLMs</li>
+                  <li class="tag">Agentic Systems</li>
+                </ul>
+              </dd>
+            </dl>
+          </section>
+
+          <section id="selected-publications" data-reveal>
+            <header class="block__head">
+              <h2 class="heading-m">Selected Publications</h2>
+              <span class="numeral">02 / 06</span>
+            </header>
+            <div id="selected-publications-container" class="pub-list"></div>
+            <div class="text-link-row">
+              <a href="publications.html" class="btn btn--subtle">
+                View all publications
+                <svg class="icon icon--next" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </a>
+            </div>
+          </section>
+
+          <div id="dynamic-content-container" class="about__main"></div>
         </div>
-      </aside>
-
-      <div class="flex-1 flex flex-col gap-8">
-        <section
-          id="about-main"
-          class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 flex flex-col gap-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-        >
-          <h2 class="text-xl font-bold text-teal-600 dark:text-teal-300 mb-2">
-            About Me
-          </h2>
-          <p
-            class="text-base text-slate-600 dark:text-slate-300 leading-relaxed"
-          >
-            I'm a passionate researcher and developer with a strong interest in
-            building intelligent systems that can learn and reason. My current
-            focus is on exploring the frontiers of AI.
-          </p>
-          <p
-            class="text-base text-slate-600 dark:text-slate-300 leading-relaxed pt-2"
-          >
-            <strong>Research Interests:</strong>
-            <span class="font-semibold text-teal-700 dark:text-teal-400">
-              Artificial Intelligence, Machine Learning, Data Science, Deep
-              Learning, LLMs, Agentic Systems
-            </span>
-          </p>
-        </section>
-
-        <section
-          id="selected-publications"
-          class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 flex flex-col gap-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-        >
-          <div class="flex items-center gap-3">
-            <i
-              data-lucide="book-open-check"
-              class="w-6 h-6 text-teal-500 dark:text-teal-400"
-            ></i>
-            <h2 class="text-xl font-bold text-teal-600 dark:text-teal-300">
-              Selected Publications
-            </h2>
-          </div>
-
-          <div id="selected-publications-container"></div>
-
-          <div
-            class="flex justify-center mt-2 animate-fadeIn opacity-0"
-            style="animation-delay: 600ms"
-          >
-            <a
-              href="publications.html"
-              class="inline-flex items-center gap-2 text-sm text-teal-600 dark:text-teal-400 hover:underline"
-            >
-              View all publications
-              <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </a>
-          </div>
-        </section>
-
-        <div id="dynamic-content-container" class="flex flex-col gap-8"></div>
       </div>
     </main>
 
     <div id="footer-partial"></div>
 
-    <script src="scripts/partials.js"></script>
+    <script src="scripts/site.js"></script>
+    <script src="scripts/publications.js"></script>
     <script>
-      // Function to escape HTML special characters
-      function escapeHtml(str) {
-        if (!str) return "";
-        return String(str).replace(/[&<>"']/g, function (s) {
-          return {
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#39;",
-          }[s];
-        });
-      }
+      const { icon, escapeHtml, fetchText, reveal, stagger } = window.Site;
 
-      // --- PUBLICATIONS PARSER ---
-      const parsePublications = (md) => {
-        md = md.replace(/^\s*\[([^\]]+)\]:\s*(\S+)(?:\s+"([^"]+)")?\s*$/gm, "");
-        const entries = md
-          .split(/\r?\n-{3,}\r?\n/)
+      // --- GENERIC CUSTOM MARKDOWN PARSER ([role], [organization], ... separated by ---) ---
+      const parseCustomMarkdown = (md) =>
+        md
+          .split(/\n-{3,}\n/)
           .map((e) => e.trim())
-          .filter(Boolean);
-        const parsedEntries = entries
+          .filter(Boolean)
           .map((entry) => {
-            const fields = {};
-            let current = null;
-            entry.split(/\r?\n/).forEach((line) => {
-              const sec = line.match(/^\[(\w+)\]$/);
-              if (sec) {
-                current = sec[1].toLowerCase();
-                fields[current] = "";
-              } else if (current) {
-                if (fields[current]) fields[current] += "\n";
-                fields[current] += line.trim();
-              }
-            });
-            if (fields.paper) {
-              const match = fields.paper.match(/\[([^\]]+)\]\(([^)]+)\)/);
-              if (match) fields.paper = match[2];
+            const item = {};
+            const regex = /\[(\w+)\]\n?([\s\S]*?)(?=\n\[\w+\]|$)/g;
+            let match;
+            while ((match = regex.exec(entry)) !== null) {
+              const key = match[1].toLowerCase();
+              const value = match[2].trim();
+              item[key] =
+                key === "responsibilities"
+                  ? value
+                      .split("\n")
+                      .map((r) => r.trim().replace(/^- /, ""))
+                      .filter(Boolean)
+                  : value;
             }
-            if (fields.code) {
-              const match = fields.code.match(/\[([^\]]+)\]\(([^)]+)\)/);
-              if (match) fields.code = match[2];
-            }
-            return {
-              ...fields,
-              numericYear: parseInt(fields.year) || 0,
-            };
-          })
-          .sort((a, b) => b.numericYear - a.numericYear);
-        return parsedEntries;
-      };
+            return item;
+          });
 
-      function copyBibTeX(button, bibText) {
-        navigator.clipboard
-          .writeText(bibText)
-          .then(() => {
-            const originalContent = button.innerHTML;
-            button.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5"></i>Copied!`;
-            lucide.createIcons();
-            setTimeout(() => {
-              button.innerHTML = originalContent;
-              lucide.createIcons();
-            }, 2000);
-          })
-          .catch((err) => console.error("Failed to copy text: ", err));
-      }
-
-      const createPublicationCard = (pub, delay) => {
-        const authorHtml = pub.author
-          ? `<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${pub.author
+      const createAccordion = (item, open) => {
+        const where = [
+          item.duration ? `<span>${icon("calendar")}${escapeHtml(item.duration)}</span>` : "",
+          item.location ? `<span>${icon("map-pin")}${escapeHtml(item.location)}</span>` : "",
+        ].join("");
+        const responsibilities =
+          item.responsibilities && item.responsibilities.length
+            ? `<ul>${item.responsibilities.map((r) => `<li>${escapeHtml(r)}</li>`).join("")}</ul>`
+            : "";
+        const skills = item.skills
+          ? `<div class="tags"><span class="label" style="align-self:center;margin-right:4px">Skills</span>${item.skills
               .split(",")
-              .map((author) =>
-                author.includes("Mohammad Ashfaq")
-                  ? `<span class="text-teal-600 dark:text-teal-400">${escapeHtml(
-                      author.trim()
-                    )}</span>`
-                  : escapeHtml(author.trim())
-              )
-              .join(", ")}</p>`
+              .map((s) => `<span class="tag">${escapeHtml(s.trim())}</span>`)
+              .join("")}</div>`
           : "";
-        const buttonBaseClass = `inline-flex items-center gap-1.5 px-3 py-1 rounded-md border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-xs font-medium hover:border-teal-500 dark:hover:border-teal-400 hover:text-teal-600 dark:hover:text-teal-400 hover:scale-105 active:scale-95 transition-all duration-200 ease-out`;
-        return `<div class="flex flex-col sm:flex-row gap-4 p-3 rounded-lg hover:bg-white/50 dark:hover:bg-slate-700/50 transition-colors duration-300 group animate-slideUp opacity-0" style="animation-delay: ${delay}ms"><div class="w-24 h-24 flex-shrink-0 bg-white dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700 p-2 group-hover:scale-105 transition-transform duration-300"><img src="${escapeHtml(
-          pub.image
-        )}" alt="${escapeHtml(
-          pub.title
-        )}" class="w-full h-full object-contain rounded" onerror="this.onerror=null; this.src='assets/images/publication-placeholder.png';" /></div><div class="flex-1"><h3 class="font-semibold text-slate-800 dark:text-slate-200">${escapeHtml(
-          pub.title
-        )}</h3>${authorHtml}<p class="text-sm text-slate-600 dark:text-slate-400 mt-1">${escapeHtml(
-          pub.venue
-        )}${
-          pub.year ? ` (${escapeHtml(pub.year)})` : ""
-        }</p><div class="flex flex-wrap gap-2 mt-3 opacity-90 group-hover:opacity-100 transition-opacity duration-300">${
-          pub.code
-            ? `<a href="${escapeHtml(
-                pub.code
-              )}" target="_blank" rel="noopener" class="${buttonBaseClass}"><i data-lucide="code-2" class="w-3.5 h-3.5"></i>Code</a>`
-            : ""
-        }${
-          pub.paper
-            ? `<a href="${escapeHtml(
-                pub.paper
-              )}" target="_blank" rel="noopener" class="${buttonBaseClass}"><i data-lucide="file-text" class="w-3.5 h-3.5"></i>Paper</a>`
-            : ""
-        }${
-          pub.bib
-            ? `<button onclick="copyBibTeX(this, \`${escapeHtml(
-                pub.bib
-              )}\`)" class="${buttonBaseClass}"><i data-lucide="quote" class="w-3.5 h-3.5"></i>BIB</button>`
-            : ""
-        }</div></div></div>`;
+        return `
+          <details class="acc"${open ? " open" : ""}>
+            <summary class="acc__sum">
+              <span class="acc__title">
+                ${item.role ? `<span class="heading-s">${escapeHtml(item.role)}</span>` : ""}
+                ${item.organization ? `<span class="body-s acc__org">${escapeHtml(item.organization)}</span>` : ""}
+              </span>
+              <span class="label acc__date">${escapeHtml(item.duration)}</span>
+              <span class="acc__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="acc__body">
+              ${where ? `<p class="label acc__where">${where}</p>` : ""}
+              ${responsibilities}
+              ${skills}
+            </div>
+          </details>`;
       };
 
-      // --- GENERIC CUSTOM MARKDOWN PARSER ---
-      const parseCustomMarkdown = (md) => {
-        const entries = md
-          .split("---")
-          .map((e) => e.trim())
+      // "- **Label:** a, b, c" lines become a label/tags table; anything else falls back to markdown.
+      const renderSkills = (md) => {
+        const rows = md
+          .split("\n")
+          .map((l) => l.match(/^\s*[-*]\s+\*\*(.+?):?\*\*:?\s*(.+)$/))
           .filter(Boolean);
-        return entries.map((entry) => {
-          const item = {};
-          const regex = /\[(\w+)\]\n?([\s\S]*?)(?=\n\[\w+\]|$)/g;
-          let match;
-          while ((match = regex.exec(entry)) !== null) {
-            const key = match[1].toLowerCase();
-            let value = match[2].trim();
-            if (key === "responsibilities") {
-              item[key] = value
-                .split("\n")
-                .map((r) => r.trim().replace(/^- /, ""))
-                .filter(Boolean);
-            } else {
-              item[key] = value;
-            }
-          }
-          return item;
-        });
-      };
-
-      const createCustomHtml = (items) => {
-        return items
+        if (!rows.length) return `<div class="prose">${marked.parse(md)}</div>`;
+        return rows
           .map(
-            (item) => `
-          <div class="space-y-3">
-            ${
-              item.role
-                ? `<h4 class="!my-0 font-semibold text-base">${escapeHtml(
-                    item.role
-                  )}</h4>`
-                : ""
-            }
-            ${
-              item.organization
-                ? `<p class="!my-0 text-sm text-slate-600 dark:text-slate-400"><em>${escapeHtml(
-                    item.organization
-                  )}</em></p>`
-                : ""
-            }
-            ${
-              item.duration || item.location
-                ? `<p class="!my-0 text-xs text-slate-500 dark:text-slate-400">${escapeHtml(
-                    item.duration
-                  )}${item.duration && item.location ? " | " : ""}${escapeHtml(
-                    item.location
-                  )}</p>`
-                : ""
-            }
-            ${
-              item.responsibilities && item.responsibilities.length > 0
-                ? `
-            <ul class="!mt-2 !mb-0">
-              ${item.responsibilities
-                .map((r) => `<li>${escapeHtml(r)}</li>`)
-                .join("")}
-            </ul>`
-                : ""
-            }
-            ${
-              item.skills
-                ? `<p class="!my-0 pt-2 text-sm"><strong>Skills:</strong> ${escapeHtml(
-                    item.skills
-                  )}</p>`
-                : ""
-            }
-          </div>
-        `
+            ([, label, items]) => `
+            <div class="skills-row">
+              <p class="label">${escapeHtml(label.replace(/:$/, ""))}</p>
+              <ul class="tags">${items
+                .split(",")
+                .map((s) => `<li class="tag">${escapeHtml(s.trim())}</li>`)
+                .join("")}</ul>
+            </div>`
           )
-          .join('<hr class="!my-6 border-slate-200 dark:border-slate-700" />');
+          .join("");
       };
 
-      // --- DYNAMIC CONTENT LOADING ---
-      document.addEventListener("DOMContentLoaded", () => {
-        // Load selected publications
-        fetch("content/publications.md")
-          .then((res) => {
-            if (!res.ok) throw new Error("Failed to load publications");
-            return res.text();
-          })
+      const createSection = (sec, index) => {
+        const section = document.createElement("section");
+        section.id = `${sec.id}-section`;
+        section.setAttribute("data-reveal", "");
+        section.innerHTML = `
+          <header class="block__head">
+            <h2 class="heading-m">${sec.title}</h2>
+            <span class="numeral">${String(index).padStart(2, "0")} / 06</span>
+          </header>
+          <div id="${sec.id}-md" class="${sec.customParser ? "acc-list" : ""}"></div>`;
+        return section;
+      };
+
+      // Selected publications (latest two)
+      fetchText("content/publications.md")
+        .then((md) => {
+          const latestTwo = Publications.parse(md).slice(0, 2);
+          if (!latestTwo.length) throw new Error("No publications found");
+          const container = document.getElementById("selected-publications-container");
+          container.innerHTML = latestTwo.map(Publications.render).join("");
+          stagger(container.children, 120);
+          reveal(container);
+        })
+        .catch((err) => {
+          console.error("Failed to load publications:", err);
+          document.getElementById("selected-publications-container").innerHTML =
+            '<p class="body-s muted">Could not load publications.</p>';
+        });
+
+      const sections = [
+        { id: "skills", title: "Skills", file: "content/skills.md" },
+        { id: "work", title: "Work Experience", file: "content/work_experience.md", customParser: true },
+        { id: "profdev", title: "Professional Development", file: "content/professional_development.md", customParser: true },
+        { id: "cocurricular", title: "Co-curricular Activities", file: "content/co_curricular.md", customParser: true },
+      ];
+      const container = document.getElementById("dynamic-content-container");
+
+      sections.forEach((sec, i) => {
+        container.appendChild(createSection(sec, i + 3));
+        fetchText(sec.file)
           .then((md) => {
-            const publications = parsePublications(md);
-            const latestTwo = publications.slice(0, 2);
-            if (latestTwo.length > 0) {
-              document.getElementById(
-                "selected-publications-container"
-              ).innerHTML = latestTwo
-                .map((pub, index) =>
-                  createPublicationCard(pub, (index + 1) * 200)
-                )
-                .join("");
-            } else {
-              throw new Error("No publications found");
-            }
+            document.getElementById(`${sec.id}-md`).innerHTML = sec.customParser
+              ? parseCustomMarkdown(md)
+                  .map((item, j) => createAccordion(item, sec.id === "work" && j === 0))
+                  .join("")
+              : renderSkills(md);
           })
-          .catch((err) => {
-            console.error("Failed to load publications:", err);
-            document.getElementById(
-              "selected-publications-container"
-            ).innerHTML =
-              '<p class="text-sm text-slate-500 dark:text-slate-400">Could not load publications.</p>';
-          })
-          .finally(() => lucide.createIcons());
-
-        // Function to create a section card
-        const createSectionCard = (id, icon, title) => {
-          const section = document.createElement("section");
-          section.id = `${id}-section`;
-          section.className =
-            "rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1";
-          section.innerHTML = `<div class="flex items-center gap-3 mb-4"><i data-lucide="${icon}" class="w-6 h-6 text-teal-500 dark:text-teal-400"></i><h2 class="text-xl font-semibold text-teal-600 dark:text-teal-400">${title}</h2></div><div id="${id}-md" class="prose prose-custom dark:prose-invert max-w-none prose-a:transition-colors prose-a:duration-200 hover:prose-a:text-teal-700 dark:hover:prose-a:text-teal-300"></div>`;
-          return section;
-        };
-
-        // Define sections to be loaded
-        const sections = [
-          {
-            id: "skills",
-            icon: "zap",
-            title: "Skills",
-            file: "content/skills.md",
-          },
-          {
-            id: "work",
-            icon: "briefcase",
-            title: "Work Experience",
-            file: "content/work_experience.md",
-            customParser: true,
-          },
-          {
-            id: "profdev",
-            icon: "award",
-            title: "Professional Development",
-            file: "content/professional_development.md",
-            customParser: true,
-          },
-          {
-            id: "cocurricular",
-            icon: "users",
-            title: "Co-curricular Activities",
-            file: "content/co_curricular.md",
-            customParser: true,
-          },
-        ];
-
-        const container = document.getElementById("dynamic-content-container");
-
-        // Load and render content for each section
-        const promises = sections.map((sec) => {
-          const card = createSectionCard(sec.id, sec.icon, sec.title);
-          container.appendChild(card);
-          return fetch(sec.file)
-            .then((res) => {
-              if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-              return res.text();
-            })
-            .then((md) => {
-              let htmlContent;
-              if (sec.customParser) {
-                const parsedItems = parseCustomMarkdown(md);
-                htmlContent = createCustomHtml(parsedItems);
-              } else {
-                htmlContent = marked.parse(md);
-              }
-              document.getElementById(`${sec.id}-md`).innerHTML = htmlContent;
-            })
-            .catch((err) => console.error(`Failed to load ${sec.file}:`, err));
-        });
-
-        // After all content is loaded, render icons
-        Promise.all(promises).then(() => {
-          lucide.createIcons();
-        });
+          .catch((err) => console.error(`Failed to load ${sec.file}:`, err));
       });
+      reveal(container);
     </script>
   </body>
 </html>

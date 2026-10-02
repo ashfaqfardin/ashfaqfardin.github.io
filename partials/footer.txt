@@ -1,50 +1,60 @@
-<footer class="w-full border-t border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 py-5 mt-auto">
-  <div
-    class="w-full max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-slate-500 dark:text-slate-400 text-sm gap-4"
-  >
-    <span class="text-center sm:text-left"
-      >&copy; 2025 Mohammad Ashfaq Ur Rahman. All rights reserved.</span
-    >
-    <div
-      class="flex items-center gap-6"
-    >
-      <a
-        href="https://github.com/ashfaqfardin"
-        class="hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="GitHub Profile"
-      >
-        <i data-lucide="github" class="w-5 h-5"></i>
-      </a>
-      <a
-        href="https://linkedin.com/in/ashfaqfardin"
-        class="hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="LinkedIn Profile"
-      >
-        <i data-lucide="linkedin" class="w-5 h-5"></i>
-      </a>
-      <a
-        href="mailto:imashfaqfardin@gmail.com"
-        class="hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        aria-label="Email"
-      >
-        <i data-lucide="mail" class="w-5 h-5"></i>
-      </a>
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__blurb">
+        <p class="heading-s">Mohammad Ashfaq Ur Rahman</p>
+        <p class="body-s muted">Trying to build something at Neumentora.</p>
+      </div>
+      <div class="site-footer__cols">
+        <div>
+          <p class="label-s">Pages</p>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="education.html">Education</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="timeline.html">Timeline</a></li>
+            <li><a href="notes.html">Notes</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="label-s">Connect</p>
+          <ul>
+            <li><a href="mailto:imashfaqfardin@gmail.com">Email</a></li>
+            <li><a href="https://github.com/ashfaqfardin" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="https://linkedin.com/in/ashfaqfardin" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://wa.me/+8801944907803?text=Hi%2C%20I%20saw%20your%20academic%20profile%20and%20I%20am%20interested%20in%20discussing%20a%20potential%20collaboration." target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+            <li><a href="https://discord.gg/rnWp2PyKyP" target="_blank" rel="noopener noreferrer">Discord</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="wordmark" data-wordmark="Ashfaq" aria-hidden="true">Ashfaq</div>
+
+    <div class="site-footer__bottom body-s">
+      <span>&copy; 2025 Mohammad Ashfaq Ur Rahman. All rights reserved.</span>
+      <div class="socials">
+        <a href="https://github.com/ashfaqfardin" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-github"></use></svg>
+        </a>
+        <a href="https://linkedin.com/in/ashfaqfardin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-linkedin"></use></svg>
+        </a>
+        <a href="mailto:imashfaqfardin@gmail.com" aria-label="Email">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mail"></use></svg>
+        </a>
+      </div>
     </div>
   </div>
 </footer>
 
-<a 
+<a
   href="https://wa.me/+8801944907803?text=Hi%2C%20I%20saw%20your%20academic%20profile%20and%20I%20am%20interested%20in%20discussing%20a%20potential%20collaboration."
   target="_blank"
   rel="noopener noreferrer"
   aria-label="Message me on WhatsApp"
-  class="fixed bottom-6 right-6 z-40 w-16 h-16 flex items-center justify-center rounded-full bg-whatsapp text-white shadow-lg transition-transform hover:scale-110 animate-pulse-ring"
+  class="wa-fab"
 >
-  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-  </svg>
+  <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-whatsapp"></use></svg>
 </a>

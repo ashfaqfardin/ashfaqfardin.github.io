@@ -1,63 +1,45 @@
+// Renders the notes index (notes.html) from posts/posts.json.
 document.addEventListener("DOMContentLoaded", () => {
   const blogList = document.getElementById("notes-list");
+  if (!blogList) return;
+  const { icon, escapeHtml, reveal, stagger } = window.Site;
 
   /**
-   * Fetches the list of posts from a JSON file and renders them as links.
-   */
-  async function loadPosts() {
-    // Ensure the blogList element exists before proceeding
-    if (!blogList) {
-      return;
-    }
-
-    try {
-      const res = await fetch("posts/posts.json");
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-      const posts = await res.json();
-      renderBlogList(posts);
-    } catch (e) {
-      console.error("Failed to load blog posts:", e);
-      blogList.innerHTML =
-        '<p class="col-span-full text-red-500">Failed to load blog posts.</p>';
-    }
-  }
-
-  /**
-   * Renders the list of blog post preview cards as links that open in the same tab.
+   * Renders the list of note preview cards as links that open post.html in the same tab.
    * @param {Array} posts - An array of post objects from posts.json.
    */
   function renderBlogList(posts) {
-    blogList.innerHTML = ""; // Clear existing list
+    blogList.innerHTML = posts
+      .map(
+        (post) => `
+        <a class="note" href="post.html?file=${encodeURIComponent(post.file)}" data-reveal>
+          <div class="note__thumb">
+            <img src="${escapeHtml(post.thumbnail)}" alt="${escapeHtml(post.title)}" loading="lazy" />
+          </div>
+          <div class="note__meta">
+            <span class="label">${escapeHtml(post.date)}</span>
+            <span class="chip chip--sm">${icon("arrow-up-right")}</span>
+          </div>
+          <h2 class="heading-m">${escapeHtml(post.title)}</h2>
+          <p class="body-s note__summary">${escapeHtml(post.summary)}</p>
+        </a>`
+      )
+      .join("");
 
-    posts.forEach((post) => {
-      // Create an anchor tag <a> instead of a div
-      const cardLink = document.createElement("a");
-
-      // Set the href to point to post.html with the file as a parameter
-      cardLink.href = `post.html?file=${post.file}`;
-
-      // The `target="_blank"` attribute has been removed. Links will now open in the same tab by default.
-
-      // Apply the card styling directly to the link
-      cardLink.className =
-        "block rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1";
-
-      // Set the inner content of the card
-      cardLink.innerHTML = `
-        <img 
-          src="${post.thumbnail}" 
-          alt="${post.title}" 
-          class="w-full h-48 object-cover rounded-lg mb-4 opacity-100 mix-blend-multiply dark:mix-blend-luminosity transition-all duration-300 group-hover:opacity-100"
-        />
-        <h3 class="font-bold text-lg text-teal-700 dark:text-teal-300">${post.title}</h3>
-        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">${post.date}</p>
-        <p class="text-base text-slate-600 dark:text-slate-300 mt-3">${post.summary}</p>
-      `;
-
-      blogList.appendChild(cardLink);
-    });
+    const count = document.getElementById("notes-count");
+    if (count) count.textContent = `(${String(posts.length).padStart(2, "0")})`;
+    stagger(blogList.children, 110);
+    reveal(blogList);
   }
 
-  // Initial load
-  loadPosts();
+  fetch("posts/posts.json")
+    .then((res) => {
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      return res.json();
+    })
+    .then(renderBlogList)
+    .catch((e) => {
+      console.error("Failed to load blog posts:", e);
+      blogList.innerHTML = '<p class="empty-state">Failed to load blog posts.</p>';
+    });
 });

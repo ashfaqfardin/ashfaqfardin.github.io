@@ -3,62 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Academic Notes of Mohammad Ashfaq Ur Rahman."
-    />
+    <meta name="description" content="Academic Notes of Mohammad Ashfaq Ur Rahman." />
     <title>Notes | Academic Profile</title>
+    <script>
+      document.documentElement.classList.add("js");
+      try {
+        var t = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.classList.add(t);
+      } catch (e) {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Host+Grotesk:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles/animations.css" />
-    <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ["Inter", "system-ui", "sans-serif"],
-            },
-          },
-        },
-      };
-    </script>
+    <link rel="stylesheet" href="styles/main.css" />
   </head>
-  <body
-    class="font-sans bg-slate-50 text-slate-700 dark:bg-slate-900 dark:text-slate-300 min-h-screen flex flex-col"
-  >
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div id="header-partial"></div>
 
-    <main class="flex-1 w-full max-w-6xl mx-auto px-4 pb-10 pt-28">
-      <div class="flex items-center gap-4 mb-8">
-        <i
-          data-lucide="pen-square"
-          class="w-8 h-8 text-teal-500 dark:text-teal-400"
-        ></i>
-        <h1
-          class="text-3xl sm:text-4xl font-bold text-teal-600 dark:text-teal-400"
-        >
-          Notes
-        </h1>
-      </div>
+    <main id="main">
+      <header class="container page-head">
+        <p class="section-label" data-rise>
+          <span class="section-label__dot"></span><span class="section-label__num">06</span
+          ><span class="section-label__name">Notes</span>
+        </p>
+        <div class="page-title">
+          <h1 class="display-l"><span class="line"><span class="line__inner" style="--d: 0.1s">Notes</span></span></h1>
+          <span id="notes-count" class="numeral page-title__count" data-rise style="--d: 0.4s"></span>
+        </div>
+      </header>
 
-      <div
-        id="notes-list"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-      ></div>
+      <div class="container">
+        <div id="notes-list" class="notes-grid"></div>
+      </div>
     </main>
 
     <div id="footer-partial"></div>
-    <script src="scripts/partials.js"></script>
+    <script src="scripts/site.js"></script>
     <script src="scripts/profile.js"></script>
-    <script>
-      // Render icons after partials are loaded
-      setTimeout(() => lucide.createIcons(), 100);
-    </script>
   </body>
 </html>

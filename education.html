@@ -8,275 +8,113 @@
       content="Education history of Mohammad Ashfaq Ur Rahman, Research Intern at CCDS, IUB. Academic background and relevant courses."
     />
     <title>Education | Academic Profile</title>
+    <script>
+      document.documentElement.classList.add("js");
+      try {
+        var t = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.classList.add(t);
+      } catch (e) {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Host+Grotesk:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles/animations.css" />
-    <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ["Inter", "system-ui", "sans-serif"],
-            },
-            // Extending typography to customize prose styles
-            typography: ({ theme }) => ({
-              custom: {
-                css: {
-                  "--tw-prose-body": theme("colors.slate[600]"),
-                  "--tw-prose-headings": theme("colors.slate[800]"),
-                  "--tw-prose-links": theme("colors.teal[600]"),
-                  "--tw-prose-bold": theme("colors.slate[800]"),
-                  "--tw-prose-bullets": theme("colors.slate[400]"),
-                  "--tw-prose-hr": theme("colors.slate[200]"),
-                  "--tw-prose-quotes": theme("colors.slate[800]"),
-                  "--tw-prose-quote-borders": theme("colors.teal[300]"),
-
-                  "--tw-prose-invert-body": theme("colors.slate[300]"),
-                  "--tw-prose-invert-headings": theme("colors.slate[100]"),
-                  "--tw-prose-invert-links": theme("colors.teal[400]"),
-                  "--tw-prose-invert-bold": theme("colors.slate[100]"),
-                  "--tw-prose-invert-bullets": theme("colors.slate[600]"),
-                  "--tw-prose-invert-hr": theme("colors.slate[700]"),
-                  "--tw-prose-invert-quotes": theme("colors.slate[100]"),
-                  "--tw-prose-invert-quote-borders": theme("colors.teal[700]"),
-                },
-              },
-            }),
-          },
-        },
-      };
-    </script>
+    <link rel="stylesheet" href="styles/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
   </head>
 
-  <body
-    class="font-sans bg-slate-50 text-slate-700 dark:bg-slate-900 dark:text-slate-300 min-h-screen flex flex-col transition-colors duration-300"
-  >
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div id="header-partial"></div>
 
-    <main class="flex-1 w-full max-w-4xl mx-auto px-4 pb-10 pt-28">
-      <section
-        id="education"
-        class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 sm:p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-      >
-        <div class="flex items-center gap-4 mb-6">
-          <i
-            data-lucide="graduation-cap"
-            class="w-8 h-8 text-teal-500 dark:text-teal-400"
-          ></i>
-          <h1
-            class="text-2xl sm:text-3xl font-bold text-teal-600 dark:text-teal-400"
-          >
-            Education
-          </h1>
+    <main id="main">
+      <header class="container page-head">
+        <p class="section-label" data-rise>
+          <span class="section-label__dot"></span><span class="section-label__num">02</span
+          ><span class="section-label__name">Education</span>
+        </p>
+        <div class="page-title">
+          <h1 class="display-l"><span class="line"><span class="line__inner" style="--d: 0.1s">Education</span></span></h1>
+          <span id="education-count" class="numeral page-title__count" data-rise style="--d: 0.4s"></span>
         </div>
+      </header>
 
-        <div
-          id="education-md"
-          class="prose prose-custom dark:prose-invert max-w-none prose-a:transition-colors prose-a:duration-200 hover:prose-a:text-teal-700 dark:hover:prose-a:text-teal-300"
-        ></div>
+      <section id="education" class="container">
+        <div id="education-md" class="edu-list"></div>
       </section>
     </main>
 
     <div id="footer-partial"></div>
 
-    <script src="scripts/partials.js"></script>
+    <script src="scripts/site.js"></script>
     <script>
-      // Function to parse education markdown
-      const parseEducation = (md) => {
-        // Split into education entries
-        const entries = md
-          .split(/\r?\n-{3,}\r?\n/)
+      const { icon, escapeHtml, fetchText, reveal, stagger } = window.Site;
+
+      // Entries separated by ---, fields are "[Name]" headers (lowercased keys).
+      const parseEducation = (md) =>
+        md
+          .split(/\n-{3,}\n/)
           .map((e) => e.trim())
-          .filter(Boolean);
-
-        // Parse each entry
-        return entries.map((entry) => {
-          const fields = {};
-          let currentField = "";
-
-          entry.split(/\r?\n/).forEach((line) => {
-            const fieldMatch = line.match(/^\[([^\]]+)\]$/);
-            if (fieldMatch) {
-              currentField = fieldMatch[1].toLowerCase();
-              fields[currentField] = "";
-            } else if (currentField && line.trim()) {
-              if (fields[currentField]) {
-                fields[currentField] += "\n";
+          .filter(Boolean)
+          .map((entry) => {
+            const fields = {};
+            let currentField = "";
+            entry.split("\n").forEach((line) => {
+              const fieldMatch = line.match(/^\[([^\]]+)\]$/);
+              if (fieldMatch) {
+                currentField = fieldMatch[1].toLowerCase();
+                fields[currentField] = "";
+              } else if (currentField && line.trim()) {
+                if (fields[currentField]) fields[currentField] += "\n";
+                fields[currentField] += line.trim();
               }
-              fields[currentField] += line.trim();
-            }
+            });
+            return fields;
           });
 
-          return fields;
-        });
-      };
-
-      // Function to create education card
-      const createEducationCard = (edu, index) => {
-        // Handle relevant courses if present
-        const additionalHtml = edu.additional
-          ? `
-          <div class="mt-4 text-sm">
-            <div class="prose prose-sm prose-custom dark:prose-invert">
-              ${marked.parse(edu.additional)}
-            </div>
-          </div>
-        `
-          : "";
-
-        // Current name display if present
-        const currentNameHtml = edu["current name"]
-          ? `
-          <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 group-hover:text-teal-500 dark:group-hover:text-teal-400 transition-colors duration-300">
-            Now: ${edu["current name"]}
-          </div>
-        `
-          : "";
-
-        // Create group and GPA badge
-        const badgesHtml = `
-          <div class="flex flex-wrap gap-2 mt-3">
-            ${
-              edu.duration
-                ? `
-              <span class="px-2.5 py-1 bg-slate-100/80 dark:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-full text-xs font-medium flex items-center gap-1.5 group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300">
-                <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
-                ${edu.duration}
-              </span>
-            `
-                : ""
-            }
-            ${
-              edu.group
-                ? `
-              <span class="px-2.5 py-1 bg-slate-100/80 dark:bg-slate-700/80 text-slate-600 dark:text-slate-300 rounded-full text-xs font-medium flex items-center gap-1.5 group-hover:bg-slate-200 dark:group-hover:bg-slate-600 transition-colors duration-300">
-                <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
-                ${edu.group}
-              </span>
-            `
-                : ""
-            }
-            ${
-              edu.gpa
-                ? `
-              <span class="px-2.5 py-1 bg-teal-50/80 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 rounded-full text-xs font-medium flex items-center gap-1.5 group-hover:bg-teal-100 dark:group-hover:bg-teal-900/50 transition-colors duration-300">
-                <i data-lucide="award" class="w-3.5 h-3.5"></i>
-                GPA: ${edu.gpa}
-              </span>
-            `
-                : ""
-            }
-          </div>
-        `;
-
-        // Responsive horizontal layout with logo and text vertically centered
-        // Use [Logo] field if present, otherwise fallback to icon
-        let logoHtml = '';
-        if (edu.logo) {
-          const logoPath = `assets/images/${edu.logo}`;
-          // The icon is always present, but hidden by default; shown if image fails
-          logoHtml = `
-            <span class="relative w-full h-full flex items-center justify-center">
-              <img src="${logoPath}" alt="${edu.institute} logo" class="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700" loading="lazy" onerror="this.style.display='none';this.parentNode.querySelector('.fallback-icon').style.display='flex';" />
-              <span class="fallback-icon absolute inset-0 w-full h-full hidden items-center justify-center">
-                <i data-lucide="building" class="w-7 h-7 sm:w-8 sm:h-8 text-slate-500 dark:text-slate-300"></i>
-              </span>
-            </span>
-          `;
-        } else {
-          logoHtml = `<i data-lucide="building" class="w-7 h-7 sm:w-8 sm:h-8 text-slate-500 dark:text-slate-300"></i>`;
-        }
+      const createEducationRow = (edu, index) => {
+        const currentName = edu["current_name"] || edu["current name"];
+        const monogram = escapeHtml((edu.institute || "?").trim().charAt(0));
+        const logoHtml = edu.logo
+          ? `<div class="edu__logo"><img src="assets/images/${escapeHtml(edu.logo)}" alt="${escapeHtml(edu.institute)} logo" loading="lazy"
+               onerror="this.parentNode.classList.add('edu__logo--mono');this.parentNode.textContent='${monogram}';" /></div>`
+          : `<div class="edu__logo edu__logo--mono" aria-hidden="true">${monogram}</div>`;
+        const badges = [
+          edu.duration ? `<span class="tag">${icon("calendar")}${escapeHtml(edu.duration)}</span>` : "",
+          edu.group ? `<span class="tag">${icon("book-open")}${escapeHtml(edu.group)}</span>` : "",
+          edu.gpa ? `<span class="tag tag--brand">${icon("award")}GPA: ${escapeHtml(edu.gpa)}</span>` : "",
+        ].join("");
 
         return `
-          <div class="education-item mb-10 last:mb-0 opacity-0 animate-fadeIn" style="animation-delay: ${
-            index * 200
-          }ms">
-            <div class="relative pl-8 border-l-2 border-slate-200 dark:border-slate-700 group">
-              <div class="absolute -left-[11px] top-0 w-5 h-5 rounded-full border-2 border-teal-500 dark:border-teal-400 bg-white dark:bg-slate-800 transition-transform duration-300 group-hover:scale-125 group-hover:border-[3px]"></div>
-              <div class="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-xl p-5 border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:shadow-md hover:border-teal-500/20 dark:hover:border-teal-400/20 transition-all duration-300 transform hover:-translate-y-0.5">
-                <div class="flex flex-row items-center gap-5 sm:gap-6 md:gap-8">
-                  <div class="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
-                    ${logoHtml}
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <h3 class="font-semibold text-lg sm:text-xl text-slate-800 dark:text-slate-200 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
-                      ${edu.degree}
-                    </h3>
-                    <div class="text-base sm:text-lg text-slate-600 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors duration-300">
-                      ${edu.institute}
-                    </div>
-                    ${currentNameHtml}
-                  </div>
-                </div>
-                ${badgesHtml}
-                ${additionalHtml}
-              </div>
+          <article class="edu education-item" data-reveal>
+            <span class="numeral edu__index">${String(index + 1).padStart(2, "0")}</span>
+            ${logoHtml}
+            <div class="edu__content">
+              <h2 class="heading-l">${escapeHtml(edu.degree)}</h2>
+              <p class="body-l edu__inst">${escapeHtml(edu.institute)}</p>
+              ${currentName ? `<p class="label">Now: ${escapeHtml(currentName)}</p>` : ""}
+              ${edu.additional ? `<p class="body-s edu__more">${marked.parseInline(edu.additional)}</p>` : ""}
             </div>
-          </div>
-        `;
+            <div class="edu__badges">${badges}</div>
+          </article>`;
       };
 
-      // Add animation keyframes and styles
-      const style = document.createElement("style");
-      style.textContent = `
-        @keyframes fadeIn {
-          0% { 
-            opacity: 0; 
-            transform: translateY(20px); 
-            filter: blur(5px);
-          }
-          100% { 
-            opacity: 1; 
-            transform: translateY(0);
-            filter: blur(0);
-          }
-        }
-        @keyframes borderPulse {
-          0%, 100% { border-color: rgb(20 184 166 / 0.3); }
-          50% { border-color: rgb(20 184 166 / 0.6); }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        }
-        .education-item:hover .border-l-2 {
-          animation: borderPulse 2s ease-in-out infinite;
-        }
-      `;
-      document.head.appendChild(style);
-
-      // Load and render education.md
-      fetch("content/education.md")
-        .then((res) => {
-          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-          return res.text();
-        })
+      fetchText("content/education.md")
         .then((md) => {
           const education = parseEducation(md);
           const container = document.getElementById("education-md");
-
-          container.innerHTML = education
-            .map((edu, index) => createEducationCard(edu, index))
-            .join("");
-
-          // Re-initialize Lucide icons
-          lucide.createIcons();
+          container.innerHTML = education.map(createEducationRow).join("");
+          document.getElementById("education-count").textContent = `(${String(education.length).padStart(2, "0")})`;
+          stagger(container.children, 90);
+          reveal(container);
         })
         .catch((err) => {
-          console.error(`Failed to load content/education.md:`, err);
+          console.error("Failed to load content/education.md:", err);
           document.getElementById("education-md").innerHTML =
-            '<p class="text-slate-500">Failed to load education history. Please try again later.</p>';
+            '<p class="empty-state">Failed to load education history. Please try again later.</p>';
         });
-
-      // Re-render Lucide icons after content is loaded
-      setTimeout(() => {
-        lucide.createIcons();
-      }, 0);
     </script>
   </body>
 </html>

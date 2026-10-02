@@ -1,78 +1,43 @@
-<header
-  class="fixed top-0 left-0 w-full z-50 border-b border-slate-200/80 dark:border-slate-800/80 bg-slate-50/80 dark:bg-slate-900/80 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-slate-50/60 dark:supports-[backdrop-filter]:bg-slate-900/60"
->
-  <div
-    class="w-full max-w-6xl mx-auto flex h-16 items-center justify-between px-4"
-  >
-    <a
-      href="index.html"
-      class="flex items-center gap-2 text-lg font-bold tracking-tight text-teal-600 dark:text-teal-300 hover:text-teal-700 dark:hover:text-teal-400 transition-colors"
-    >
-      <i data-lucide="user-round" class="w-5 h-5"></i>
-      <span class="md:hidden">Mohammad</span>
-      <span class="hidden md:inline">Mohammad Ashfaq Ur Rahman</span>
+<header class="site-header">
+  <div class="container site-header__bar">
+    <a href="index.html" class="brand" aria-label="Mohammad Ashfaq Ur Rahman, home">
+      <span class="brand__mark" aria-hidden="true">A<span class="brand__dot"></span></span>
+      <span class="brand__short">Mohammad</span>
+      <span class="brand__full">Mohammad Ashfaq Ur Rahman</span>
     </a>
 
-    <div class="flex items-center gap-2">
-      <nav
-        id="main-nav"
-        class="hidden md:flex items-center gap-1 absolute md:static top-full left-0 w-full md:w-auto p-2 md:p-0 bg-slate-50 dark:bg-slate-900 md:bg-transparent md:dark:bg-transparent border-y md:border-0 border-slate-200 dark:border-slate-700"
-      >
-        <a
-          href="about.html"
-          class="nav-link flex items-center gap-2 w-full text-left md:text-center px-4 py-3 md:px-3 md:py-2 rounded-md text-base md:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        >
-          <i data-lucide="contact-2" class="w-4 h-4"></i> About
-        </a>
-        <a
-          href="education.html"
-          class="nav-link flex items-center gap-2 w-full text-left md:text-center px-4 py-3 md:px-3 md:py-2 rounded-md text-base md:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        >
-          <i data-lucide="graduation-cap" class="w-4 h-4"></i> Education
-        </a>
-        <a
-          href="publications.html"
-          class="nav-link flex items-center gap-2 w-full text-left md:text-center px-4 py-3 md:px-3 md:py-2 rounded-md text-base md:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        >
-          <i data-lucide="book-open-check" class="w-4 h-4"></i> Publications
-        </a>
-        <a
-          href="projects.html"
-          class="nav-link flex items-center gap-2 w-full text-left md:text-center px-4 py-3 md:px-3 md:py-2 rounded-md text-base md:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        >
-          <i data-lucide="lightbulb" class="w-4 h-4"></i> Projects
-        </a>
-        <a
-          href="timeline.html"
-          class="nav-link flex items-center gap-2 w-full text-left md:text-center px-4 py-3 md:px-3 md:py-2 rounded-md text-base md:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        >
-          <i data-lucide="milestone" class="w-4 h-4"></i> Timeline
-        </a>
-        <a
-          href="notes.html"
-          class="nav-link flex items-center gap-2 w-full text-left md:text-center px-4 py-3 md:px-3 md:py-2 rounded-md text-base md:text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-teal-600 dark:hover:text-teal-300 transition-colors"
-        >
-          <i data-lucide="notebook-pen" class="w-4 h-4"></i> Notes
-        </a>
+    <div class="site-header__right">
+      <nav id="main-nav" class="nav" aria-label="Primary">
+        <span class="nav__indicator" aria-hidden="true"></span>
+        <a href="about.html" class="nav__link">About</a>
+        <a href="education.html" class="nav__link">Education</a>
+        <a href="publications.html" class="nav__link">Publications</a>
+        <a href="projects.html" class="nav__link">Projects</a>
+        <a href="timeline.html" class="nav__link">Timeline</a>
+        <a href="notes.html" class="nav__link">Notes</a>
       </nav>
 
-      <button
-        id="dark-toggle"
-        class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
-        title="Toggle dark mode"
-      >
-        <i data-lucide="moon" class="block dark:hidden w-5 h-5 text-slate-700"></i>
-        <i data-lucide="sun" class="hidden dark:block w-5 h-5 text-slate-200"></i>
-        <span class="sr-only">Toggle dark mode</span>
+      <button id="dark-toggle" class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">
+        <svg class="icon icon--moon" aria-hidden="true" focusable="false"><use href="#i-moon"></use></svg>
+        <svg class="icon icon--sun" aria-hidden="true" focusable="false"><use href="#i-sun"></use></svg>
       </button>
 
-      <button
-        id="mobile-nav-toggle"
-        class="md:hidden p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
-        aria-label="Open navigation"
-      >
-        <i data-lucide="menu" class="w-6 h-6 text-slate-700 dark:text-slate-200"></i>
+      <button id="mobile-nav-toggle" class="icon-btn menu-btn" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="burger" aria-hidden="true"><span></span><span></span></span>
       </button>
     </div>
+  </div>
+
+  <div id="mobile-menu" class="mobile-menu">
+    <nav class="container" aria-label="Mobile">
+      <ul>
+        <li><a href="about.html"><span class="numeral">01</span>About</a></li>
+        <li><a href="education.html"><span class="numeral">02</span>Education</a></li>
+        <li><a href="publications.html"><span class="numeral">03</span>Publications</a></li>
+        <li><a href="projects.html"><span class="numeral">04</span>Projects</a></li>
+        <li><a href="timeline.html"><span class="numeral">05</span>Timeline</a></li>
+        <li><a href="notes.html"><span class="numeral">06</span>Notes</a></li>
+      </ul>
+    </nav>
   </div>
 </header>

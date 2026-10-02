@@ -4,177 +4,138 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Notes | Academic Profile</title>
-    <link rel="stylesheet" href="styles/animations.css" />
+    <script>
+      document.documentElement.classList.add("js");
+      try {
+        var t = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.classList.add(t);
+      } catch (e) {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Host+Grotesk:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            fontFamily: { sans: ["Inter", "system-ui", "sans-serif"] },
-            typography: ({ theme }) => ({
-              custom: {
-                css: {
-                  "--tw-prose-body": theme("colors.slate[600]"),
-                  "--tw-prose-headings": theme("colors.slate[800]"),
-                  "--tw-prose-links": theme("colors.teal[600]"),
-                  "--tw-prose-invert-body": theme("colors.slate[300]"),
-                  "--tw-prose-invert-headings": theme("colors.slate[100]"),
-                  "--tw-prose-invert-links": theme("colors.teal[400]"),
-                },
-              },
-            }),
-          },
-        },
-      };
-    </script>
+    <link rel="stylesheet" href="styles/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
   </head>
-  <body
-    class="font-sans bg-slate-50 text-slate-700 dark:bg-slate-900 dark:text-slate-300 min-h-screen flex flex-col"
-  >
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div id="header-partial"></div>
 
-    <main class="flex-1 w-full max-w-4xl mx-auto px-4 pb-10 pt-28">
-      <a
-        href="notes.html"
-        class="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-lg bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm text-teal-600 dark:text-teal-300 font-semibold border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-      >
-        <i data-lucide="arrow-left" class="w-4 h-4"></i>
-        Back to All Posts
-      </a>
+    <main id="main">
+      <article id="post-card" class="container post">
+        <a href="notes.html" class="btn post__back" data-rise>
+          <svg class="icon icon--prev" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+          Back to All Posts
+        </a>
 
-      <div
-        id="post-card"
-        class="rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-4 sm:p-8"
-      >
-        <div
-          id="post-content"
-          class="prose prose-custom dark:prose-invert max-w-none mb-8 min-h-[250px] sm:min-h-[350px]"
-        >
+        <div id="reading" class="reading" hidden>
+          <div class="reading__meta">
+            <span id="reading-title" class="label"></span>
+            <span id="reading-count" class="numeral"></span>
+          </div>
+          <div class="reading__bar"><div id="reading-fill" class="reading__fill"></div></div>
+        </div>
+
+        <div id="post-content" class="prose">
           <p>Loading post...</p>
         </div>
 
-        <div
-          id="pagination-controls"
-          class="flex items-center justify-between border-t border-slate-200 dark:border-slate-700 pt-6"
-        ></div>
-      </div>
+        <nav id="pagination-controls" class="pagination" aria-label="Post pages"></nav>
+      </article>
     </main>
 
     <div id="footer-partial"></div>
-    <script src="scripts/partials.js"></script>
+    <script src="scripts/site.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const postContent = document.getElementById("post-content");
-        const paginationControls = document.getElementById(
-          "pagination-controls"
-        );
-        const urlParams = new URLSearchParams(window.location.search);
-        const postFile = urlParams.get("file");
+      const { icon, fetchText } = window.Site;
+      const postContent = document.getElementById("post-content");
+      const paginationControls = document.getElementById("pagination-controls");
+      const reading = document.getElementById("reading");
+      const postFile = new URLSearchParams(window.location.search).get("file");
 
-        let pages = [];
-        let currentPageIndex = 0;
+      let pages = [];
+      let currentPageIndex = 0;
 
-        const renderPage = (index) => {
-          if (!pages[index]) return;
+      const updateChrome = (index) => {
+        const total = pages.length;
+        document.getElementById("reading-count").textContent = `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+        document.getElementById("reading-fill").style.setProperty("--p", (index + 1) / total);
+        const indicator = document.getElementById("page-indicator");
+        if (indicator) indicator.textContent = `Page ${index + 1} of ${total}`;
+        const prev = document.getElementById("prev-button");
+        const next = document.getElementById("next-button");
+        if (prev) prev.disabled = index === 0;
+        if (next) next.disabled = index === total - 1;
+      };
 
+      const renderPage = (index, animate) => {
+        if (!pages[index]) return;
+        const swap = () => {
           postContent.innerHTML = marked.parse(pages[index]);
-
-          const pageIndicator = document.getElementById("page-indicator");
-          const prevButton = document.getElementById("prev-button");
-          const nextButton = document.getElementById("next-button");
-
-          if (pageIndicator) {
-            pageIndicator.textContent = `Page ${index + 1} of ${pages.length}`;
-          }
-          if (prevButton) {
-            prevButton.disabled = index === 0;
-            prevButton.classList.toggle("opacity-50", index === 0);
-          }
-          if (nextButton) {
-            nextButton.disabled = index === pages.length - 1;
-            nextButton.classList.toggle(
-              "opacity-50",
-              index === pages.length - 1
-            );
-          }
-
-          lucide.createIcons();
+          updateChrome(index);
+          postContent.classList.remove("is-swapping");
         };
+        if (!animate) return swap();
 
-        if (postFile) {
-          const filePath = `posts/${postFile}`;
+        postContent.classList.add("is-swapping");
+        const top = document.getElementById("post-card").getBoundingClientRect().top + window.scrollY - 80;
+        if (window.scrollY > top) window.scrollTo({ top, behavior: "smooth" });
+        setTimeout(swap, 280);
+      };
 
-          fetch(filePath)
-            .then((res) => {
-              if (!res.ok) throw new Error("Post not found");
-              return res.text();
-            })
-            .then((md) => {
-              pages = md
-                .trim()
-                .split(/^\s*---\s*$/m)
-                .filter((p) => p.trim());
+      if (postFile) {
+        fetchText(`posts/${postFile}`)
+          .then((md) => {
+            pages = md
+              .trim()
+              .split(/^\s*---\s*$/m)
+              .filter((p) => p.trim());
 
-              if (pages.length === 0) {
-                postContent.innerHTML = `<p>No content found in this file to create pages.</p>`;
-                return;
-              }
+            if (pages.length === 0) {
+              postContent.innerHTML = `<p>No content found in this file to create pages.</p>`;
+              return;
+            }
 
-              const tempDiv = document.createElement("div");
-              tempDiv.innerHTML = marked.parse(md);
-              const firstHeading = tempDiv.querySelector("h1, h2, h3");
-              if (firstHeading) {
-                document.title = `${firstHeading.textContent} | Notes`;
-              }
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = marked.parse(md);
+            const firstHeading = tempDiv.querySelector("h1, h2, h3");
+            if (firstHeading) {
+              document.title = `${firstHeading.textContent} | Notes`;
+              document.getElementById("reading-title").textContent = firstHeading.textContent;
+            }
 
-              // NEW: Responsive pagination controls HTML
+            if (pages.length > 1) {
+              reading.hidden = false;
               paginationControls.innerHTML = `
-                <button id="prev-button" class="inline-flex items-center justify-center sm:justify-start gap-2 px-3 sm:px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 disabled:opacity-50 disabled:hover:bg-slate-200 dark:disabled:hover:bg-slate-700 transition-opacity">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                    <span class="hidden sm:inline">Previous</span>
-                </button>
-                <span id="page-indicator" class="hidden sm:block text-sm font-semibold text-slate-500 dark:text-slate-400"></span>
-                <button id="next-button" class="inline-flex items-center justify-center sm:justify-start gap-2 px-3 sm:px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 disabled:opacity-50 disabled:hover:bg-slate-200 dark:disabled:hover:bg-slate-700 transition-opacity">
-                    <span class="hidden sm:inline">Next</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </button>
-              `;
+                <button id="prev-button" class="btn" type="button">${icon("arrow-left", "icon--prev")}<span>Previous</span></button>
+                <span id="page-indicator" class="label"></span>
+                <button id="next-button" class="btn btn--primary" type="button"><span>Next</span>${icon("arrow-right", "icon--next")}</button>`;
 
-              document
-                .getElementById("prev-button")
-                .addEventListener("click", () => {
-                  if (currentPageIndex > 0) {
-                    currentPageIndex--;
-                    renderPage(currentPageIndex);
-                  }
-                });
+              document.getElementById("prev-button").addEventListener("click", () => {
+                if (currentPageIndex > 0) renderPage(--currentPageIndex, true);
+              });
+              document.getElementById("next-button").addEventListener("click", () => {
+                if (currentPageIndex < pages.length - 1) renderPage(++currentPageIndex, true);
+              });
+              document.addEventListener("keydown", (e) => {
+                if (e.target.closest("input, textarea")) return;
+                if (e.key === "ArrowRight" && currentPageIndex < pages.length - 1) renderPage(++currentPageIndex, true);
+                if (e.key === "ArrowLeft" && currentPageIndex > 0) renderPage(--currentPageIndex, true);
+              });
+            }
 
-              document
-                .getElementById("next-button")
-                .addEventListener("click", () => {
-                  if (currentPageIndex < pages.length - 1) {
-                    currentPageIndex++;
-                    renderPage(currentPageIndex);
-                  }
-                });
-
-              renderPage(currentPageIndex);
-            })
-            .catch((err) => {
-              postContent.innerHTML = `<p>Sorry, the requested post could not be found.</p>`;
-              console.error(err);
-            });
-        } else {
-          postContent.innerHTML = `<p>No post specified.</p>`;
-        }
-      });
+            renderPage(currentPageIndex, false);
+          })
+          .catch((err) => {
+            postContent.innerHTML = `<p>Sorry, the requested post could not be found.</p>`;
+            console.error(err);
+          });
+      } else {
+        postContent.innerHTML = `<p>No post specified.</p>`;
+      }
     </script>
   </body>
 </html>

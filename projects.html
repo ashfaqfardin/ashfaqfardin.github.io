@@ -8,126 +8,102 @@
       content="Projects by Mohammad Ashfaq Ur Rahman, Research Intern at CCDS, IUB. Software, research, and technical work."
     />
     <title>Projects | Academic Profile</title>
+    <script>
+      document.documentElement.classList.add("js");
+      try {
+        var t = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.classList.add(t);
+      } catch (e) {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Host+Grotesk:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles/animations.css" />
-    <script src="https://cdn.tailwindcss.com?plugins=typography,forms"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ["Inter", "system-ui", "sans-serif"],
-            },
-            // Extending typography to customize prose styles
-            typography: ({ theme }) => ({
-              custom: {
-                css: {
-                  "--tw-prose-body": theme("colors.slate[600]"),
-                  "--tw-prose-headings": theme("colors.slate[800]"),
-                  "--tw-prose-links": theme("colors.teal[600]"),
-                  "--tw-prose-bold": theme("colors.slate[800]"),
-                  "--tw-prose-bullets": theme("colors.slate[400]"),
-                  "--tw-prose-hr": theme("colors.slate[200]"),
-                  "--tw-prose-quotes": theme("colors.slate[800]"),
-                  "--tw-prose-quote-borders": theme("colors.teal[300]"),
-
-                  "--tw-prose-invert-body": theme("colors.slate[300]"),
-                  "--tw-prose-invert-headings": theme("colors.slate[100]"),
-                  "--tw-prose-invert-links": theme("colors.teal[400]"),
-                  "--tw-prose-invert-bold": theme("colors.slate[100]"),
-                  "--tw-prose-invert-bullets": theme("colors.slate[600]"),
-                  "--tw-prose-invert-hr": theme("colors.slate[700]"),
-                  "--tw-prose-invert-quotes": theme("colors.slate[100]"),
-                  "--tw-prose-invert-quote-borders": theme("colors.teal[700]"),
-                },
-              },
-            }),
-          },
-        },
-      };
-    </script>
+    <link rel="stylesheet" href="styles/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
   </head>
 
-  <body
-    class="font-sans bg-slate-50 text-slate-700 dark:bg-slate-900 dark:text-slate-300 min-h-screen flex flex-col transition-colors duration-300"
-  >
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div id="header-partial"></div>
 
-    <main class="flex-1 w-full max-w-6xl mx-auto px-4 pb-10 pt-28">
-      <div class="flex items-center gap-4 mb-8">
-        <i
-          data-lucide="folder-kanban"
-          class="w-8 h-8 text-teal-500 dark:text-teal-400"
-        ></i>
-        <h1
-          class="text-3xl sm:text-4xl font-bold text-teal-600 dark:text-teal-400"
-        >
-          Projects
-        </h1>
-      </div>
+    <main id="main">
+      <header class="container page-head">
+        <p class="section-label" data-rise>
+          <span class="section-label__dot"></span><span class="section-label__num">04</span
+          ><span class="section-label__name">Projects</span>
+        </p>
+        <div class="page-title">
+          <h1 class="display-l"><span class="line"><span class="line__inner" style="--d: 0.1s">Projects</span></span></h1>
+          <span id="projects-count" class="numeral page-title__count" data-rise style="--d: 0.4s"></span>
+        </div>
+      </header>
 
-      <div
-        id="projects-container"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-      ></div>
+      <div class="container">
+        <div id="projects-container" class="projects"></div>
+      </div>
     </main>
 
     <div id="footer-partial"></div>
 
-    <script src="scripts/partials.js"></script>
+    <script src="scripts/site.js"></script>
     <script>
-      // Configure marked.js to prevent it from altering header IDs (for C#, etc.)
-      marked.setOptions({
-        mangle: false,
-        headerIds: false,
-      });
-
+      const { icon, escapeHtml, fetchText, reveal, stagger, initSpotlight } = window.Site;
       const container = document.getElementById("projects-container");
 
-      // Load projects.md and create a card for each project
-      fetch("content/projects.md")
-        .then((res) => {
-          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-          return res.text();
-        })
+      // "## Title | [GitHub](url)" or "## Title | Private Repository", followed by a description.
+      const parseProject = (chunk) => {
+        const lines = chunk.trim().split("\n");
+        const heading = lines[0].match(/^#{1,3}\s+(.+)$/);
+        if (!heading) return { body: chunk };
+        const [title, ...rest] = heading[1].split(" | ");
+        const meta = rest.join(" | ").trim();
+        const link = meta.match(/\[([^\]]+)\]\(([^)]+)\)/);
+        return {
+          title: title.trim(),
+          linkLabel: link ? link[1] : meta,
+          url: link ? link[2] : "",
+          body: lines.slice(1).join("\n").trim(),
+        };
+      };
+
+      const createProjectCard = (p, index) => {
+        const num = `<span class="numeral">${String(index + 1).padStart(2, "0")}</span>`;
+        let link = "";
+        if (p.url && p.url !== "#") {
+          link = `<a class="project__link" href="${escapeHtml(p.url)}" target="_blank" rel="noopener noreferrer">
+              <span class="label">${escapeHtml(p.linkLabel)}</span><span class="chip">${icon("arrow-up-right")}</span></a>`;
+        } else if (p.linkLabel) {
+          link = `<span class="project__link"><span class="label">${escapeHtml(p.linkLabel)}</span></span>`;
+        }
+        return `
+          <article class="project" data-reveal data-spotlight>
+            <div class="project__top">${num}${link}</div>
+            <div class="project__bottom">
+              ${p.title ? `<h2 class="heading-l project__title">${escapeHtml(p.title)}</h2>` : ""}
+              ${p.body ? `<div class="project__desc">${marked.parse(p.body)}</div>` : ""}
+            </div>
+          </article>`;
+      };
+
+      fetchText("content/projects.md")
         .then((md) => {
-          // Split the markdown file into chunks, using headings as delimiters.
-          // This regex splits the text at any line that starts with #, ##, or ###.
           const projects = md
             .split(/\n(?=#{1,3} )/)
-            .filter((p) => p.trim() !== "");
-
-          // For each project chunk, create a styled card
-          projects.forEach((projectMarkdown) => {
-            const card = document.createElement("div");
-            card.className =
-              "flex flex-col rounded-2xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1";
-
-            const contentHtml = marked.parse(projectMarkdown);
-
-            card.innerHTML = `
-              <div class="prose prose-custom dark:prose-invert max-w-none prose-a:transition-colors prose-a:duration-200 hover:prose-a:text-teal-700 dark:hover:prose-a:text-teal-300">
-                ${contentHtml}
-              </div>
-            `;
-            container.appendChild(card);
-          });
+            .filter((p) => p.trim() !== "")
+            .map(parseProject);
+          container.innerHTML = projects.map(createProjectCard).join("");
+          document.getElementById("projects-count").textContent = `(${String(projects.length).padStart(2, "0")})`;
+          stagger(container.children, 90);
+          reveal(container);
+          initSpotlight(container);
         })
         .catch((err) => {
-          console.error(`Failed to load content/projects.md:`, err);
-          container.innerHTML = `<p class="text-slate-500 dark:text-slate-400 col-span-full">Could not load projects. Please check the console for errors.</p>`;
+          console.error("Failed to load content/projects.md:", err);
+          container.innerHTML = `<p class="empty-state">Could not load projects. Please check the console for errors.</p>`;
         });
-
-      // Re-render Lucide icons after content is loaded
-      setTimeout(() => {
-        lucide.createIcons();
-      }, 100); // A slightly longer timeout to ensure DOM updates
     </script>
   </body>
 </html>
