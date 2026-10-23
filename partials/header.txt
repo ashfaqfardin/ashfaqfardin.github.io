@@ -14,7 +14,7 @@
         <a href="publications.html" class="nav__link">Publications</a>
         <a href="projects.html" class="nav__link">Projects</a>
         <a href="timeline.html" class="nav__link">Timeline</a>
-        <a href="notes.html" class="nav__link">Notes</a>
+        <a href="news.html" class="nav__link">News</a>
       </nav>
 
       <button id="dark-toggle" class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">
@@ -36,7 +36,7 @@
         <li><a href="publications.html"><span class="numeral">03</span>Publications</a></li>
         <li><a href="projects.html"><span class="numeral">04</span>Projects</a></li>
         <li><a href="timeline.html"><span class="numeral">05</span>Timeline</a></li>
-        <li><a href="notes.html"><span class="numeral">06</span>Notes</a></li>
+        <li><a href="news.html"><span class="numeral">06</span>News</a></li>
       </ul>
     </nav>
   </div>

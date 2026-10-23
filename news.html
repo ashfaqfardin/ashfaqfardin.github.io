@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="News and updates from Mohammad Ashfaq Ur Rahman: publications, achievements, and milestones." />
+    <title>News | Academic Profile</title>
+    <script>
+      document.documentElement.classList.add("js");
+      try {
+        var t = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.classList.add(t);
+      } catch (e) {}
+    </script>
+    <link rel="icon" href="favicon.ico" sizes="32x32" />
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Host+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div id="header-partial"></div>
+
+    <main id="main">
+      <header class="container page-head">
+        <p class="section-label" data-rise>
+          <span class="section-label__dot"></span><span class="section-label__num">06</span
+          ><span class="section-label__name">News</span>
+        </p>
+        <div class="page-title">
+          <h1 class="display-l"><span class="line"><span class="line__inner" style="--d: 0.1s">News</span></span></h1>
+          <span id="news-count" class="numeral page-title__count" data-rise style="--d: 0.4s"></span>
+        </div>
+      </header>
+
+      <section class="container" style="padding-bottom: var(--section-y)">
+        <div id="news-list"></div>
+      </section>
+    </main>
+
+    <div id="footer-partial"></div>
+    <script src="scripts/site.js"></script>
+    <script>
+      const { icon, escapeHtml, reveal, stagger } = window.Site;
+      const list = document.getElementById("news-list");
+      const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+      // Each item: { date: "YYYY-MM" or "YYYY", type, title, description, link?, linkLabel? }
+      const createItem = (item) => {
+        const month = item.date.split("-")[1];
+        const external = /^https?:\/\//.test(item.link || "");
+        const link = item.link
+          ? `<a class="btn btn--sm" href="${escapeHtml(item.link)}"${external ? ' target="_blank" rel="noopener noreferrer"' : ""}>
+              ${escapeHtml(item.linkLabel || "Read more")}${icon("arrow-up-right")}</a>`
+          : "";
+        return `
+          <article class="news" data-reveal>
+            <span class="label news__month">${month ? MONTHS[Number(month) - 1] : ""}</span>
+            <div>
+              <span class="tag">${escapeHtml(item.type)}</span>
+              <h3 class="heading-s news__title">${escapeHtml(item.title)}</h3>
+              <p class="news__desc">${escapeHtml(item.description)}</p>
+              ${link}
+            </div>
+          </article>`;
+      };
+
+      fetch("content/news.json")
+        .then((res) => {
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+          return res.json();
+        })
+        .then((items) => {
+          items.sort((a, b) => b.date.localeCompare(a.date));
+          document.getElementById("news-count").textContent = `(${String(items.length).padStart(2, "0")})`;
+
+          // Group by year, newest first.
+          const groups = [];
+          for (const item of items) {
+            const year = item.date.slice(0, 4);
+            let group = groups.find((g) => g.year === year);
+            if (!group) groups.push((group = { year, items: [] }));
+            group.items.push(item);
+          }
+
+          list.innerHTML = groups
+            .map(
+              (g) => `
+            <section class="year-group">
+              <div class="year-group__year" data-reveal>
+                <h2 class="display-m">${escapeHtml(g.year)}</h2>
+                <span class="numeral">${String(g.items.length).padStart(2, "0")} / ${String(items.length).padStart(2, "0")}</span>
+              </div>
+              <div class="news-list">${g.items.map(createItem).join("")}</div>
+            </section>`
+            )
+            .join("");
+
+          list.querySelectorAll(".news-list").forEach((l) => stagger(l.children, 90));
+          reveal(list);
+        })
+        .catch((err) => {
+          console.error("Failed to load content/news.json:", err);
+          list.innerHTML = `<p class="empty-state">Could not load news.</p>`;
+        });
+    </script>
+  </body>
+</html>

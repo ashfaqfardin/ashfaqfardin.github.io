@@ -158,8 +158,7 @@
 
   // --- Header ---
   function currentPage() {
-    const file = location.pathname.split("/").pop() || "index.html";
-    return file === "post.html" ? "notes.html" : file;
+    return location.pathname.split("/").pop() || "index.html";
   }
 
   function initHeader(headerHost) {

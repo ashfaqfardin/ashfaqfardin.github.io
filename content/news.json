@@ -1,0 +1,114 @@
+[
+  {
+    "date": "2026-02",
+    "type": "Education",
+    "title": "Started MSc in Artificial Intelligence at the University of Surrey",
+    "description": "Began an MSc in Artificial Intelligence at the University of Surrey, UK, focusing on machine learning, natural language processing, and computer vision.",
+    "link": "education.html",
+    "linkLabel": "Education"
+  },
+  {
+    "date": "2025-12",
+    "type": "Publication",
+    "title": "AlphaBorno at BLP-2025 Task 2 published",
+    "description": "First-author paper on Bangla code generation with structured prompts and execution feedback, published at the Second Workshop on Bangla Language Processing (BLP-2025) in Mumbai, India. Our best system reached a Pass@1 of 72.2%.",
+    "link": "https://aclanthology.org/2025.banglalp-1.63/",
+    "linkLabel": "Paper"
+  },
+  {
+    "date": "2025-12",
+    "type": "Publication",
+    "title": "SOMAJGYAAN published in Findings of IJCNLP-AACL 2025",
+    "description": "A Bangla multiple-choice benchmark of 4,234 questions, built from Bangladeshi curriculum and social studies textbooks, for evaluating how well LLMs handle culturally grounded knowledge. Published in Findings of IJCNLP-AACL 2025, Mumbai, India.",
+    "link": "https://aclanthology.org/2025.findings-ijcnlp.134/",
+    "linkLabel": "Paper"
+  },
+  {
+    "date": "2025-07",
+    "type": "Achievement",
+    "title": "Team BD placed 5th of 44 at the BEA 2025 Shared Task",
+    "description": "Our MPNet ensemble placed 5th of 44 teams on Track 1 (Mistake Identification) and 7th of 31 on Track 2 (Mistake Location) in the shared task on pedagogical ability assessment of AI tutors, held at the BEA 2025 workshop in Vienna, Austria.",
+    "link": "https://aclanthology.org/2025.bea-1.102/",
+    "linkLabel": "Paper"
+  },
+  {
+    "date": "2025-04",
+    "type": "Publication",
+    "title": "PACE study published at CHI 2025",
+    "description": "Our study on improving user engagement and learning outcomes in PACE, an LLM-based Python tutor, appeared in the Extended Abstracts of CHI 2025 in Yokohama, Japan.",
+    "link": "https://dl.acm.org/doi/abs/10.1145/3706599.3720240",
+    "linkLabel": "Paper"
+  },
+  {
+    "date": "2025-02",
+    "type": "Workshop",
+    "title": "Conducted a 3-day hands-on workshop on LLMs",
+    "description": "Ran a workshop on large language models covering data preparation, fine-tuning, and deployment, with demonstrations of LLaMA using llama.cpp."
+  },
+  {
+    "date": "2024-12",
+    "type": "Education",
+    "title": "Graduated with a BSc in Computer Science and Engineering",
+    "description": "Completed my BSc in Computer Science and Engineering at Independent University, Bangladesh (IUB).",
+    "link": "education.html",
+    "linkLabel": "Education"
+  },
+  {
+    "date": "2024-12",
+    "type": "Work",
+    "title": "Joined CCDS as a Research Intern",
+    "description": "Started as a Research Intern at the Center for Computational & Data Sciences (CCDS), IUB, working on dataset development and LLM-based educational systems.",
+    "link": "about.html",
+    "linkLabel": "About"
+  },
+  {
+    "date": "2024-11",
+    "type": "Thesis",
+    "title": "Undergraduate thesis on PACE published",
+    "description": "Our thesis, PACE: Python AI Companion for Enhanced Engagement, is now available in the IUB Academic Repository.",
+    "link": "https://ar.iub.edu.bd/handle/11348/993",
+    "linkLabel": "Thesis"
+  },
+  {
+    "date": "2024-01",
+    "type": "Event",
+    "title": "Attended the ACM SIGCHI Winter School, South Asia",
+    "description": "Took part in a three-day Human-Computer Interaction winter school in Colombo, Sri Lanka, supported by a $500 travel grant."
+  },
+  {
+    "date": "2023-10",
+    "type": "Volunteering",
+    "title": "Design Team, IEEEXtreme 17.0",
+    "description": "Served on the Design Team for IEEEXtreme 17.0, IEEE's global 24-hour programming competition for student teams, held on 28 October 2023.",
+    "link": "https://ieeextreme.org/ieeextreme-17-0-team/",
+    "linkLabel": "Team"
+  },
+  {
+    "date": "2023-08",
+    "type": "Publication",
+    "title": "Fruit quality detection paper at IEEE ICCSCE 2023",
+    "description": "Co-authored a paper on a fruit quality detection and monitoring system, published at the 13th IEEE International Conference on Control System, Computing and Engineering (ICCSCE 2023) in Penang, Malaysia.",
+    "link": "https://ieeexplore.ieee.org/abstract/document/10237165/",
+    "linkLabel": "Paper"
+  },
+  {
+    "date": "2022-10",
+    "type": "Volunteering",
+    "title": "Joined the IEEEXtreme 16.0 Design Team",
+    "description": "Worked on PR graphics design for IEEEXtreme 16.0, IEEE's global 24-hour programming competition for student teams, held on 22 October 2022.",
+    "link": "https://ieeextreme.org/ieeextreme-16-0-team/",
+    "linkLabel": "Team"
+  },
+  {
+    "date": "2022-08",
+    "type": "Leadership",
+    "title": "Became Chair of the IEEE Computer Society IUB Student Branch Chapter",
+    "description": "Led the chapter until May 2023, growing active membership from 20 to 304 and the executive board from 7 to 17 members."
+  },
+  {
+    "date": "2021",
+    "type": "Entrepreneurship",
+    "title": "Founded Neumentora",
+    "description": "Started Neumentora, a platform offering mentorship, technical resources, and community support for students and professionals in technology."
+  }
+]
