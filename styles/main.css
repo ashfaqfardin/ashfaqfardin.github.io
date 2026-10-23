@@ -1785,6 +1785,13 @@ html.dark .portrait img {
   margin-top: var(--space-200);
 }
 
+.project__desc a {
+  text-decoration: underline;
+  text-decoration-color: var(--lime);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
 .project:hover {
   background-color: var(--brand);
   color: var(--on-brand);
