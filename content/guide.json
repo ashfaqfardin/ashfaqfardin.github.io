@@ -38,6 +38,11 @@
     "text": "Thanks for reading all the way to the bottom.",
     "action": { "label": "Back to top", "run": "top" }
   },
+  "secret": {
+    "label": "Secret unlocked",
+    "text": "You found the hidden pool! Steer me with ← and → and dodge the bugs of machine learning.",
+    "action": { "label": "Play Keep Swimming", "href": "keep-swimming.html" }
+  },
   "cite": {
     "label": "Copied",
     "text": "Cite away! The BibTeX is on your clipboard."

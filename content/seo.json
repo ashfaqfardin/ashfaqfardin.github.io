@@ -83,6 +83,13 @@
       "list": "news",
       "sources": ["content/news.json"]
     },
+    "keep-swimming.html": {
+      "name": "Keep Swimming",
+      "title": "Keep Swimming | Mohammad Ashfaq Ur Rahman",
+      "description": "A hidden mini-game: swim past CUDA OOMs, adversarial patches, hallucinations and exploding gradients.",
+      "noindex": true,
+      "sources": []
+    },
     "404.html": {
       "name": "Page not found",
       "title": "Page not found | Mohammad Ashfaq Ur Rahman",

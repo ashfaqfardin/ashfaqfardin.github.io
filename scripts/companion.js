@@ -476,14 +476,19 @@
     if (guide) say({ ...guide.cite, ms: 3000 });
   });
 
-  // "Keep Swimming": goggles on, a little swim.
+  // "Keep Swimming": goggles on, a little swim. Clicking it unlocks the hidden game.
   document.querySelectorAll('[data-companion="swim"]').forEach((n) => {
     const swim = () => {
       rouse();
       express("swimming", 2600);
     };
     n.addEventListener("pointerenter", swim);
-    n.addEventListener("click", swim);
+    n.addEventListener("click", () => {
+      swim();
+      save("localStorage", "keep-swimming", true); // read by scripts/keep-swimming.js
+      if (guide && guide.secret) say({ ...guide.secret, ms: 12000 });
+      else location.href = "keep-swimming.html";
+    });
   });
 
   // Reached the footer: a wave and a way back up, once per page view.

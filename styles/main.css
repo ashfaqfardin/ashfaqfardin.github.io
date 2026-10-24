@@ -2516,6 +2516,309 @@ html.dark .portrait img {
   margin-top: var(--space-400);
 }
 
+/* ---------- Keep Swimming (hidden game, scripts/keep-swimming.js) ---------- */
+[data-companion="swim"] {
+  cursor: pointer;
+}
+
+/* The floating WhatsApp button would sit on the right arrow on phones. */
+[data-page="keep-swimming"] .wa-fab {
+  display: none;
+}
+
+.ks {
+  display: grid;
+  grid-template-columns: minmax(0, 520px) minmax(0, 1fr);
+  gap: var(--space-1200);
+  align-items: start;
+}
+
+.ks__game {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-300);
+}
+
+.ks__stage {
+  position: relative;
+  height: min(680px, 72vh);
+  min-height: 420px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-2);
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  outline: none;
+}
+
+.ks__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ks__hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-200);
+  padding: var(--space-400);
+  pointer-events: none;
+}
+
+.ks__score {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--text-2);
+}
+
+.ks__num {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.ks__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-200);
+}
+
+.ks__btn {
+  width: 36px;
+  height: 36px;
+  background: var(--bg);
+  pointer-events: auto;
+}
+
+.ks__btn:disabled {
+  opacity: 0.4;
+}
+
+.ks__btn .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.ks__lives {
+  display: flex;
+  gap: 2px;
+  margin-right: var(--space-100);
+}
+
+.ks__heart svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--lime);
+  stroke: var(--text);
+  stroke-width: 2;
+  transition: opacity 0.3s, transform 0.4s var(--ease);
+}
+
+.ks__heart.is-lost svg {
+  opacity: 0.25;
+  fill: none;
+  transform: scale(0.85);
+}
+
+.ks__combo {
+  position: absolute;
+  top: 96px;
+  left: var(--space-400);
+  pointer-events: none;
+}
+
+.ks__overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--space-600);
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  text-align: center;
+}
+
+.ks__overlay[hidden] {
+  display: none;
+}
+
+.ks__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-300);
+  max-width: 320px;
+}
+
+.ks__card .pill {
+  margin-top: var(--space-200);
+}
+
+.ks__muted {
+  color: var(--text-2);
+}
+
+.ks__best {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.ks__final {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6vw, 72px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ks__pad {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-300);
+}
+
+.ks__padbtn {
+  display: grid;
+  place-items: center;
+  height: 64px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-2);
+  color: var(--text);
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.2s, color 0.2s, transform 0.15s;
+}
+
+.ks__padbtn.is-down {
+  background: var(--lime);
+  color: var(--on-lime);
+  transform: scale(0.97);
+}
+
+.ks__padbtn .icon {
+  width: 26px;
+  height: 26px;
+}
+
+/* Full screen: the browser's Fullscreen API or, where that isn't allowed, the whole window. */
+html.ks-immersive {
+  overflow: hidden;
+}
+
+.ks__game.is-fullscreen {
+  --ks-column: min(100%, calc((100vh - 112px) * 0.72));
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  align-items: center;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom))
+    max(12px, env(safe-area-inset-left));
+  background: var(--bg);
+}
+
+@supports (height: 100dvh) {
+  .ks__game.is-fullscreen {
+    --ks-column: min(100%, calc((100dvh - 112px) * 0.72));
+  }
+}
+
+.ks__game.is-fullscreen .ks__stage {
+  flex: 1;
+  width: var(--ks-column);
+  height: auto;
+  min-height: 0;
+}
+
+.ks__game.is-fullscreen .ks__pad {
+  width: var(--ks-column);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ks__padbtn {
+    height: 48px;
+  }
+}
+
+.ks__help {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-400);
+  max-width: 440px;
+}
+
+.ks__keys {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+  color: var(--text-body);
+}
+
+.ks__kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  margin-right: 4px;
+  padding: 0 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text);
+}
+
+.ks__legend-title {
+  margin-top: var(--space-400);
+  color: var(--text-2);
+}
+
+.ks__legend {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+}
+
+.ks__legend li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-300);
+  font-size: 14px;
+  color: var(--text-body);
+}
+
+.ks__legend strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.ks__icon {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--bg-2);
+}
+
 /* ---------- Prose ---------- */
 .prose {
   min-height: 300px;
@@ -3127,6 +3430,14 @@ html.dark .portrait img {
   .tl-item__card {
     grid-column: 2;
     padding: var(--space-600);
+  }
+
+  .ks {
+    grid-template-columns: 1fr;
+  }
+
+  .ks__stage {
+    height: min(620px, 66vh);
   }
 }
 
