@@ -56,6 +56,13 @@
     return String(str).replace(/[&<>"']/g, (s) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[s]);
   }
 
+  // "BD at BEA 2025 Shared Task" -> "bd-at-bea-2025-shared-task" (ids for #links; tools/build-seo.mjs matches it).
+  const slug = (s) =>
+    String(s)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+
   async function fetchText(url) {
     const res = await fetch(url);
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -101,7 +108,7 @@
       if (!blank) box.append(n.cloneNode(true));
     });
     box.querySelectorAll("*").forEach((n) => {
-      n.classList.remove("is-in", "is-reached");
+      n.classList.remove("is-in", "is-reached", "is-target");
       if (n.getAttribute("class") === "") n.removeAttribute("class");
       ["--d", "--mx", "--my"].forEach((p) => n.style.removeProperty(p));
       if (n.getAttribute("style") === "") n.removeAttribute("style");
@@ -123,6 +130,17 @@
     container.innerHTML = html;
     return true;
   }
+
+  // --- Deep links ---
+  // Briefly ring the item a #hash points at, e.g. a result from the companion's search.
+  function highlightTarget() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const target = id && document.getElementById(id);
+    if (!target) return;
+    target.classList.add("is-target");
+    setTimeout(() => target.classList.remove("is-target"), 2400);
+  }
+  window.addEventListener("hashchange", highlightTarget);
 
   // --- Pointer spotlight on cards ---
   function initSpotlight(scope = document) {
@@ -307,11 +325,12 @@
     }
   }
 
-  window.Site = { icon, escapeHtml, fetchText, reveal, stagger, initSpotlight, render, same };
+  window.Site = { icon, escapeHtml, slug, fetchText, reveal, stagger, initSpotlight, render, same };
 
   injectSprite();
   initTheme();
   injectPartials();
   reveal();
   initSpotlight();
+  highlightTarget();
 })();

@@ -1,6 +1,6 @@
 {
-  "greeting": "Hi, I'm Ashfaq's tiny guide",
-  "hint": "Tap me any time to see this tip again.",
+  "greeting": "I'm Ashfaq's tiny guide",
+  "hint": "Tap me any time for this tip, or press / to search.",
   "pages": {
     "index": {
       "text": "Start with News to see what Ashfaq has been up to lately.",
@@ -22,10 +22,36 @@
       "action": { "label": "Try the demo", "href": "https://huggingface.co/spaces/ashfaqfardin/pkg_recognizer" }
     },
     "timeline": {
-      "text": "Scroll down and the line fills in, one milestone at a time."
+      "text": "Scroll down and I'll ride the line through every milestone."
     },
     "news": {
       "text": "Newest first. Each item links to the paper or page behind it."
     }
+  },
+  "lost": {
+    "label": "Lost?",
+    "text": "Me too. This page doesn't exist, but plenty of others do.",
+    "action": { "label": "Go home", "href": "/" }
+  },
+  "footer": {
+    "label": "That's everything",
+    "text": "Thanks for reading all the way to the bottom.",
+    "action": { "label": "Back to top", "run": "top" }
+  },
+  "cite": {
+    "label": "Copied",
+    "text": "Cite away! The BibTeX is on your clipboard."
+  },
+  "news": {
+    "label": "New since your last visit",
+    "one": "New: {title}",
+    "many": "{count} new updates, including “{title}”.",
+    "action": { "label": "See what's new", "href": "news.html" }
+  },
+  "search": {
+    "label": "Search",
+    "placeholder": "Papers, projects, news…",
+    "empty": "Try “Bangla”, “RAG” or “CHI”.",
+    "none": "Nothing found for “{query}”."
   }
 }

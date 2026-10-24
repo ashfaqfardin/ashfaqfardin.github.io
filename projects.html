@@ -42,7 +42,7 @@
     <link rel="stylesheet" href="styles/main.css" />
   </head>
 
-  <body>
+  <body data-outfit="hardhat">
     <a class="skip-link" href="#main">Skip to content</a>
     <div id="header-partial"><!-- prerender:header --><header class="site-header">
   <div class="container site-header__bar">
@@ -102,8 +102,8 @@
       </header>
 
       <div class="container">
-        <div id="projects-container" class="projects"><!-- prerender:projects --><!-- prerender:projects --><!-- prerender:projects -->
-          <article class="project" data-reveal="" data-spotlight="">
+        <div id="projects-container" class="projects"><!-- prerender:projects -->
+          <article class="project" id="project-local-rag-api-with-ollama" data-reveal="" data-spotlight="">
             <div class="project__top"><span class="numeral">01</span><a class="project__link" href="https://github.com/ashfaqfardin/local-rag-api-with-ollama" target="_blank" rel="noopener noreferrer">
               <span class="label">GitHub</span><span class="chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-up-right"></use></svg></span></a></div>
             <div class="project__bottom">
@@ -112,7 +112,7 @@
 </div>
             </div>
           </article>
-          <article class="project" data-reveal="" data-spotlight="">
+          <article class="project" id="project-package-recognizer" data-reveal="" data-spotlight="">
             <div class="project__top"><span class="numeral">02</span><a class="project__link" href="https://github.com/ashfaqfardin/Package-Recognizer" target="_blank" rel="noopener noreferrer">
               <span class="label">GitHub</span><span class="chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-up-right"></use></svg></span></a></div>
             <div class="project__bottom">
@@ -121,7 +121,7 @@
 </div>
             </div>
           </article>
-          <article class="project" data-reveal="" data-spotlight="">
+          <article class="project" id="project-global-university-rankings-analytics" data-reveal="" data-spotlight="">
             <div class="project__top"><span class="numeral">03</span><a class="project__link" href="https://github.com/ashfaqfardin/Global-University-Rankings-Analytics" target="_blank" rel="noopener noreferrer">
               <span class="label">GitHub</span><span class="chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-up-right"></use></svg></span></a></div>
             <div class="project__bottom">
@@ -130,7 +130,7 @@
 </div>
             </div>
           </article>
-          <article class="project" data-reveal="" data-spotlight="">
+          <article class="project" id="project-slm-based-python-tutoring-system" data-reveal="" data-spotlight="">
             <div class="project__top"><span class="numeral">04</span><span class="project__link"><span class="label">Private Repository</span></span></div>
             <div class="project__bottom">
               <h2 class="heading-l project__title">SLM Based Python Tutoring System</h2>
@@ -138,7 +138,7 @@
 </div>
             </div>
           </article>
-          <article class="project" data-reveal="" data-spotlight="">
+          <article class="project" id="project-easyocr-form-app" data-reveal="" data-spotlight="">
             <div class="project__top"><span class="numeral">05</span><a class="project__link" href="https://github.com/ashfaqfardin/Useless_OCR" target="_blank" rel="noopener noreferrer">
               <span class="label">GitHub</span><span class="chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-up-right"></use></svg></span></a></div>
             <div class="project__bottom">
@@ -147,7 +147,7 @@
 </div>
             </div>
           </article>
-          <article class="project" data-reveal="" data-spotlight="">
+          <article class="project" id="project-dockylin-reimplementation" data-reveal="" data-spotlight="">
             <div class="project__top"><span class="numeral">06</span><a class="project__link" href="https://github.com/ashfaqfardin/DocKylin_Reimplemented" target="_blank" rel="noopener noreferrer">
               <span class="label">GitHub</span><span class="chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-up-right"></use></svg></span></a></div>
             <div class="project__bottom">
@@ -156,7 +156,7 @@
 </div>
             </div>
           </article>
-          <article class="project" data-reveal="" data-spotlight="">
+          <article class="project" id="project-local-chat-application" data-reveal="" data-spotlight="">
             <div class="project__top"><span class="numeral">07</span><a class="project__link" href="https://github.com/ashfaqfardin/local-chat-app" target="_blank" rel="noopener noreferrer">
               <span class="label">GitHub</span><span class="chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-up-right"></use></svg></span></a></div>
             <div class="project__bottom">
@@ -165,7 +165,7 @@
 </div>
             </div>
           </article>
-          <article class="project" data-reveal="" data-spotlight="">
+          <article class="project" id="project-dl-code-organization" data-reveal="" data-spotlight="">
             <div class="project__top"><span class="numeral">08</span><a class="project__link" href="https://github.com/ashfaqfardin/DL_Code_Organization" target="_blank" rel="noopener noreferrer">
               <span class="label">GitHub</span><span class="chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-up-right"></use></svg></span></a></div>
             <div class="project__bottom">
@@ -174,7 +174,7 @@
 </div>
             </div>
           </article>
-          <article class="project" data-reveal="" data-spotlight="">
+          <article class="project" id="project-quiz-application" data-reveal="" data-spotlight="">
             <div class="project__top"><span class="numeral">09</span><a class="project__link" href="https://github.com/ashfaqfardin/quiz_app" target="_blank" rel="noopener noreferrer">
               <span class="label">GitHub</span><span class="chip"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-up-right"></use></svg></span></a></div>
             <div class="project__bottom">
@@ -252,7 +252,7 @@
     <script src="scripts/site.js"></script>
     <script src="scripts/companion.js"></script>
     <script>
-      const { icon, escapeHtml, fetchText, reveal, stagger, initSpotlight, render } = window.Site;
+      const { icon, escapeHtml, slug, fetchText, reveal, stagger, initSpotlight, render } = window.Site;
       const container = document.getElementById("projects-container");
 
       // "## Title | [GitHub](url)" or "## Title | Private Repository", followed by a description.
@@ -281,7 +281,7 @@
           link = `<span class="project__link"><span class="label">${escapeHtml(p.linkLabel)}</span></span>`;
         }
         return `
-          <article class="project" data-reveal data-spotlight>
+          <article class="project"${p.title ? ` id="project-${slug(p.title)}"` : ""} data-reveal data-spotlight>
             <div class="project__top">${num}${link}</div>
             <div class="project__bottom">
               ${p.title ? `<h2 class="heading-l project__title">${escapeHtml(p.title)}</h2>` : ""}

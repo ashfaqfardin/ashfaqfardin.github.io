@@ -7,7 +7,7 @@
 //   2. Crawlable HTML: renders each page in a headless browser and bakes the
 //      result in between <!-- prerender:ID --> markers, so crawlers that don't
 //      run JavaScript still see the content. Page scripts re-render on load.
-//   3. sitemap.xml and llms.txt.
+//   3. sitemap.xml, llms.txt and search-index.json (the companion's site search).
 //
 // Run after editing content/ or a page:  node tools/build-seo.mjs
 import { createServer } from "node:http";
@@ -353,7 +353,7 @@ async function launchBrowser() {
 const SNAPSHOT = `(select, all) => {
   const clean = (root) => {
     root.querySelectorAll("*").forEach((n) => {
-      n.classList.remove("is-in", "is-reached");
+      n.classList.remove("is-in", "is-reached", "is-target");
       if (n.getAttribute("class") === "") n.removeAttribute("class");
       ["--d", "--mx", "--my"].forEach((p) => n.style.removeProperty(p));
       if (n.getAttribute("style") === "") n.removeAttribute("style");
@@ -455,7 +455,20 @@ ${data.news
 `
 );
 
-console.log(`  sitemap.xml (${indexed.length} URLs), llms.txt`);
+// The companion's "/" search (scripts/companion.js). Item ids match site.js slug().
+const slug = (s) =>
+  String(s)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+const searchIndex = [
+  ...data.publications.map((p) => ({ type: "Paper", title: p.title, text: `${p.title} ${p.venue} ${p.year} ${p.author}`, url: `publications.html#pub-${slug(p.title)}` })),
+  ...data.projects.map((p) => ({ type: "Project", title: p.title, text: `${p.title} ${p.body}`, url: `projects.html#project-${slug(p.title)}` })),
+  ...data.news.map((n) => ({ type: "News", title: n.title, text: `${n.title} ${n.description} ${n.date}`, url: `news.html#news-${slug(n.title)}` })),
+];
+writeFileSync(join(ROOT, "search-index.json"), JSON.stringify(searchIndex));
+
+console.log(`  sitemap.xml (${indexed.length} URLs), llms.txt, search-index.json (${searchIndex.length} items)`);
 if (warnings.length) {
   console.warn("\nWarnings:");
   warnings.forEach((w) => console.warn(`  - ${w}`));

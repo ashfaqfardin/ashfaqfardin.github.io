@@ -952,7 +952,7 @@ html.dark .theme-toggle .icon--moon {
   box-shadow: 0 0 0 2px var(--bg), inset -3px -4px 0 rgba(14, 14, 15, 0.12);
   transform: rotate(var(--tilt, 0deg)) scale(var(--sx, 1), var(--sy, 1));
   transform-origin: 50% 85%;
-  transition: transform 0.35s var(--ease);
+  transition: transform 0.35s var(--ease), rotate 0.35s var(--ease);
   animation: companion-bob 2.8s ease-in-out infinite;
 }
 
@@ -985,7 +985,7 @@ html.dark .theme-toggle .icon--moon {
   height: 8px;
   border-radius: 3px;
   background: var(--on-lime);
-  transition: scale 0.25s var(--ease);
+  transition: scale 0.25s var(--ease), width 0.2s var(--ease), height 0.2s var(--ease), margin 0.2s var(--ease);
   animation: companion-blink 5.5s infinite;
 }
 
@@ -1011,23 +1011,231 @@ html.dark .theme-toggle .icon--moon {
   pointer-events: none;
 }
 
-.companion__heart {
+/* Hearts and waves that float up and fade */
+.companion__float {
   position: absolute;
-  top: -10px;
+  top: -12px;
   left: 50%;
-  width: 16px;
-  height: 16px;
-  margin-left: -8px;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  font-size: 15px;
+  line-height: 1;
   pointer-events: none;
-  animation: companion-heart 0.9s var(--ease) forwards;
+  animation: companion-float 0.9s var(--ease) forwards;
 }
 
-.companion__heart svg {
-  width: 100%;
-  height: 100%;
+.companion__float svg {
+  width: 16px;
+  height: 16px;
   fill: var(--lime);
   stroke: var(--text);
   stroke-width: 2;
+}
+
+/* Accessories: hidden until an outfit or mood calls for them */
+.companion__hat,
+.companion__specs,
+.companion__map,
+.companion__mark,
+.companion__air {
+  position: absolute;
+  pointer-events: none;
+}
+
+.companion__hat,
+.companion__specs,
+.companion__map {
+  display: none;
+}
+
+/* Hard hat (Projects) */
+.companion.outfit-hardhat .companion__hat {
+  display: block;
+  top: -7px;
+  left: 50%;
+  width: 28px;
+  height: 13px;
+  margin-left: -14px;
+  border-radius: 14px 14px 3px 3px;
+  background: var(--brand);
+}
+
+.companion.outfit-hardhat .companion__hat::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 50%;
+  width: 4px;
+  height: 9px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: var(--lime);
+}
+
+.companion.outfit-hardhat .companion__hat::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: -4px;
+  right: -4px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--brand);
+}
+
+/* Nightcap (midnight to 5am, replaces any hat) */
+.companion.has-nightcap .companion__hat {
+  display: block;
+  top: -14px;
+  left: 13px;
+  width: 22px;
+  height: 20px;
+  margin-left: 0;
+  border-radius: 0;
+  background: none;
+  rotate: 24deg;
+}
+
+.companion.has-nightcap .companion__hat::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  border-radius: 0;
+  background: var(--brand);
+  clip-path: polygon(0 100%, 100% 100%, 62% 0);
+}
+
+.companion.has-nightcap .companion__hat::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  bottom: auto;
+  left: 11px;
+  right: auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 0 1.5px var(--brand);
+}
+
+/* Reading glasses (Publications) and swim goggles share the lens shapes */
+.companion.outfit-glasses .companion__specs,
+.companion.is-swimming .companion__specs {
+  display: block;
+  top: 11px;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: linear-gradient(var(--on-lime), var(--on-lime)) no-repeat 16px 5px / 4px 1.5px;
+}
+
+.companion__specs::before,
+.companion__specs::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 11px;
+  height: 11px;
+  border: 1.5px solid var(--on-lime);
+  border-radius: 50%;
+}
+
+.companion__specs::before {
+  left: 6px;
+}
+
+.companion__specs::after {
+  right: 6px;
+}
+
+.companion.is-swimming .companion__specs {
+  background: linear-gradient(var(--on-lime), var(--on-lime)) no-repeat 0 5px / 100% 2px;
+}
+
+.companion.is-swimming .companion__specs::before,
+.companion.is-swimming .companion__specs::after {
+  top: -1px;
+  width: 13px;
+  height: 13px;
+  border-width: 2.5px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.companion.is-swimming .companion__specs::before {
+  left: 5px;
+}
+
+.companion.is-swimming .companion__specs::after {
+  right: 5px;
+}
+
+/* Tiny map and a question mark (404) */
+.companion.outfit-map .companion__map {
+  display: block;
+  right: -9px;
+  bottom: 1px;
+  width: 16px;
+  height: 12px;
+  border: 1.5px solid var(--text);
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent 31%, var(--text-3) 31% 37%, transparent 37% 64%, var(--text-3) 64% 70%, transparent 70%), var(--bg);
+  rotate: -14deg;
+}
+
+.companion.outfit-map .companion__map::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 7px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--lime);
+}
+
+.companion__mark {
+  top: -18px;
+  left: -8px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-2);
+  opacity: 0;
+}
+
+.companion.outfit-map .companion__mark {
+  opacity: 1;
+  animation: companion-wonder 2.6s ease-in-out infinite;
+}
+
+.companion.outfit-map:not(.is-sleeping) .companion__eyes {
+  animation: companion-lookaround 3.2s ease-in-out infinite;
+}
+
+/* Air bubbles while swimming */
+.companion__air {
+  top: 0;
+  left: 24px;
+  width: 6px;
+  height: 6px;
+  border: 1.5px solid var(--text-2);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.companion__air + .companion__air {
+  left: 30px;
+}
+
+.companion__air + .companion__air + .companion__air {
+  left: 18px;
 }
 
 .companion:hover .companion__eye {
@@ -1051,6 +1259,68 @@ html.dark .theme-toggle .icon--moon {
 
 .companion.is-sleeping .companion__z {
   animation: companion-z 2.4s ease-in-out infinite;
+}
+
+.companion.is-sleeping .companion__mark {
+  opacity: 0;
+}
+
+/* Moods (set by express() in companion.js) */
+.companion.is-curious .companion__eye {
+  width: 6px;
+  height: 10px;
+  margin-top: -1px;
+}
+
+.companion.is-curious .companion__body {
+  rotate: calc(var(--look, 0) * 8deg);
+}
+
+.companion.is-squint .companion__eye {
+  height: 3px;
+  margin-top: 3px;
+}
+
+.companion.is-sleepy .companion__eye {
+  height: 4px;
+  margin-top: 3px;
+  border-radius: 0 0 3px 3px;
+}
+
+.companion.is-swimming .companion__body {
+  animation: companion-swim 1.2s ease-in-out infinite;
+}
+
+.companion.is-swimming .companion__air {
+  animation: companion-air 1.5s ease-in infinite;
+}
+
+.companion.is-swimming .companion__air + .companion__air {
+  animation-delay: 0.5s;
+}
+
+.companion.is-swimming .companion__air + .companion__air + .companion__air {
+  animation-delay: 1s;
+}
+
+.companion.is-waving .companion__body {
+  animation: companion-wave 0.6s ease-in-out 3;
+}
+
+.companion.is-dizzy .companion__body {
+  animation: companion-wobble 0.5s ease-in-out infinite;
+}
+
+.companion.is-dizzy .companion__eye {
+  width: 8px;
+  height: 8px;
+  margin-top: 0;
+  border: 2px solid var(--on-lime);
+  border-right-color: transparent;
+  border-radius: 50%;
+  background: none;
+  scale: 1;
+  animation: companion-spin 0.7s linear infinite;
 }
 
 .companion.is-hopping .companion__body {
@@ -1114,23 +1384,27 @@ html.dark .theme-toggle .icon--moon {
   color: var(--text-2);
 }
 
-.companion-bubble__close {
+.companion-bubble__tools {
+  display: flex;
+  margin: -6px -6px -6px auto;
+}
+
+.companion-bubble__btn {
   display: grid;
   place-items: center;
   width: 28px;
   height: 28px;
-  margin: -6px -6px -6px auto;
   border-radius: 50%;
   color: var(--text-2);
   transition: background-color 0.25s, color 0.25s;
 }
 
-.companion-bubble__close:hover {
+.companion-bubble__btn:hover {
   background: var(--bg-2);
   color: var(--text);
 }
 
-.companion-bubble__close .icon {
+.companion-bubble__btn .icon {
   width: 16px;
   height: 16px;
 }
@@ -1147,6 +1421,87 @@ html.dark .theme-toggle .icon--moon {
 .companion-bubble__hint {
   margin-top: var(--space-300);
   color: var(--text-2);
+}
+
+/* Search ("/" or the bubble's search button) */
+.companion-bubble--search {
+  width: min(320px, calc(100vw - 24px));
+}
+
+.companion-bubble__input {
+  width: 100%;
+  height: 40px;
+  margin-top: var(--space-300);
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  transition: border-color 0.25s ease-out, box-shadow 0.35s var(--ease);
+}
+
+.companion-bubble__input::placeholder {
+  color: var(--text-2);
+}
+
+.companion-bubble__input:focus {
+  outline: none;
+  border-color: var(--text);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--lime) 40%, transparent);
+}
+
+.companion-bubble__results {
+  display: flex;
+  flex-direction: column;
+  max-height: 264px;
+  margin: var(--space-200) -6px 0;
+  overflow-y: auto;
+}
+
+.companion-bubble__results a {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: background-color 0.2s;
+}
+
+.companion-bubble__results a:hover,
+.companion-bubble__results a:focus-visible {
+  outline: none;
+  background: var(--bg-2);
+}
+
+.companion-bubble__results .label-s {
+  color: var(--text-2);
+}
+
+.companion-bubble__results .body-s {
+  margin-top: 0;
+  color: var(--text);
+}
+
+.companion-bubble .companion-bubble__empty {
+  padding: 0 6px;
+  color: var(--text-2);
+}
+
+/* Items a #link points at (e.g. a search result) get a brief lime ring */
+.pub,
+.project,
+.news {
+  scroll-margin-top: calc(var(--header-h) + 24px);
+  outline: 3px solid transparent;
+  outline-offset: 8px;
+  transition: outline-color 0.6s ease-out;
+}
+
+.pub.is-target,
+.project.is-target,
+.news.is-target {
+  outline-color: var(--lime);
 }
 
 /* ---------- Home ---------- */
@@ -2448,7 +2803,7 @@ html.dark .portrait img {
   }
 }
 
-@keyframes companion-heart {
+@keyframes companion-float {
   from {
     opacity: 0;
     scale: 0.4;
@@ -2461,6 +2816,78 @@ html.dark .portrait img {
   to {
     opacity: 0;
     translate: 0 -24px;
+  }
+}
+
+@keyframes companion-swim {
+  0%,
+  100% {
+    translate: 0 0;
+    rotate: -7deg;
+  }
+  50% {
+    translate: 0 -4px;
+    rotate: 7deg;
+  }
+}
+
+@keyframes companion-air {
+  0% {
+    opacity: 0;
+    translate: 0 6px;
+    scale: 0.5;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    translate: 4px -24px;
+    scale: 1.1;
+  }
+}
+
+@keyframes companion-wave {
+  25% {
+    rotate: -14deg;
+  }
+  75% {
+    rotate: 14deg;
+  }
+}
+
+@keyframes companion-wobble {
+  25% {
+    rotate: -9deg;
+  }
+  75% {
+    rotate: 9deg;
+  }
+}
+
+@keyframes companion-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes companion-wonder {
+  50% {
+    translate: 0 -3px;
+    rotate: -12deg;
+  }
+}
+
+@keyframes companion-lookaround {
+  0%,
+  100% {
+    translate: -3px 0;
+  }
+  40% {
+    translate: 3px -1px;
+  }
+  70% {
+    translate: 0 -2px;
   }
 }
 

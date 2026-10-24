@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  const { icon, escapeHtml } = window.Site;
+  const { icon, escapeHtml, slug } = window.Site;
   const SELF = "Mohammad Ashfaq";
   const bibs = [];
 
@@ -68,7 +68,7 @@
       : `<div class="pub__thumb" aria-hidden="true"></div>`;
 
     return `
-      <article class="pub publication-item" data-reveal>
+      <article class="pub publication-item" id="pub-${slug(pub.title)}" data-reveal>
         ${thumb}
         <div class="pub__body">
           <p class="pub__meta">
@@ -91,6 +91,7 @@
     navigator.clipboard
       .writeText(text)
       .then(() => {
+        document.dispatchEvent(new CustomEvent("bib-copied")); // the companion cheers
         const original = button.innerHTML;
         button.innerHTML = `${icon("check")}Copied!`;
         setTimeout(() => (button.innerHTML = original), 2000);
