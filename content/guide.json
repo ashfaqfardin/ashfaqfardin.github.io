@@ -1,0 +1,31 @@
+{
+  "greeting": "Hi, I'm Ashfaq's tiny guide",
+  "hint": "Tap me any time to see this tip again.",
+  "pages": {
+    "index": {
+      "text": "Start with News to see what Ashfaq has been up to lately.",
+      "action": { "label": "Open News", "href": "news.html" }
+    },
+    "about": {
+      "text": "Work experience and activities are folded into rows. Tap one to unfold the details."
+    },
+    "education": {
+      "text": "Every stop from school to the MSc at the University of Surrey. The Timeline shows the bigger picture.",
+      "action": { "label": "Open Timeline", "href": "timeline.html" }
+    },
+    "publications": {
+      "text": "Search by title or author, and tap BIB on any paper to copy its citation.",
+      "action": { "label": "Search papers", "focus": "#publication-search" }
+    },
+    "projects": {
+      "text": "Some projects have live demos. Package Recognizer runs on Hugging Face, so you can try it with a photo.",
+      "action": { "label": "Try the demo", "href": "https://huggingface.co/spaces/ashfaqfardin/pkg_recognizer" }
+    },
+    "timeline": {
+      "text": "Scroll down and the line fills in, one milestone at a time."
+    },
+    "news": {
+      "text": "Newest first. Each item links to the paper or page behind it."
+    }
+  }
+}

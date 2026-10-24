@@ -1,0 +1,48 @@
+# Mohammad Ashfaq Ur Rahman
+
+> MSc Artificial Intelligence student at the University of Surrey and former Research Intern at the Center for Computational & Data Sciences (CCDS), Independent University, Bangladesh, working on large language models, NLP and intelligent tutoring systems.
+
+Also known as Ashfaq Fardin. Contact: imashfaqfardin@gmail.com.
+Profiles: https://github.com/ashfaqfardin, https://www.linkedin.com/in/ashfaqfardin, https://huggingface.co/ashfaqfardin, https://aclanthology.org/people/mohammad-ashfaq-ur-rahman/
+
+## Pages
+
+- [Home](https://ashfaqfardin.github.io/): Mohammad Ashfaq Ur Rahman (Ashfaq Fardin) is an MSc Artificial Intelligence student at the University of Surrey researching LLMs, NLP and AI tutors.
+- [About](https://ashfaqfardin.github.io/about.html): Background, research interests, experience and skills of Mohammad Ashfaq Ur Rahman, former CCDS Research Intern at IUB and MSc AI student at Surrey.
+- [Education](https://ashfaqfardin.github.io/education.html): Mohammad Ashfaq Ur Rahman's education: MSc in Artificial Intelligence at the University of Surrey and BSc in CSE from Independent University, Bangladesh.
+- [Publications](https://ashfaqfardin.github.io/publications.html): Papers by Mohammad Ashfaq Ur Rahman at CHI 2025, BEA 2025, IJCNLP-AACL 2025 Findings and BLP-2025 on LLM tutors, Bangla NLP and code generation.
+- [Projects](https://ashfaqfardin.github.io/projects.html): AI and software projects by Mohammad Ashfaq Ur Rahman, including a local RAG API with FastAPI and Ollama and a FastAI packaging classifier.
+- [Timeline](https://ashfaqfardin.github.io/timeline.html): Milestones in Mohammad Ashfaq Ur Rahman's journey, from IUB and IEEE Computer Society leadership to CCDS research, publications and Surrey.
+- [News](https://ashfaqfardin.github.io/news.html): Latest from Mohammad Ashfaq Ur Rahman: new papers, BEA 2025 shared-task results, IEEEXtreme volunteering and an MSc in AI at Surrey.
+
+## Publications
+
+- BD at BEA 2025 Shared Task: MPNet Ensembles for Pedagogical Mistake Identification and Localization in AI Tutor Responses. Proceedings of the 20th Workshop on Innovative Use of NLP for Building Educational Applications (BEA 2025) (2025). https://aclanthology.org/2025.bea-1.102/
+- Improving User Engagement and Learning Outcomes in LLM-Based Python Tutor: A Study of PACE. Proceedings of the Extended Abstracts of the CHI Conference on Human Factors in Computing Systems (2025). https://dl.acm.org/doi/abs/10.1145/3706599.3720240
+- PACE: Python AI Companion for Enhanced Engagement. Independent University, Bangladesh (2025). https://ar.iub.edu.bd/handle/11348/993
+- AlphaBorno at BLP-2025 Task 2: Code Generation with Structured Prompts and Execution Feedback. Proceedings of the Second Workshop on Bangla Language Processing (BLP-2025) (2025). https://aclanthology.org/2025.banglalp-1.63/
+- SOMAJGYAAN: A Dataset for Evaluating LLMs on Bangla Culture, Social Knowledge, and Low-Resource Language Adaptation. Proceedings of the 14th International Joint Conference on Natural Language Processing and the 4th Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics (2025). https://aclanthology.org/2025.findings-ijcnlp.134/
+- Fruit Quality Detection and Monitoring System. 2023 IEEE 13th International Conference on Control System, Computing and Engineering (ICCSCE) (2023). https://ieeexplore.ieee.org/abstract/document/10237165/
+
+## Projects
+
+- Local RAG API with Ollama (https://github.com/ashfaqfardin/local-rag-api-with-ollama): A fully local retrieval-augmented generation API built with FastAPI, ChromaDB, and Ollama. Submitted text is split into chunks, embedded with nomic-embed-text, and stored in a persistent vector database. Questions retrieve the most relevant passages, which Qwen 2.5 uses to produce grounded answers, with optional per-user filtering. Read the build walkthrough.
+- Package Recognizer (https://github.com/ashfaqfardin/Package-Recognizer): An image classifier that sorts photos of everyday product packaging into 12 categories, from bottled water to detergent packs, for recycling, sorting, and inventory use cases. A ResNet34 model (with MobileNetV3 for comparison) is fine-tuned with FastAI and served through a Gradio interface. Try the live demo on Hugging Face Spaces.
+- Global University Rankings Analytics (https://github.com/ashfaqfardin/Global-University-Rankings-Analytics): A Selenium scraper that sweeps the virtualized table of the THE World University Rankings to collect every ranked institution, followed by data cleaning in Python and an interactive Tableau dashboard. The analysis explores how research quality, international outlook, and industry income relate to teaching scores, and where top-ranked universities are concentrated. View the dashboard.
+- SLM Based Python Tutoring System: A Python tutoring system using React for the frontend and FastAPI for backend interactions. Employs the fine-tuned Gemma 2B model on a synthetic dataset. Future iterations will focus on making the system model-agnostic and adding various agents to improve functionality.
+- EasyOCR Form App (https://github.com/ashfaqfardin/Useless_OCR): A full-stack OCR and annotation tool built with Next.js, shadcn UI, and FastAPI. Users upload an image, extract text and bounding boxes with EasyOCR, Groq's Llama 4 Maverick vision model, or a hybrid of both, then edit the boxes and export the results as JSON. Supports multiple languages, including Bangla. The OCR pipelines are still experimental.
+- DocKylin Reimplementation (https://github.com/ashfaqfardin/DocKylin_Reimplemented): A PyTorch reimplementation of DocKylin (AAAI 2025), a multimodal model for visual document understanding. Connects a Swin Transformer vision encoder to Qwen 1.5 (1.8B) through an MLP projector, and integrates the paper's Adaptive Pixel Slimming and Dynamic Token Slimming to cut redundant pixels and visual tokens. Includes pretraining, fine-tuning, and evaluation scripts on FUNSD.
+- Local Chat Application (https://github.com/ashfaqfardin/local-chat-app): A real-time chat application for local network communication, built with React (TypeScript), Socket.IO, Tailwind CSS, Node.js, and Express. Features real-time messaging, file sharing, user presence detection, and customizable avatars, all within a responsive UI.
+- DL Code Organization (https://github.com/ashfaqfardin/DL_Code_Organization): A hands-on session on deep learning code management using PyTorch, organized by CCDS.AI at IUB. Covers code structuring, experiment tracking, and model training workflows with a CLI for training/testing.
+- Quiz Application (https://github.com/ashfaqfardin/quiz_app): A Flutter-based mobile quiz app featuring a multiple-choice format, smooth navigation, and a responsive UI for both Android and iOS. Built with Dart and Flutter.
+
+## Recent news
+
+- 2026-02: Started MSc in Artificial Intelligence at the University of Surrey
+- 2025-12: AlphaBorno at BLP-2025 Task 2 published
+- 2025-12: SOMAJGYAAN published in Findings of IJCNLP-AACL 2025
+- 2025-07: Team BD placed 5th of 44 at the BEA 2025 Shared Task
+- 2025-04: PACE study published at CHI 2025
+- 2025-02: Conducted a 3-day hands-on workshop on LLMs
+- 2024-12: Graduated with a BSc in Computer Science and Engineering
+- 2024-12: Joined CCDS as a Research Intern

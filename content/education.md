@@ -57,5 +57,3 @@ Secondary School Certificate (SSC)
 5.00/5.00
 [Group]
 Science
-[Logo]
-bhasantek-school-logo.png

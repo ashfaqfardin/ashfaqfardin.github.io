@@ -1,0 +1,94 @@
+{
+  "site": {
+    "url": "https://ashfaqfardin.github.io/",
+    "name": "Mohammad Ashfaq Ur Rahman",
+    "image": "assets/images/og-image.jpg",
+    "imageAlt": "Mohammad Ashfaq Ur Rahman, AI and NLP researcher"
+  },
+  "person": {
+    "name": "Mohammad Ashfaq Ur Rahman",
+    "alternateName": ["Ashfaq Fardin"],
+    "description": "MSc Artificial Intelligence student at the University of Surrey and former Research Intern at the Center for Computational & Data Sciences (CCDS), Independent University, Bangladesh, working on large language models, NLP and intelligent tutoring systems.",
+    "image": "assets/images/profile-960.jpg",
+    "email": "imashfaqfardin@gmail.com",
+    "affiliation": { "name": "University of Surrey", "url": "https://www.surrey.ac.uk/" },
+    "alumniOf": [{ "name": "Independent University, Bangladesh", "url": "https://iub.ac.bd/" }],
+    "credentials": [{ "name": "BSc in Computer Science & Engineering", "recognizedBy": "Independent University, Bangladesh" }],
+    "knowsAbout": [
+      "Artificial Intelligence",
+      "Machine Learning",
+      "Natural Language Processing",
+      "Large Language Models",
+      "Deep Learning",
+      "Data Science",
+      "Agentic Systems",
+      "Intelligent Tutoring Systems",
+      "Bangla NLP"
+    ],
+    "sameAs": [
+      "https://github.com/ashfaqfardin",
+      "https://www.linkedin.com/in/ashfaqfardin",
+      "https://huggingface.co/ashfaqfardin",
+      "https://aclanthology.org/people/mohammad-ashfaq-ur-rahman/"
+    ]
+  },
+  "pages": {
+    "index.html": {
+      "name": "Home",
+      "title": "Mohammad Ashfaq Ur Rahman | AI & NLP Researcher",
+      "description": "Mohammad Ashfaq Ur Rahman (Ashfaq Fardin) is an MSc Artificial Intelligence student at the University of Surrey researching LLMs, NLP and AI tutors.",
+      "type": "ProfilePage",
+      "sources": []
+    },
+    "about.html": {
+      "name": "About",
+      "title": "About Mohammad Ashfaq Ur Rahman | AI & NLP Researcher",
+      "description": "Background, research interests, experience and skills of Mohammad Ashfaq Ur Rahman, former CCDS Research Intern at IUB and MSc AI student at Surrey.",
+      "type": "AboutPage",
+      "sources": ["content/publications.md", "content/skills.md", "content/work_experience.md", "content/professional_development.md", "content/co_curricular.md"]
+    },
+    "education.html": {
+      "name": "Education",
+      "title": "Education | Mohammad Ashfaq Ur Rahman",
+      "description": "Mohammad Ashfaq Ur Rahman's education: MSc in Artificial Intelligence at the University of Surrey and BSc in CSE from Independent University, Bangladesh.",
+      "sources": ["content/education.md"]
+    },
+    "publications.html": {
+      "name": "Publications",
+      "title": "Publications | Mohammad Ashfaq Ur Rahman",
+      "description": "Papers by Mohammad Ashfaq Ur Rahman at CHI 2025, BEA 2025, IJCNLP-AACL 2025 Findings and BLP-2025 on LLM tutors, Bangla NLP and code generation.",
+      "type": "CollectionPage",
+      "list": "publications",
+      "sources": ["content/publications.md"]
+    },
+    "projects.html": {
+      "name": "Projects",
+      "title": "Projects | Mohammad Ashfaq Ur Rahman",
+      "description": "AI and software projects by Mohammad Ashfaq Ur Rahman, including a local RAG API with FastAPI and Ollama and a FastAI packaging classifier.",
+      "type": "CollectionPage",
+      "list": "projects",
+      "sources": ["content/projects.md"]
+    },
+    "timeline.html": {
+      "name": "Timeline",
+      "title": "Timeline | Mohammad Ashfaq Ur Rahman",
+      "description": "Milestones in Mohammad Ashfaq Ur Rahman's journey, from IUB and IEEE Computer Society leadership to CCDS research, publications and Surrey.",
+      "sources": ["content/timeline.json"]
+    },
+    "news.html": {
+      "name": "News",
+      "title": "News | Mohammad Ashfaq Ur Rahman",
+      "description": "Latest from Mohammad Ashfaq Ur Rahman: new papers, BEA 2025 shared-task results, IEEEXtreme volunteering and an MSc in AI at Surrey.",
+      "type": "CollectionPage",
+      "list": "news",
+      "sources": ["content/news.json"]
+    },
+    "404.html": {
+      "name": "Page not found",
+      "title": "Page not found | Mohammad Ashfaq Ur Rahman",
+      "description": "This page doesn't exist. Find Mohammad Ashfaq Ur Rahman's publications, projects and news from the home page.",
+      "noindex": true,
+      "sources": []
+    }
+  }
+}

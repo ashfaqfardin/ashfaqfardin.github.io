@@ -90,6 +90,40 @@
     Array.from(nodes).forEach((el, i) => el.style.setProperty("--d", `${Math.min(i * step, max)}ms`));
   }
 
+  // --- Prerendered content ---
+  // tools/build-seo.mjs bakes rendered content into each page for crawlers. When
+  // a page renders the same markup again, keep the nodes already on screen so they
+  // don't blink out and animate in a second time.
+  function normalized(nodes) {
+    const box = document.createElement("div");
+    nodes.forEach((n) => {
+      const blank = n.nodeType === Node.COMMENT_NODE || (n.nodeType === Node.TEXT_NODE && !n.textContent.trim());
+      if (!blank) box.append(n.cloneNode(true));
+    });
+    box.querySelectorAll("*").forEach((n) => {
+      n.classList.remove("is-in", "is-reached");
+      if (n.getAttribute("class") === "") n.removeAttribute("class");
+      ["--d", "--mx", "--my"].forEach((p) => n.style.removeProperty(p));
+      if (n.getAttribute("style") === "") n.removeAttribute("style");
+      n.removeAttribute("data-spotlight-bound");
+      n.removeAttribute("aria-current");
+    });
+    return box.innerHTML.trim();
+  }
+
+  function same(nodes, html) {
+    const tpl = document.createElement("template");
+    tpl.innerHTML = html;
+    return normalized(Array.from(nodes)) === normalized(Array.from(tpl.content.childNodes));
+  }
+
+  // Sets container's markup unless it already shows exactly that. Returns true if it changed.
+  function render(container, html) {
+    if (same(container.childNodes, html)) return false;
+    container.innerHTML = html;
+    return true;
+  }
+
   // --- Pointer spotlight on cards ---
   function initSpotlight(scope = document) {
     scope.querySelectorAll("[data-spotlight]").forEach((el) => {
@@ -261,11 +295,11 @@
         footerHost ? fetchText("partials/footer.txt") : "",
       ]);
       if (headerHost) {
-        headerHost.innerHTML = header;
+        render(headerHost, header);
         initHeader(headerHost);
       }
       if (footerHost) {
-        footerHost.innerHTML = footer;
+        render(footerHost, footer);
         initFooter(footerHost);
       }
     } catch (err) {
@@ -273,7 +307,7 @@
     }
   }
 
-  window.Site = { icon, escapeHtml, fetchText, reveal, stagger, initSpotlight };
+  window.Site = { icon, escapeHtml, fetchText, reveal, stagger, initSpotlight, render, same };
 
   injectSprite();
   initTheme();

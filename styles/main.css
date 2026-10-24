@@ -927,6 +927,228 @@ html.dark .theme-toggle .icon--moon {
   transform: scale(1.08) rotate(-8deg);
 }
 
+/* ---------- Companion (scripts/companion.js) ---------- */
+.companion {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 39; /* under the WhatsApp button and header */
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  animation: companion-in 0.8s var(--ease) 1.4s both;
+}
+
+.companion.is-moving {
+  pointer-events: none;
+}
+
+.companion__body {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 0 2px var(--bg), inset -3px -4px 0 rgba(14, 14, 15, 0.12);
+  transform: rotate(var(--tilt, 0deg)) scale(var(--sx, 1), var(--sy, 1));
+  transform-origin: 50% 85%;
+  transition: transform 0.35s var(--ease);
+  animation: companion-bob 2.8s ease-in-out infinite;
+}
+
+.companion__body::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  width: 9px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  rotate: -30deg;
+}
+
+.companion__eyes {
+  position: absolute;
+  top: 13px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  translate: var(--lx, 0px) var(--ly, 0px);
+  transition: translate 0.25s var(--ease);
+}
+
+.companion__eye {
+  width: 5px;
+  height: 8px;
+  border-radius: 3px;
+  background: var(--on-lime);
+  transition: scale 0.25s var(--ease);
+  animation: companion-blink 5.5s infinite;
+}
+
+.companion__shadow {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: -7px;
+  height: 5px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--text) 16%, transparent);
+}
+
+.companion__z {
+  position: absolute;
+  top: -14px;
+  right: -6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.companion__heart {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  pointer-events: none;
+  animation: companion-heart 0.9s var(--ease) forwards;
+}
+
+.companion__heart svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--lime);
+  stroke: var(--text);
+  stroke-width: 2;
+}
+
+.companion:hover .companion__eye {
+  animation: none;
+  scale: 1 0.55;
+}
+
+.companion.is-moving .companion__body {
+  transition-duration: 0.12s;
+  animation: none;
+}
+
+.companion.is-sleeping .companion__body {
+  animation: companion-breathe 3s ease-in-out infinite;
+}
+
+.companion.is-sleeping .companion__eye {
+  animation: none;
+  scale: 1 0.18;
+}
+
+.companion.is-sleeping .companion__z {
+  animation: companion-z 2.4s ease-in-out infinite;
+}
+
+.companion.is-hopping .companion__body {
+  animation: companion-hop 0.5s var(--ease);
+}
+
+.companion.is-hopping .companion__shadow {
+  animation: companion-shadow 0.5s var(--ease);
+}
+
+/* Guide tip bubble */
+.companion-bubble {
+  position: fixed;
+  z-index: 39;
+  width: min(280px, calc(100vw - 24px));
+  padding: var(--space-400);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+  transform-origin: var(--tail-x, 24px) 100%;
+}
+
+.companion-bubble[hidden] {
+  display: none;
+}
+
+.companion-bubble.is-open {
+  animation: bubble-in 0.45s var(--ease) both;
+}
+
+.companion-bubble.is-below {
+  transform-origin: var(--tail-x, 24px) 0;
+}
+
+.companion-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  left: var(--tail-x, 24px);
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  rotate: 45deg;
+}
+
+.companion-bubble.is-below::after {
+  top: -7px;
+  bottom: auto;
+  rotate: 225deg;
+}
+
+.companion-bubble__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-200);
+  color: var(--text-2);
+}
+
+.companion-bubble__close {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin: -6px -6px -6px auto;
+  border-radius: 50%;
+  color: var(--text-2);
+  transition: background-color 0.25s, color 0.25s;
+}
+
+.companion-bubble__close:hover {
+  background: var(--bg-2);
+  color: var(--text);
+}
+
+.companion-bubble__close .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.companion-bubble .body-s {
+  margin-top: var(--space-200);
+  color: var(--text-body);
+}
+
+.companion-bubble .btn {
+  margin-top: var(--space-300);
+}
+
+.companion-bubble__hint {
+  margin-top: var(--space-300);
+  color: var(--text-2);
+}
+
 /* ---------- Home ---------- */
 .hero {
   display: flex;
@@ -2154,6 +2376,91 @@ html.dark .portrait img {
   70%,
   100% {
     box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
+  }
+}
+
+@keyframes companion-in {
+  from {
+    opacity: 0;
+    scale: 0.3;
+  }
+}
+
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    scale: 0.92;
+    translate: 0 6px;
+  }
+}
+
+@keyframes companion-bob {
+  50% {
+    translate: 0 -2px;
+  }
+}
+
+@keyframes companion-blink {
+  0%,
+  94%,
+  100% {
+    scale: 1 1;
+  }
+  96% {
+    scale: 1 0.1;
+  }
+}
+
+@keyframes companion-breathe {
+  50% {
+    scale: 1.04 0.96;
+  }
+}
+
+@keyframes companion-hop {
+  40% {
+    translate: 0 -16px;
+  }
+  75% {
+    translate: 0 0;
+    scale: 1.12 0.88;
+  }
+}
+
+@keyframes companion-shadow {
+  40% {
+    scale: 0.55;
+    opacity: 0.5;
+  }
+}
+
+@keyframes companion-z {
+  0% {
+    opacity: 0;
+    translate: 0 4px;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    translate: 6px -12px;
+  }
+}
+
+@keyframes companion-heart {
+  from {
+    opacity: 0;
+    scale: 0.4;
+    translate: 0 6px;
+  }
+  30% {
+    opacity: 1;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    translate: 0 -24px;
   }
 }
 
