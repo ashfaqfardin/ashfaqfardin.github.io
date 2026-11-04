@@ -1,6 +1,6 @@
 <header class="site-header">
   <div class="container site-header__bar">
-    <a href="index.html" class="brand" aria-label="Mohammad Ashfaq Ur Rahman, home">
+    <a href="/" class="brand" aria-label="Mohammad Ashfaq Ur Rahman, home">
       <span class="brand__mark" aria-hidden="true">A<span class="brand__dot"></span></span>
       <span class="brand__short">Mohammad</span>
       <span class="brand__full">Mohammad Ashfaq Ur Rahman</span>
@@ -9,12 +9,13 @@
     <div class="site-header__right">
       <nav id="main-nav" class="nav" aria-label="Primary">
         <span class="nav__indicator" aria-hidden="true"></span>
-        <a href="about.html" class="nav__link">About</a>
-        <a href="education.html" class="nav__link">Education</a>
-        <a href="publications.html" class="nav__link">Publications</a>
-        <a href="projects.html" class="nav__link">Projects</a>
-        <a href="timeline.html" class="nav__link">Timeline</a>
-        <a href="news.html" class="nav__link">News</a>
+        <a href="/about.html" class="nav__link">About</a>
+        <a href="/education.html" class="nav__link">Education</a>
+        <a href="/publications.html" class="nav__link">Publications</a>
+        <a href="/projects.html" class="nav__link">Projects</a>
+        <a href="/timeline.html" class="nav__link">Timeline</a>
+        <a href="/news.html" class="nav__link">News</a>
+        <a href="/notes.html" class="nav__link">Notes</a>
       </nav>
 
       <button id="dark-toggle" class="icon-btn theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">
@@ -31,12 +32,13 @@
   <div id="mobile-menu" class="mobile-menu">
     <nav class="container" aria-label="Mobile">
       <ul>
-        <li><a href="about.html"><span class="numeral">01</span>About</a></li>
-        <li><a href="education.html"><span class="numeral">02</span>Education</a></li>
-        <li><a href="publications.html"><span class="numeral">03</span>Publications</a></li>
-        <li><a href="projects.html"><span class="numeral">04</span>Projects</a></li>
-        <li><a href="timeline.html"><span class="numeral">05</span>Timeline</a></li>
-        <li><a href="news.html"><span class="numeral">06</span>News</a></li>
+        <li><a href="/about.html"><span class="numeral">01</span>About</a></li>
+        <li><a href="/education.html"><span class="numeral">02</span>Education</a></li>
+        <li><a href="/publications.html"><span class="numeral">03</span>Publications</a></li>
+        <li><a href="/projects.html"><span class="numeral">04</span>Projects</a></li>
+        <li><a href="/timeline.html"><span class="numeral">05</span>Timeline</a></li>
+        <li><a href="/news.html"><span class="numeral">06</span>News</a></li>
+        <li><a href="/notes.html"><span class="numeral">07</span>Notes</a></li>
       </ul>
     </nav>
   </div>

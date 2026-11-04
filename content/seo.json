@@ -1,6 +1,7 @@
 {
   "site": {
-    "url": "https://ashfaqfardin.github.io/",
+    "url": "https://ashfaqfardin.dev/",
+    "repo": "ashfaqfardin/ashfaqfardin.github.io",
     "name": "Mohammad Ashfaq Ur Rahman",
     "image": "assets/images/og-image.jpg",
     "imageAlt": "Mohammad Ashfaq Ur Rahman, AI and NLP researcher"
@@ -82,6 +83,14 @@
       "type": "CollectionPage",
       "list": "news",
       "sources": ["content/news.json"]
+    },
+    "notes.html": {
+      "name": "Notes",
+      "title": "AI Research Notes | Mohammad Ashfaq Ur Rahman",
+      "description": "Daily breakdowns of new AI papers by Mohammad Ashfaq Ur Rahman: what each one found, how it works, and where its claims stop.",
+      "type": "CollectionPage",
+      "list": "notes",
+      "sources": ["content/Notes"]
     },
     "keep-swimming.html": {
       "name": "Keep Swimming",

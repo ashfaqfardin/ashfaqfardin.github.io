@@ -209,14 +209,13 @@
   }
 
   // --- Header ---
-  function currentPage() {
-    return location.pathname.split("/").pop() || "index.html";
-  }
+  // "/about.html" and "/about" -> "/about", "/index.html" -> "/", and every note counts as "/notes".
+  const pageKey = (path) => path.replace(/^\/notes\/.+/, "/notes").replace(/(\/index)?(\.html)?$/, "") || "/";
 
   function initHeader(headerHost) {
-    const page = currentPage();
+    const page = pageKey(location.pathname);
     headerHost.querySelectorAll("a[href]").forEach((a) => {
-      if (a.getAttribute("href") === page && !a.classList.contains("brand")) a.setAttribute("aria-current", "page");
+      if (pageKey(a.pathname) === page && !a.classList.contains("brand")) a.setAttribute("aria-current", "page");
     });
 
     // Sliding pill behind the desktop nav links.
@@ -309,8 +308,8 @@
     const footerHost = document.getElementById("footer-partial");
     try {
       const [header, footer] = await Promise.all([
-        headerHost ? fetchText("partials/header.txt") : "",
-        footerHost ? fetchText("partials/footer.txt") : "",
+        headerHost ? fetchText("/partials/header.txt") : "",
+        footerHost ? fetchText("/partials/footer.txt") : "",
       ]);
       if (headerHost) {
         render(headerHost, header);

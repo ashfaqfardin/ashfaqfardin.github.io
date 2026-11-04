@@ -7,11 +7,14 @@
 //   2. Crawlable HTML: renders each page in a headless browser and bakes the
 //      result in between <!-- prerender:ID --> markers, so crawlers that don't
 //      run JavaScript still see the content. Page scripts re-render on load.
-//   3. sitemap.xml, llms.txt and search-index.json (the companion's site search).
+//   3. Research notes: notes.html and one page per note under notes/, from the
+//      content/notes.json that tools/build-notes.py writes.
+//   4. sitemap.xml, llms.txt and search-index.json (the companion's site search).
 //
-// Run after editing content/ or a page:  node tools/build-seo.mjs
+// On GitHub this runs on every push (.github/workflows/deploy.yml). To preview locally:
+//   python tools/build-notes.py && node tools/build-seo.mjs
 import { createServer } from "node:http";
-import { readFileSync, writeFileSync, existsSync, mkdtempSync, rmSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync, mkdtempSync, mkdirSync, rmSync } from "node:fs";
 import { spawn, execFileSync } from "node:child_process";
 import { join, extname, dirname, normalize } from "node:path";
 import { tmpdir } from "node:os";
@@ -97,6 +100,10 @@ function loadProjects() {
     });
 }
 
+function loadNotes() {
+  return existsSync(join(ROOT, "content/notes.json")) ? JSON.parse(read("content/notes.json")) : [];
+}
+
 const plain = (md) =>
   md
     .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
@@ -168,6 +175,27 @@ function publicationNode(pub) {
   };
 }
 
+function noteNode(n, url) {
+  const authors = n.paper.byline.split(" · ")[0].split(/,\s*/).filter(Boolean);
+  return {
+    "@type": "BlogPosting",
+    headline: n.headline,
+    description: n.idea || n.takeaway || n.headline,
+    datePublished: n.date,
+    dateModified: n.date,
+    author: { "@id": PERSON_ID },
+    image: abs(`assets/notes/${n.slug}/cover.jpg`),
+    keywords: n.tags.join(", "),
+    mainEntityOfPage: { "@id": `${url}#webpage` },
+    isBasedOn: {
+      "@type": "ScholarlyArticle",
+      name: n.paper.title,
+      ...(n.paper.url && { url: n.paper.url }),
+      ...(authors.length && { author: authors.map((name) => ({ "@type": "Person", name })) }),
+    },
+  };
+}
+
 function jsonLd(file, page, data) {
   const url = pageUrl(file);
   const graph = [personNode, websiteNode];
@@ -202,15 +230,17 @@ function jsonLd(file, page, data) {
       data.news.map((n) => ({ name: `${n.date}: ${n.title}`, description: n.description, ...(n.link && { url: abs(n.link) }) }))
     );
   }
+  if (page.list === "notes") {
+    webpage.mainEntity = itemList(data.notes.map((n) => ({ name: n.headline, url: pageUrl(noteFile(n)) })));
+  }
+  if (page.note) webpage.mainEntity = noteNode(page.note, url);
   if (file !== "index.html") {
+    const trail = [{ name: "Home", url: SITE }, ...(page.parent ? [{ name: page.parent.name, url: pageUrl(page.parent.file) }] : []), { name: page.name, url }];
     webpage.breadcrumb = { "@id": `${url}#breadcrumb` };
     graph.push({
       "@type": "BreadcrumbList",
       "@id": `${url}#breadcrumb`,
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: SITE },
-        { "@type": "ListItem", position: 2, name: page.name, item: url },
-      ],
+      itemListElement: trail.map((step, i) => ({ "@type": "ListItem", position: i + 1, name: step.name, item: step.url })),
     });
   }
   graph.push(webpage);
@@ -219,7 +249,7 @@ function jsonLd(file, page, data) {
 
 function headTags(file, page, data) {
   const url = pageUrl(file);
-  const image = abs(config.site.image);
+  const image = abs(page.image || config.site.image);
   const tags = [
     `<title>${esc(page.title)}</title>`,
     `<meta name="description" content="${esc(page.description)}" />`,
@@ -228,7 +258,8 @@ function headTags(file, page, data) {
     `<meta name="author" content="${esc(person.name)}" />`,
     `<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />`,
     `<meta name="theme-color" content="#1e1e1e" media="(prefers-color-scheme: dark)" />`,
-    `<meta property="og:type" content="${file === "index.html" ? "profile" : "website"}" />`,
+    `<meta property="og:type" content="${page.note ? "article" : file === "index.html" ? "profile" : "website"}" />`,
+    ...(page.note ? [`<meta property="article:published_time" content="${page.note.date}" />`] : []),
     `<meta property="og:site_name" content="${esc(config.site.name)}" />`,
     `<meta property="og:title" content="${esc(page.title)}" />`,
     `<meta property="og:description" content="${esc(page.description)}" />`,
@@ -236,7 +267,7 @@ function headTags(file, page, data) {
     `<meta property="og:image" content="${image}" />`,
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,
-    `<meta property="og:image:alt" content="${esc(config.site.imageAlt)}" />`,
+    `<meta property="og:image:alt" content="${esc(page.imageAlt || config.site.imageAlt)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     ...(page.noindex ? [] : [`<script type="application/ld+json">${jsonLd(file, page, data)}</script>`]),
   ];
@@ -246,7 +277,148 @@ function headTags(file, page, data) {
 // Header with the current page marked, as site.js would do after load.
 function headerFor(file) {
   const href = file.replace(/\./g, "\\.");
-  return read("partials/header.txt").replace(new RegExp(`(<a href="${href}"(?! class="brand"))`, "g"), '$1 aria-current="page"');
+  return read("partials/header.txt").replace(new RegExp(`(<a href="/${href}")`, "g"), '$1 aria-current="page"');
+}
+
+// --- Research notes ---
+const noteFile = (n) => `notes/${n.slug}.html`;
+const noteDate = (day) => new Date(`${day}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+const iconHtml = (name) => `<svg class="icon" aria-hidden="true" focusable="false"><use href="#i-${name}"></use></svg>`;
+const shorten = (text, max) => (text.length <= max ? text : `${text.slice(0, text.lastIndexOf(" ", max - 1))}…`);
+
+function noteCard(n, i) {
+  const search = [n.tags.join(" "), n.paper.title, n.paper.byline, n.idea, n.takeaway].join(" ");
+  return `
+          <a class="note" href="/${noteFile(n)}" data-search="${esc(search)}" data-reveal>
+            <div class="note__thumb"><img src="/assets/notes/${n.slug}/thumb.webp" width="480" height="480" alt=""${i < 3 ? "" : ' loading="lazy"'} /></div>
+            <div class="note__meta"><span class="label">${noteDate(n.date)}</span><span class="chip chip--sm">${iconHtml("arrow-up-right")}</span></div>
+            <h2 class="heading-m">${esc(n.headline)}</h2>
+            <p class="body-s note__summary">${esc(n.paper.title)}</p>
+          </a>`;
+}
+
+function noteTranscript(n) {
+  const slide = (s, i) => {
+    let body = "";
+    let bullets = [];
+    const flush = () => {
+      if (bullets.length) body += `<ul>${bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>`;
+      bullets = [];
+    };
+    for (const item of s.body) {
+      if (item.text.startsWith("●")) {
+        bullets.push(item.text.slice(1).trim());
+        continue;
+      }
+      flush();
+      body += item.kind === "label" ? `<p class="label-s">${esc(item.text)}</p>` : `<p>${esc(item.text)}</p>`;
+    }
+    flush();
+    return `
+            <section class="note-text__slide">
+              <p class="label">Slide ${i + 1}${s.kicker ? ` · ${esc(s.kicker)}` : ""}</p>
+              <h3 class="heading-s">${esc(s.headline)}</h3>
+              ${body}
+            </section>`;
+  };
+  return n.slides.map(slide).join("");
+}
+
+function notePage(n, newer, older) {
+  const total = n.slides.length;
+  const pad = (v) => String(v).padStart(2, "0");
+  const slides = n.slides
+    .map((s, i) => {
+      const alt = `Slide ${i + 1} of ${total}${s.headline ? `: ${s.headline}` : ""}`;
+      const load = i ? 'loading="lazy"' : 'fetchpriority="high"';
+      return `<li class="slides__slide"><img src="/assets/notes/${n.slug}/slide-${i + 1}.webp" width="1080" height="1080" alt="${esc(alt)}" ${load} /></li>`;
+    })
+    .join("\n            ");
+  const pdf = `https://raw.githubusercontent.com/${config.site.repo}/main/content/Notes/${encodeURIComponent(n.file)}`;
+  const refs = n.references.map((r) => `<li><a href="${esc(r)}" target="_blank" rel="noopener noreferrer">${esc(r.replace(/^https:\/\//, ""))}</a></li>`).join("");
+  const pager = (other, label) =>
+    other
+      ? `<a class="note-page__step" href="/${noteFile(other)}"><span class="label-s">${label}</span><span class="heading-s">${esc(other.headline)}</span></a>`
+      : "<span></span>";
+  return `
+      <article class="container note-page">
+        <a class="btn btn--subtle btn--sm note-page__back" href="/notes.html">${iconHtml("arrow-left")}All notes</a>
+
+        <header class="note-page__head">
+          <p class="note-page__tags"><time class="label" datetime="${n.date}">${noteDate(n.date)}</time>${n.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</p>
+          <h1 class="display-m">${esc(n.headline)}</h1>
+          ${n.idea ? `<p class="body-l page-sub">${esc(n.idea)}</p>` : ""}
+        </header>
+
+        <div class="note-page__grid">
+          <section class="slides" data-slides aria-roledescription="carousel" aria-label="Slides for this note">
+            <ol class="slides__track" tabindex="0">
+            ${slides}
+            </ol>
+            <div class="slides__bar">
+              <button class="icon-btn" type="button" data-slides-prev aria-label="Previous slide">${iconHtml("arrow-left")}</button>
+              <span class="numeral" data-slides-count aria-live="polite">01 / ${pad(total)}</span>
+              <button class="icon-btn" type="button" data-slides-next aria-label="Next slide">${iconHtml("arrow-right")}</button>
+            </div>
+          </section>
+
+          <aside class="note-page__side">
+            <div class="note-page__block">
+              <p class="label-s">The paper</p>
+              <h2 class="heading-m">${esc(n.paper.title)}</h2>
+              ${n.paper.byline ? `<p class="body-s muted">${esc(n.paper.byline)}</p>` : ""}
+              <div class="pub__actions">
+                ${n.paper.url ? `<a class="btn btn--sm" href="${esc(n.paper.url)}" target="_blank" rel="noopener noreferrer">${iconHtml("file-text")}Read the paper</a>` : ""}
+                <a class="btn btn--sm" href="${pdf}" rel="noopener">${iconHtml("arrow-up-right")}Download PDF</a>
+              </div>
+            </div>
+            ${n.takeaway ? `<div class="note-page__block"><p class="label-s">Takeaway</p><p class="body-l">${esc(n.takeaway)}</p></div>` : ""}
+            ${refs ? `<div class="note-page__block"><p class="label-s">References</p><ul class="note-page__refs body-s">${refs}</ul></div>` : ""}
+          </aside>
+        </div>
+
+        <details class="acc">
+          <summary class="acc__sum">
+            <span class="acc__title"><span class="heading-s">Read the slides as text</span></span>
+            <span class="label acc__date">${total} slides</span>
+            <span class="acc__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="acc__body note-text">${noteTranscript(n)}
+          </div>
+        </details>
+
+        <nav class="note-page__pager" aria-label="More notes">${pager(newer, "Newer")}${pager(older, "Older")}</nav>
+      </article>
+    `;
+}
+
+// Generated fresh each run, so a deleted PDF takes its page with it.
+function buildNotePages(notes) {
+  const dir = join(ROOT, "notes");
+  rmSync(dir, { recursive: true, force: true });
+  mkdirSync(dir, { recursive: true });
+  // /notes/ is a folder as well as a page; without this it would be a dead end.
+  writeFileSync(join(dir, "index.html"), `<!DOCTYPE html><meta charset="UTF-8" /><title>Notes</title><meta name="robots" content="noindex" /><meta http-equiv="refresh" content="0; url=/notes.html" /><a href="/notes.html">Notes</a>\n`);
+  const template = read("tools/note-template.html");
+  return notes.map((n, i) => {
+    const file = noteFile(n);
+    const page = {
+      name: n.paper.title,
+      title: `${n.paper.title} | AI Research Notes`,
+      description: shorten([n.headline, n.idea].filter(Boolean).join(" "), 158),
+      image: `assets/notes/${n.slug}/cover.jpg`,
+      imageAlt: n.headline,
+      modified: n.date,
+      parent: { name: "Notes", file: "notes.html" },
+      note: n,
+    };
+    let html = fill(template, "seo:head", headTags(file, page, data), file);
+    html = fill(html, "prerender:header", headerFor("notes.html"), file);
+    html = fill(html, "prerender:footer", read("partials/footer.txt"), file);
+    html = fill(html, "note", notePage(n, notes[i - 1], notes[i + 1]), file);
+    writeFileSync(join(ROOT, file), html);
+    return [file, page];
+  });
 }
 
 // --- Static server + headless browser ---
@@ -387,7 +559,12 @@ async function prerender(browser, baseUrl, file) {
 
 // --- Main ---
 const pages = Object.entries(config.pages);
-const data = { publications: loadPublications(), projects: loadProjects(), news: JSON.parse(read("content/news.json")).sort((a, b) => b.date.localeCompare(a.date)) };
+const data = {
+  publications: loadPublications(),
+  projects: loadProjects(),
+  news: JSON.parse(read("content/news.json")).sort((a, b) => b.date.localeCompare(a.date)),
+  notes: loadNotes(),
+};
 
 const server = await serve();
 const baseUrl = `http://127.0.0.1:${server.address().port}/`;
@@ -405,6 +582,10 @@ try {
     html = fill(html, "prerender:header", headerFor(file), file);
     html = fill(html, "prerender:footer", read("partials/footer.txt"), file);
     for (const [marker, content] of Object.entries(baked)) html = fill(html, `prerender:${marker}`, content, file);
+    if (page.list === "notes") {
+      html = fill(html, "prerender:notes", `${data.notes.map(noteCard).join("")}\n        `, file);
+      html = fill(html, "prerender:notes-count", `(${String(data.notes.length).padStart(2, "0")})`, file);
+    }
     writeFileSync(join(ROOT, file), html);
     console.log(`  ${file}${Object.keys(baked).length ? ` (baked: ${Object.keys(baked).join(", ")})` : ""}`);
   }
@@ -414,12 +595,15 @@ try {
   server.close();
 }
 
+const notePages = buildNotePages(data.notes);
+console.log(`  notes/ (${notePages.length} pages)`);
+
 const indexed = pages.filter(([, p]) => !p.noindex);
 writeFileSync(
   join(ROOT, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${indexed.map(([file, p]) => `  <url>\n    <loc>${pageUrl(file)}</loc>\n    <lastmod>${p.modified}</lastmod>\n  </url>`).join("\n")}
+${[...indexed, ...notePages].map(([file, p]) => `  <url>\n    <loc>${pageUrl(file)}</loc>\n    <lastmod>${p.modified}</lastmod>\n  </url>`).join("\n")}
 </urlset>
 `
 );
@@ -446,6 +630,15 @@ ${data.publications.map((p) => `- ${p.title}. ${p.venue} (${p.year}).${p.paper ?
 
 ${data.projects.map((p) => `- ${p.title}${p.url ? ` (${p.url})` : ""}: ${p.body}`).join("\n")}
 
+## Research notes
+
+Short breakdowns of recent AI papers, newest first.
+
+${data.notes
+  .slice(0, 30)
+  .map((n) => `- [${n.headline}](${pageUrl(noteFile(n))}): ${n.date}, on ${n.paper.title}.${n.takeaway ? ` ${n.takeaway}` : ""}`)
+  .join("\n")}
+
 ## Recent news
 
 ${data.news
@@ -462,13 +655,14 @@ const slug = (s) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 const searchIndex = [
-  ...data.publications.map((p) => ({ type: "Paper", title: p.title, text: `${p.title} ${p.venue} ${p.year} ${p.author}`, url: `publications.html#pub-${slug(p.title)}` })),
-  ...data.projects.map((p) => ({ type: "Project", title: p.title, text: `${p.title} ${p.body}`, url: `projects.html#project-${slug(p.title)}` })),
-  ...data.news.map((n) => ({ type: "News", title: n.title, text: `${n.title} ${n.description} ${n.date}`, url: `news.html#news-${slug(n.title)}` })),
+  ...data.publications.map((p) => ({ type: "Paper", title: p.title, text: `${p.title} ${p.venue} ${p.year} ${p.author}`, url: `/publications.html#pub-${slug(p.title)}` })),
+  ...data.notes.map((n) => ({ type: "Note", title: n.headline, text: `${n.headline} ${n.paper.title} ${n.paper.byline} ${n.tags.join(" ")} ${n.idea} ${n.takeaway}`, url: `/${noteFile(n)}` })),
+  ...data.projects.map((p) => ({ type: "Project", title: p.title, text: `${p.title} ${p.body}`, url: `/projects.html#project-${slug(p.title)}` })),
+  ...data.news.map((n) => ({ type: "News", title: n.title, text: `${n.title} ${n.description} ${n.date}`, url: `/news.html#news-${slug(n.title)}` })),
 ];
 writeFileSync(join(ROOT, "search-index.json"), JSON.stringify(searchIndex));
 
-console.log(`  sitemap.xml (${indexed.length} URLs), llms.txt, search-index.json (${searchIndex.length} items)`);
+console.log(`  sitemap.xml (${indexed.length + notePages.length} URLs), llms.txt, search-index.json (${searchIndex.length} items)`);
 if (warnings.length) {
   console.warn("\nWarnings:");
   warnings.forEach((w) => console.warn(`  - ${w}`));

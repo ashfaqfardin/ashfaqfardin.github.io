@@ -9,12 +9,13 @@
         <div>
           <p class="label-s">Pages</p>
           <ul>
-            <li><a href="about.html">About</a></li>
-            <li><a href="education.html">Education</a></li>
-            <li><a href="publications.html">Publications</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="timeline.html">Timeline</a></li>
-            <li><a href="news.html">News</a></li>
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/publications.html">Publications</a></li>
+            <li><a href="/projects.html">Projects</a></li>
+            <li><a href="/timeline.html">Timeline</a></li>
+            <li><a href="/news.html">News</a></li>
+            <li><a href="/notes.html">Notes</a></li>
           </ul>
         </div>
         <div>

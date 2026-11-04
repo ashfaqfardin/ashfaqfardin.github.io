@@ -1,0 +1,8 @@
+# Generated on deploy by tools/build-notes.py and tools/build-seo.mjs
+/notes/
+/assets/notes/
+/content/notes.json
+/_site/
+
+# Local settings
+/.claude/

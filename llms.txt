@@ -7,13 +7,14 @@ Profiles: https://github.com/ashfaqfardin, https://www.linkedin.com/in/ashfaqfar
 
 ## Pages
 
-- [Home](https://ashfaqfardin.github.io/): Mohammad Ashfaq Ur Rahman (Ashfaq Fardin) is an MSc Artificial Intelligence student at the University of Surrey researching LLMs, NLP and AI tutors.
-- [About](https://ashfaqfardin.github.io/about.html): Background, research interests, experience and skills of Mohammad Ashfaq Ur Rahman, former CCDS Research Intern at IUB and MSc AI student at Surrey.
-- [Education](https://ashfaqfardin.github.io/education.html): Mohammad Ashfaq Ur Rahman's education: MSc in Artificial Intelligence at the University of Surrey and BSc in CSE from Independent University, Bangladesh.
-- [Publications](https://ashfaqfardin.github.io/publications.html): Papers by Mohammad Ashfaq Ur Rahman at CHI 2025, BEA 2025, IJCNLP-AACL 2025 Findings and BLP-2025 on LLM tutors, Bangla NLP and code generation.
-- [Projects](https://ashfaqfardin.github.io/projects.html): AI and software projects by Mohammad Ashfaq Ur Rahman, including a local RAG API with FastAPI and Ollama and a FastAI packaging classifier.
-- [Timeline](https://ashfaqfardin.github.io/timeline.html): Milestones in Mohammad Ashfaq Ur Rahman's journey, from IUB and IEEE Computer Society leadership to CCDS research, publications and Surrey.
-- [News](https://ashfaqfardin.github.io/news.html): Latest from Mohammad Ashfaq Ur Rahman: new papers, BEA 2025 shared-task results, IEEEXtreme volunteering and an MSc in AI at Surrey.
+- [Home](https://ashfaqfardin.dev/): Mohammad Ashfaq Ur Rahman (Ashfaq Fardin) is an MSc Artificial Intelligence student at the University of Surrey researching LLMs, NLP and AI tutors.
+- [About](https://ashfaqfardin.dev/about.html): Background, research interests, experience and skills of Mohammad Ashfaq Ur Rahman, former CCDS Research Intern at IUB and MSc AI student at Surrey.
+- [Education](https://ashfaqfardin.dev/education.html): Mohammad Ashfaq Ur Rahman's education: MSc in Artificial Intelligence at the University of Surrey and BSc in CSE from Independent University, Bangladesh.
+- [Publications](https://ashfaqfardin.dev/publications.html): Papers by Mohammad Ashfaq Ur Rahman at CHI 2025, BEA 2025, IJCNLP-AACL 2025 Findings and BLP-2025 on LLM tutors, Bangla NLP and code generation.
+- [Projects](https://ashfaqfardin.dev/projects.html): AI and software projects by Mohammad Ashfaq Ur Rahman, including a local RAG API with FastAPI and Ollama and a FastAI packaging classifier.
+- [Timeline](https://ashfaqfardin.dev/timeline.html): Milestones in Mohammad Ashfaq Ur Rahman's journey, from IUB and IEEE Computer Society leadership to CCDS research, publications and Surrey.
+- [News](https://ashfaqfardin.dev/news.html): Latest from Mohammad Ashfaq Ur Rahman: new papers, BEA 2025 shared-task results, IEEEXtreme volunteering and an MSc in AI at Surrey.
+- [Notes](https://ashfaqfardin.dev/notes.html): Daily breakdowns of new AI papers by Mohammad Ashfaq Ur Rahman: what each one found, how it works, and where its claims stop.
 
 ## Publications
 
@@ -35,6 +36,13 @@ Profiles: https://github.com/ashfaqfardin, https://www.linkedin.com/in/ashfaqfar
 - Local Chat Application (https://github.com/ashfaqfardin/local-chat-app): A real-time chat application for local network communication, built with React (TypeScript), Socket.IO, Tailwind CSS, Node.js, and Express. Features real-time messaging, file sharing, user presence detection, and customizable avatars, all within a responsive UI.
 - DL Code Organization (https://github.com/ashfaqfardin/DL_Code_Organization): A hands-on session on deep learning code management using PyTorch, organized by CCDS.AI at IUB. Covers code structuring, experiment tracking, and model training workflows with a CLI for training/testing.
 - Quiz Application (https://github.com/ashfaqfardin/quiz_app): A Flutter-based mobile quiz app featuring a multiple-choice format, smooth navigation, and a responsive UI for both Android and iOS. Built with Dart and Flutter.
+
+## Research notes
+
+Short breakdowns of recent AI papers, newest first.
+
+- [Teach the small model the teacher's ranking, not its probabilities.](https://ashfaqfardin.dev/notes/2026-11-04-order-only-on-policy-distillation.html): 2026-11-04, on Order-Only On-Policy Distillation (O³PD). For distillation, the teacher's order may matter more than its numbers.
+- [Your fine-tuning data can make a model less safe without a single harmful example.](https://ashfaqfardin.dev/notes/2026-11-03-gradient-safety-data-filtering.html): 2026-11-03, on Follow the Gradient: Tracing Safety Degradation Back to Training Data. Safety-aware curation has to look at training dynamics, not just text.
 
 ## Recent news
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- seo:head --><!-- /seo:head -->
+    <script>
+      document.documentElement.classList.add("js");
+      try {
+        var t = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.classList.add(t);
+      } catch (e) {}
+    </script>
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Host+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/main.css" />
+  </head>
+  <body data-outfit="glasses">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div id="header-partial"><!-- prerender:header --><!-- /prerender:header --></div>
+
+    <main id="main"><!-- note --><!-- /note --></main>
+
+    <div id="footer-partial"><!-- prerender:footer --><!-- /prerender:footer --></div>
+    <script src="/scripts/site.js"></script>
+    <script src="/scripts/companion.js"></script>
+    <script src="/scripts/notes.js"></script>
+  </body>
+</html>

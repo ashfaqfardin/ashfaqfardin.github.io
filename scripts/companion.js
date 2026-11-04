@@ -401,7 +401,7 @@
     });
     showResults("");
     if (!index) {
-      fetchJSON("search-index.json").then((data) => {
+      fetchJSON("/search-index.json").then((data) => {
         index = data || [];
         if (searching) showResults(input.value);
       });
@@ -487,7 +487,7 @@
       swim();
       save("localStorage", "keep-swimming", true); // read by scripts/keep-swimming.js
       if (guide && guide.secret) say({ ...guide.secret, ms: 12000 });
-      else location.href = "keep-swimming.html";
+      else location.href = "/keep-swimming.html";
     });
   });
 
@@ -561,7 +561,7 @@
     else setTimeout(go, 2600); // after its entrance
   }
 
-  Promise.all([fetchJSON("content/guide.json"), fetchJSON("content/news.json")]).then(([data, news]) => {
+  Promise.all([fetchJSON("/content/guide.json"), fetchJSON("/content/news.json")]).then(([data, news]) => {
     if (!data) return;
     guide = data;
     const state = load("localStorage", "companion-guide") || {};

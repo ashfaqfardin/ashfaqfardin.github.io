@@ -2516,6 +2516,238 @@ html.dark .portrait img {
   margin-top: var(--space-400);
 }
 
+/* ---------- Notes (generated from content/Notes, see tools/build-notes.py) ---------- */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-1200) var(--space-400);
+}
+
+.note {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-300);
+}
+
+.note[hidden] {
+  display: none;
+}
+
+.note__thumb {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--bg-2);
+}
+
+.note__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s var(--ease);
+}
+
+.note:hover .note__thumb img {
+  transform: scale(1.04);
+}
+
+.note__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-300);
+}
+
+.note__summary {
+  color: var(--text-2);
+}
+
+.note:hover .chip {
+  background: var(--lime);
+  color: var(--on-lime);
+  transform: rotate(45deg);
+}
+
+.note-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-800);
+  padding-top: var(--space-800);
+  padding-bottom: var(--section-y);
+}
+
+.note-page__back {
+  align-self: flex-start;
+  margin-left: -12px;
+}
+
+.note-page__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-300);
+  max-width: 920px;
+}
+
+.note-page__tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-200);
+}
+
+.note-page__tags .label {
+  margin-right: var(--space-200);
+  color: var(--text-2);
+}
+
+.note-page__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--space-800);
+  align-items: start;
+}
+
+.note-page__side {
+  position: sticky;
+  top: calc(var(--header-h) + 16px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-600);
+}
+
+.note-page__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+}
+
+.note-page__block > .label-s {
+  color: var(--text-2);
+}
+
+.note-page__refs a {
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-color: var(--lime);
+  text-underline-offset: 3px;
+}
+
+.note-page__refs li + li {
+  margin-top: var(--space-100);
+}
+
+.note-page__pager {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-400);
+}
+
+.note-page__step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+  padding: var(--space-400);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.25s ease-out, transform 0.45s var(--ease);
+}
+
+.note-page__step:hover {
+  border-color: var(--text);
+  transform: translateY(-2px);
+}
+
+.note-page__step .label-s {
+  color: var(--text-2);
+}
+
+.note-page__step:last-child:not(:first-child) {
+  text-align: right;
+}
+
+/* Slide viewer: a native swipeable scroller, sized to fit a short window */
+.slides {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-300);
+  width: 100%;
+  max-width: calc(100vh - var(--header-h) - 96px);
+  min-width: 0;
+}
+
+.slides__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  border-radius: var(--radius);
+  background: var(--bg-2);
+}
+
+.slides__track::-webkit-scrollbar {
+  display: none;
+}
+
+.slides__track:focus-visible {
+  outline: 3px solid var(--lime);
+  outline-offset: 3px;
+}
+
+.slides__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.slides__slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.slides__bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-400);
+}
+
+.slides__bar .numeral {
+  min-width: 64px;
+  text-align: center;
+  color: var(--text);
+}
+
+.slides__bar .icon-btn:disabled {
+  opacity: 0.35;
+}
+
+.note-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-600);
+  color: var(--text-body);
+}
+
+.note-text__slide {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+}
+
+.note-text__slide .label,
+.note-text__slide .label-s {
+  color: var(--text-2);
+}
+
+.note-text__slide .heading-s {
+  color: var(--text);
+}
+
+.note-text__slide .label-s {
+  margin-top: var(--space-200);
+}
+
 /* ---------- Keep Swimming (hidden game, scripts/keep-swimming.js) ---------- */
 [data-companion="swim"] {
   cursor: pointer;
@@ -3229,6 +3461,15 @@ html.ks-immersive {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
+  /* The full name and seven nav links no longer fit side by side. */
+  .brand__full {
+    display: none;
+  }
+
+  .brand__short {
+    display: inline;
+  }
+
   .hero__meta {
     grid-template-columns: 1fr auto;
   }
@@ -3248,6 +3489,16 @@ html.ks-immersive {
   .tl-item {
     grid-template-columns: 200px 24px minmax(0, 1fr);
     gap: var(--space-800);
+  }
+
+  .notes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1000px) {
+  .nav__link {
+    padding-inline: 10px;
   }
 }
 
@@ -3432,6 +3683,18 @@ html.ks-immersive {
     padding: var(--space-600);
   }
 
+  .note-page__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .note-page__side {
+    position: static;
+  }
+
+  .slides {
+    max-width: none;
+  }
+
   .ks {
     grid-template-columns: 1fr;
   }
@@ -3530,6 +3793,18 @@ html.ks-immersive {
 
   .news__month {
     padding-top: 0;
+  }
+
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .note-page__pager {
+    grid-template-columns: 1fr;
+  }
+
+  .note-page__step:last-child:not(:first-child) {
+    text-align: left;
   }
 
   .site-footer__bottom {

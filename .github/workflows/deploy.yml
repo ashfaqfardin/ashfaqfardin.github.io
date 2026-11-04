@@ -1,0 +1,72 @@
+# Builds and publishes the site on every push to main, so adding a PDF to
+# content/Notes is all it takes to publish a note.
+#
+# The generated pages are deployed directly and never committed, so pushing stays
+# simple: there is nothing to pull back afterwards.
+#
+# Needs Settings > Pages > Source set to "GitHub Actions".
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # build-seo.mjs dates pages from the git history
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Install PDF tools
+        run: pip install pymupdf==2.0 pillow==12.2.0
+
+      # Rendered slides are kept between runs, so only new PDFs get processed.
+      - uses: actions/cache@v6
+        with:
+          path: assets/notes
+          key: notes-${{ hashFiles('content/Notes/**', 'tools/build-notes.py') }}
+          restore-keys: notes-
+
+      - name: Process notes
+        run: python tools/build-notes.py
+
+      - name: Build pages
+        run: node tools/build-seo.mjs
+
+      # The source PDFs stay in the repository (note pages link to them there).
+      # Leaving them out keeps the published site well under GitHub's 1 GB limit.
+      - name: Assemble site
+        run: rsync -a --exclude .git --exclude .github --exclude .claude --exclude tools --exclude content/Notes --exclude _site ./ _site/
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v5

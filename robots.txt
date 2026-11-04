@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ashfaqfardin.github.io/sitemap.xml
+Sitemap: https://ashfaqfardin.dev/sitemap.xml

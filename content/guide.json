@@ -4,14 +4,14 @@
   "pages": {
     "index": {
       "text": "Start with News to see what Ashfaq has been up to lately.",
-      "action": { "label": "Open News", "href": "news.html" }
+      "action": { "label": "Open News", "href": "/news.html" }
     },
     "about": {
       "text": "Work experience and activities are folded into rows. Tap one to unfold the details."
     },
     "education": {
       "text": "Every stop from school to the MSc at the University of Surrey. The Timeline shows the bigger picture.",
-      "action": { "label": "Open Timeline", "href": "timeline.html" }
+      "action": { "label": "Open Timeline", "href": "/timeline.html" }
     },
     "publications": {
       "text": "Search by title or author, and tap BIB on any paper to copy its citation.",
@@ -26,6 +26,9 @@
     },
     "news": {
       "text": "Newest first. Each item links to the paper or page behind it."
+    },
+    "notes": {
+      "text": "Short breakdowns of new AI papers. Open one and swipe through the slides, or search by topic."
     }
   },
   "lost": {
@@ -41,7 +44,7 @@
   "secret": {
     "label": "Secret unlocked",
     "text": "You found the hidden pool! Steer me with ← and → and dodge the bugs of machine learning.",
-    "action": { "label": "Play Keep Swimming", "href": "keep-swimming.html" }
+    "action": { "label": "Play Keep Swimming", "href": "/keep-swimming.html" }
   },
   "cite": {
     "label": "Copied",
@@ -51,11 +54,11 @@
     "label": "New since your last visit",
     "one": "New: {title}",
     "many": "{count} new updates, including “{title}”.",
-    "action": { "label": "See what's new", "href": "news.html" }
+    "action": { "label": "See what's new", "href": "/news.html" }
   },
   "search": {
     "label": "Search",
-    "placeholder": "Papers, projects, news…",
+    "placeholder": "Papers, notes, projects…",
     "empty": "Try “Bangla”, “RAG” or “CHI”.",
     "none": "Nothing found for “{query}”."
   }
