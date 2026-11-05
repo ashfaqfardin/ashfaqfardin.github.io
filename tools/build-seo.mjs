@@ -7,8 +7,8 @@
 //   2. Crawlable HTML: renders each page in a headless browser and bakes the
 //      result in between <!-- prerender:ID --> markers, so crawlers that don't
 //      run JavaScript still see the content. Page scripts re-render on load.
-//   3. Research notes: notes.html and one page per note under notes/, from the
-//      content/notes.json that tools/build-notes.py writes.
+//   3. Notes: notes.html and one page per research note or tutorial under notes/,
+//      from the content/notes.json that tools/build-notes.py writes.
 //   4. sitemap.xml, llms.txt and search-index.json (the companion's site search).
 //
 // On GitHub this runs on every push (.github/workflows/deploy.yml). To preview locally:
@@ -176,9 +176,11 @@ function publicationNode(pub) {
 }
 
 function noteNode(n, url) {
-  const authors = n.paper.byline.split(" · ")[0].split(/,\s*/).filter(Boolean);
+  const tutorial = n.kind === "tutorial";
+  const authors = tutorial ? [] : n.paper.byline.split(" · ")[0].split(/,\s*/).filter(Boolean);
   return {
-    "@type": "BlogPosting",
+    "@type": tutorial ? "TechArticle" : "BlogPosting",
+    ...(tutorial && { learningResourceType: "Tutorial" }),
     headline: n.headline,
     description: n.idea || n.takeaway || n.headline,
     datePublished: n.date,
@@ -280,24 +282,49 @@ function headerFor(file) {
   return read("partials/header.txt").replace(new RegExp(`(<a href="/${href}")`, "g"), '$1 aria-current="page"');
 }
 
-// --- Research notes ---
+// --- Notes ---
 const noteFile = (n) => `notes/${n.slug}.html`;
 const noteDate = (day) => new Date(`${day}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
 const iconHtml = (name) => `<svg class="icon" aria-hidden="true" focusable="false"><use href="#i-${name}"></use></svg>`;
 const shorten = (text, max) => (text.length <= max ? text : `${text.slice(0, text.lastIndexOf(" ", max - 1))}…`);
 
 function noteCard(n, i) {
+  const tutorial = n.kind === "tutorial";
   const search = [n.tags.join(" "), n.paper.title, n.paper.byline, n.idea, n.takeaway].join(" ");
   return `
-          <a class="note" href="/${noteFile(n)}" data-search="${esc(search)}" data-reveal>
+          <a class="note" href="/${noteFile(n)}" data-kind="${n.kind}" data-search="${esc(search)}" data-reveal>
             <div class="note__thumb"><img src="/assets/notes/${n.slug}/thumb.webp" width="480" height="480" alt=""${i < 3 ? "" : ' loading="lazy"'} /></div>
-            <div class="note__meta"><span class="label">${noteDate(n.date)}</span><span class="chip chip--sm">${iconHtml("arrow-up-right")}</span></div>
+            <div class="note__meta"><span class="note__when"><span class="label">${noteDate(n.date)}</span>${tutorial ? '<span class="tag tag--brand tag--sm">Tutorial</span>' : ""}</span><span class="chip chip--sm">${iconHtml("arrow-up-right")}</span></div>
             <h2 class="heading-m">${esc(n.headline)}</h2>
-            <p class="body-s note__summary">${esc(n.paper.title)}</p>
+            <p class="body-s note__summary">${esc(tutorial ? n.idea : n.paper.title)}</p>
           </a>`;
 }
 
+// Only worth showing once there is more than one kind of note to choose between.
+function noteFilter(notes) {
+  const kinds = [
+    ["all", "All", notes.length],
+    ["research", "Research", notes.filter((n) => n.kind === "research").length],
+    ["tutorial", "Tutorials", notes.filter((n) => n.kind === "tutorial").length],
+  ];
+  if (kinds.some(([, , count]) => !count)) return "";
+  const button = ([kind, label, count]) =>
+    `<button class="tag" type="button" data-notes-kind="${kind}" aria-pressed="${kind === "all"}">${label}<span class="numeral">${String(count).padStart(2, "0")}</span></button>`;
+  return `<div class="notes-filter" role="group" aria-label="Show">${kinds.map(button).join("")}</div>`;
+}
+
+// Notes that cite each other, so a lesson and the paper it prepares you for link up.
+function relatedNotes(n, notes) {
+  const cites = (a, b) => a.references.some((r) => r.url === b.paper.url);
+  return notes.filter((other) => other.slug !== n.slug && (cites(n, other) || cites(other, n)));
+}
+
 function noteTranscript(n) {
+  const table = (t) => `
+              <div class="note-table"><table>
+                <thead><tr>${t.head.map((cell) => `<th scope="col">${esc(cell)}</th>`).join("")}</tr></thead>
+                <tbody>${t.rows.map((row) => `<tr>${row.map((cell) => `<td>${esc(cell)}</td>`).join("")}</tr>`).join("")}</tbody>
+              </table></div>`;
   const slide = (s, i) => {
     let body = "";
     let bullets = [];
@@ -306,6 +333,11 @@ function noteTranscript(n) {
       bullets = [];
     };
     for (const item of s.body) {
+      if (item.kind === "table" || item.kind === "code") {
+        flush();
+        body += item.kind === "table" ? table(item) : `<pre class="note-code"><code>${esc(item.text)}</code></pre>`;
+        continue;
+      }
       if (item.text.startsWith("●")) {
         bullets.push(item.text.slice(1).trim());
         continue;
@@ -324,18 +356,33 @@ function noteTranscript(n) {
   return n.slides.map(slide).join("");
 }
 
-function notePage(n, newer, older) {
+// A control laid over one drawn on a lesson's slide. Those drawings are pictures, so
+// these are what make them work. scripts/notes.js handles the clicks.
+function hotspot(spot) {
+  const [left, top, width, height] = spot.box;
+  const place = `style="left:${left}%;top:${top}%;width:${width}%;height:${height}%"`;
+  const label = `aria-label="${esc(spot.label || "")}"`;
+  if (spot.action === "exit") return `<a class="slides__hot slides__hot--exit" href="/notes.html" ${place} ${label}></a>`;
+  if (spot.action === "note") return `<p class="slides__note" data-hot-note aria-live="polite" ${place}></p>`;
+  const extra = spot.action === "option" ? ` data-key="${esc(spot.key)}" aria-pressed="false"` : spot.answer ? ` data-answer="${esc(spot.answer)}"` : "";
+  return `<button class="slides__hot slides__hot--${spot.action}" type="button" data-hot="${spot.action}"${extra} ${place} ${label}></button>`;
+}
+
+function notePage(n, newer, older, related) {
+  const tutorial = n.kind === "tutorial";
   const total = n.slides.length;
   const pad = (v) => String(v).padStart(2, "0");
   const slides = n.slides
     .map((s, i) => {
       const alt = `Slide ${i + 1} of ${total}${s.headline ? `: ${s.headline}` : ""}`;
       const load = i ? 'loading="lazy"' : 'fetchpriority="high"';
-      return `<li class="slides__slide"><img src="/assets/notes/${n.slug}/slide-${i + 1}.webp" width="1080" height="1080" alt="${esc(alt)}" ${load} /></li>`;
+      return `<li class="slides__slide"><img src="/assets/notes/${n.slug}/slide-${i + 1}.webp" width="1080" height="1080" alt="${esc(alt)}" ${load} />${(s.hotspots || []).map(hotspot).join("")}</li>`;
     })
     .join("\n            ");
   const pdf = `https://raw.githubusercontent.com/${config.site.repo}/main/content/Notes/${encodeURIComponent(n.file)}`;
-  const refs = n.references.map((r) => `<li><a href="${esc(r)}" target="_blank" rel="noopener noreferrer">${esc(r.replace(/^https:\/\//, ""))}</a></li>`).join("");
+  const refs = n.references.map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.text)}</a></li>`).join("");
+  const links = related.map((other) => `<li><a href="/${noteFile(other)}">${esc(other.headline)}</a></li>`).join("");
+  const tags = [...n.tags, ...(tutorial ? n.facts : [])];
   const pager = (other, label) =>
     other
       ? `<a class="note-page__step" href="/${noteFile(other)}"><span class="label-s">${label}</span><span class="heading-s">${esc(other.headline)}</span></a>`
@@ -345,7 +392,7 @@ function notePage(n, newer, older) {
         <a class="btn btn--subtle btn--sm note-page__back" href="/notes.html">${iconHtml("arrow-left")}All notes</a>
 
         <header class="note-page__head">
-          <p class="note-page__tags"><time class="label" datetime="${n.date}">${noteDate(n.date)}</time>${n.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</p>
+          <p class="note-page__tags"><time class="label" datetime="${n.date}">${noteDate(n.date)}</time>${tutorial ? '<span class="tag tag--brand">Tutorial</span>' : ""}${tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</p>
           <h1 class="display-m">${esc(n.headline)}</h1>
           ${n.idea ? `<p class="body-l page-sub">${esc(n.idea)}</p>` : ""}
         </header>
@@ -364,7 +411,7 @@ function notePage(n, newer, older) {
 
           <aside class="note-page__side">
             <div class="note-page__block">
-              <p class="label-s">The paper</p>
+              <p class="label-s">${tutorial ? "Based on" : "The paper"}</p>
               <h2 class="heading-m">${esc(n.paper.title)}</h2>
               ${n.paper.byline ? `<p class="body-s muted">${esc(n.paper.byline)}</p>` : ""}
               <div class="pub__actions">
@@ -373,6 +420,8 @@ function notePage(n, newer, older) {
               </div>
             </div>
             ${n.takeaway ? `<div class="note-page__block"><p class="label-s">Takeaway</p><p class="body-l">${esc(n.takeaway)}</p></div>` : ""}
+            ${n.code ? `<div class="note-page__block"><p class="label-s">Check it in code</p><pre class="note-code"><code>${esc(n.code)}</code></pre></div>` : ""}
+            ${links ? `<div class="note-page__block"><p class="label-s">${tutorial ? "Where this shows up" : "Work it out by hand"}</p><ul class="note-page__refs body-s">${links}</ul></div>` : ""}
             ${refs ? `<div class="note-page__block"><p class="label-s">References</p><ul class="note-page__refs body-s">${refs}</ul></div>` : ""}
           </aside>
         </div>
@@ -402,9 +451,10 @@ function buildNotePages(notes) {
   const template = read("tools/note-template.html");
   return notes.map((n, i) => {
     const file = noteFile(n);
+    const tutorial = n.kind === "tutorial";
     const page = {
-      name: n.paper.title,
-      title: `${n.paper.title} | AI Research Notes`,
+      name: tutorial ? n.headline : n.paper.title,
+      title: tutorial ? `${n.headline} | AI Tutorials` : `${n.paper.title} | AI Research Notes`,
       description: shorten([n.headline, n.idea].filter(Boolean).join(" "), 158),
       image: `assets/notes/${n.slug}/cover.jpg`,
       imageAlt: n.headline,
@@ -415,7 +465,7 @@ function buildNotePages(notes) {
     let html = fill(template, "seo:head", headTags(file, page, data), file);
     html = fill(html, "prerender:header", headerFor("notes.html"), file);
     html = fill(html, "prerender:footer", read("partials/footer.txt"), file);
-    html = fill(html, "note", notePage(n, notes[i - 1], notes[i + 1]), file);
+    html = fill(html, "note", notePage(n, notes[i - 1], notes[i + 1], relatedNotes(n, notes)), file);
     writeFileSync(join(ROOT, file), html);
     return [file, page];
   });
@@ -585,6 +635,7 @@ try {
     if (page.list === "notes") {
       html = fill(html, "prerender:notes", `${data.notes.map(noteCard).join("")}\n        `, file);
       html = fill(html, "prerender:notes-count", `(${String(data.notes.length).padStart(2, "0")})`, file);
+      html = fill(html, "prerender:notes-filter", noteFilter(data.notes), file);
     }
     writeFileSync(join(ROOT, file), html);
     console.log(`  ${file}${Object.keys(baked).length ? ` (baked: ${Object.keys(baked).join(", ")})` : ""}`);
@@ -607,6 +658,9 @@ ${[...indexed, ...notePages].map(([file, p]) => `  <url>\n    <loc>${pageUrl(fil
 </urlset>
 `
 );
+
+const research = data.notes.filter((n) => n.kind !== "tutorial");
+const tutorials = data.notes.filter((n) => n.kind === "tutorial");
 
 // A plain-text map for LLM tools that look for /llms.txt (https://llmstxt.org).
 writeFileSync(
@@ -634,9 +688,18 @@ ${data.projects.map((p) => `- ${p.title}${p.url ? ` (${p.url})` : ""}: ${p.body}
 
 Short breakdowns of recent AI papers, newest first.
 
-${data.notes
+${research
   .slice(0, 30)
   .map((n) => `- [${n.headline}](${pageUrl(noteFile(n))}): ${n.date}, on ${n.paper.title}.${n.takeaway ? ` ${n.takeaway}` : ""}`)
+  .join("\n")}
+
+## Tutorials
+
+Step-by-step lessons to work through by hand, newest first.
+
+${tutorials
+  .slice(0, 30)
+  .map((n) => `- [${n.headline}](${pageUrl(noteFile(n))}): ${n.date}. ${n.idea}${n.takeaway ? ` ${n.takeaway}` : ""}`)
   .join("\n")}
 
 ## Recent news
@@ -656,7 +719,7 @@ const slug = (s) =>
     .replace(/^-|-$/g, "");
 const searchIndex = [
   ...data.publications.map((p) => ({ type: "Paper", title: p.title, text: `${p.title} ${p.venue} ${p.year} ${p.author}`, url: `/publications.html#pub-${slug(p.title)}` })),
-  ...data.notes.map((n) => ({ type: "Note", title: n.headline, text: `${n.headline} ${n.paper.title} ${n.paper.byline} ${n.tags.join(" ")} ${n.idea} ${n.takeaway}`, url: `/${noteFile(n)}` })),
+  ...data.notes.map((n) => ({ type: n.kind === "tutorial" ? "Tutorial" : "Note", title: n.headline, text: `${n.headline} ${n.paper.title} ${n.paper.byline} ${n.tags.join(" ")} ${n.idea} ${n.takeaway}`, url: `/${noteFile(n)}` })),
   ...data.projects.map((p) => ({ type: "Project", title: p.title, text: `${p.title} ${p.body}`, url: `/projects.html#project-${slug(p.title)}` })),
   ...data.news.map((n) => ({ type: "News", title: n.title, text: `${n.title} ${n.description} ${n.date}`, url: `/news.html#news-${slug(n.title)}` })),
 ];

@@ -86,8 +86,8 @@
     },
     "notes.html": {
       "name": "Notes",
-      "title": "AI Research Notes | Mohammad Ashfaq Ur Rahman",
-      "description": "Daily breakdowns of new AI papers by Mohammad Ashfaq Ur Rahman: what each one found, how it works, and where its claims stop.",
+      "title": "Daily AI Notes | Mohammad Ashfaq Ur Rahman",
+      "description": "Daily AI notes by Mohammad Ashfaq Ur Rahman: breakdowns of new papers, and hands-on tutorials that work the ideas out step by step.",
       "type": "CollectionPage",
       "list": "notes",
       "sources": ["content/Notes"]

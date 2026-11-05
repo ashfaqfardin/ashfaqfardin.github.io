@@ -2558,8 +2558,49 @@ html.dark .portrait img {
   gap: var(--space-300);
 }
 
+.note__when {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-200);
+}
+
 .note__summary {
   color: var(--text-2);
+}
+
+.tag--sm {
+  padding: 3px 8px;
+  font-size: 12px;
+}
+
+/* Filters need the script, so without it the full list simply stays on show. */
+.notes-filter {
+  display: none;
+  flex-wrap: wrap;
+  gap: var(--space-200);
+  padding-top: var(--space-300);
+}
+
+.js .notes-filter {
+  display: flex;
+}
+
+.notes-filter .tag {
+  cursor: pointer;
+}
+
+.notes-filter .tag:hover {
+  background: color-mix(in srgb, var(--text) 12%, transparent);
+}
+
+.notes-filter .tag[aria-pressed="true"] {
+  background: var(--lime);
+  color: var(--on-lime);
+}
+
+.notes-filter .numeral {
+  color: inherit;
+  opacity: 0.6;
 }
 
 .note:hover .chip {
@@ -2694,15 +2735,107 @@ html.dark .portrait img {
 }
 
 .slides__slide {
+  position: relative;
   flex: 0 0 100%;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  container-type: inline-size;
 }
 
 .slides__slide img {
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* Tutorials draw an app into their slides. These sit exactly over the drawn controls
+   (see read_hotspots in tools/build-notes.py), so they share the slide's fixed colours
+   rather than the site theme, and use cqw to scale with it. */
+.slides__hot,
+.slides__note {
+  display: none;
+  position: absolute;
+}
+
+.js .slides__hot {
+  display: block;
+  border-radius: 2cqw;
+  transition: background-color 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.slides__hot--exit {
+  border-radius: 50%;
+}
+
+.slides__hot--next:hover,
+.slides__hot--check:hover {
+  background: rgb(255 255 255 / 10%);
+}
+
+.slides__hot--exit:hover,
+.slides__hot--option:hover:enabled {
+  background: rgb(32 39 52 / 6%);
+}
+
+.slides__hot:focus-visible {
+  outline: 3px solid #a2c97a;
+  outline-offset: 2px;
+}
+
+.slides__hot--option[aria-pressed="true"] {
+  background: rgb(195 230 161 / 28%);
+  box-shadow: inset 0 0 0 0.35cqw #202734;
+}
+
+.slides__hot--option.is-right {
+  background: rgb(195 230 161 / 28%);
+  box-shadow: inset 0 0 0 0.35cqw #a2c97a;
+}
+
+.slides__hot--option.is-wrong {
+  background: rgb(255 227 220 / 40%);
+  box-shadow: inset 0 0 0 0.35cqw #f0613f;
+}
+
+.slides__hot--option.is-right::after,
+.slides__hot--option.is-wrong::after {
+  position: absolute;
+  top: 50%;
+  right: 2.4cqw;
+  color: #202734;
+  font-size: 2.2cqw;
+  font-weight: 600;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.slides__hot--option.is-right::after {
+  content: "✓";
+}
+
+.slides__hot--option.is-wrong::after {
+  content: "✕";
+}
+
+/* Once answered, the drawn "Check" gives way to the same "Continue" as other slides. */
+.js .slides__hot.is-done {
+  background: #202734;
+  color: #fff;
+  font-size: 2cqw;
+  font-weight: 600;
+}
+
+.js .slides__hot.is-done:hover {
+  background: #2d3647;
+}
+
+.js .slides__note:not(:empty) {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  color: #202734;
+  font-size: 1.7cqw;
+  font-weight: 500;
 }
 
 .slides__bar {
@@ -2746,6 +2879,42 @@ html.dark .portrait img {
 
 .note-text__slide .label-s {
   margin-top: var(--space-200);
+}
+
+.note-code {
+  overflow-x: auto;
+  padding: var(--space-300);
+  border-radius: var(--radius);
+  background: var(--bg-2);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.note-table {
+  overflow-x: auto;
+}
+
+.note-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.note-table th,
+.note-table td {
+  padding: var(--space-200) var(--space-300) var(--space-200) 0;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.note-table th {
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
 }
 
 /* ---------- Keep Swimming (hidden game, scripts/keep-swimming.js) ---------- */
